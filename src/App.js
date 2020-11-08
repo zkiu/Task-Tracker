@@ -9,8 +9,8 @@ import Navigation from './components/Navigation'
 import HomePage from './pages/HomePage'
 import Login from './pages/LoginPage'
 
-import Register from './pages/RegisterPage'
-import TaskListPage from './pages/TaskListPage'
+import RegisterPage from './pages/RegisterPage'
+import DashboardPage from './pages/DashboardPage'
 import TaskFormPage from './pages/TaskFormPage'
 
 function App() {
@@ -18,13 +18,13 @@ function App() {
 		<div>
 			<Navigation />
 
-			{/* <Router> */}
-			<HomePage path="/" />
-			<Login path="/login" />
-			<Register path="/register" />
-			<TaskListPage path="/tasklist" />
-			<TaskFormPage path="/taskform" />
-			{/* </Router> */}
+			<Router>
+				<HomePage path="/" />
+				<Login path="/login" />
+				<RegisterPage path="/register" />
+				<DashboardPage path="/dashboard" />
+				<TaskFormPage path="/taskform" />
+			</Router>
 		</div>
 	)
 }

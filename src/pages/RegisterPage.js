@@ -30,7 +30,8 @@ function Register(prop) {
 		} else {
 			setRegData({...regData, errorMessage: null})
 		}
-	}, [regData])
+		// eslint-disable-next-line
+	}, [regData.passOne, regData.passTwo]) // ** if only include regData, then infinite look. Need to move setRegData outside of useEffect
 
 	function handleSubmit(e) {
 		e.preventDefault()

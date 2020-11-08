@@ -3,7 +3,7 @@ import {Link} from '@reach/router'
 import TaskList from '../components/TaskList'
 
 // ** need to add component to filter/query through tasks before sending array to TaskList
-export default function TaskListPage() {
+export default function DashboardPage() {
 	return (
 		<div className="container text-center">
 			<div className="row justify-content-center">

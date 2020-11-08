@@ -1,8 +1,9 @@
 import {navigate} from '@reach/router'
 import React, {useState} from 'react'
-import firebase from '../FirebaseConfig'
 
 import ErrorForm from '../components/ErrorForm'
+
+import {signIn} from '../services/auth/signIn'
 
 function Login(prop) {
 	// -- *** not yet used prop
@@ -19,13 +20,11 @@ function Login(prop) {
 	function handleSubmit(e) {
 		e.preventDefault()
 
-		firebase
-			.auth()
-			.signInWithEmailAndPassword(loginUser.email, loginUser.password)
+		signIn(loginUser.email, loginUser.password)
 			.then((user) => {
 				if (user) {
 					//if the user is not null then
-					navigate('/meetings')
+					navigate('/dashboard')
 				}
 			})
 			.catch((error) => {
