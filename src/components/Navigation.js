@@ -1,9 +1,14 @@
 import React from 'react'
 import {Link} from '@reach/router'
-
 import {RiCheckDoubleLine} from 'react-icons/ri'
 
+import {signOut} from '../services/auth/signOut'
+
 function Navigation() {
+	function logoutUser(e) {
+		signOut()
+	}
+
 	return (
 		<nav className="site-nav family-sans navbar navbar-expand bg-primary navbar-dark higher">
 			<div className="container-fluid">
@@ -24,7 +29,7 @@ function Navigation() {
 						Greetings NAME_PLACEHOLDERSS,
 					</div>
 
-					<Link className="nav-item nav-link" to="/login">
+					<Link className="nav-item nav-link" to="/login" onClick={logoutUser}>
 						log out
 					</Link>
 				</div>
