@@ -16,25 +16,36 @@ function Navigation({userInfo, isLoading}) {
 					<RiCheckDoubleLine className="mr-1" />
 					Task Tracker
 				</Link>
+
 				<div className="navbar-nav ml-auto">
-					<Link className="nav-item nav-link" to="/register">
-						register
-					</Link>
+					{/* if userInfo is null then display the JSX */}
+					{!userInfo && (
+						<>
+							<Link className="nav-item nav-link" to="/register">
+								register
+							</Link>
 
-					<Link className="nav-item nav-link" to="/login">
-						log in
-					</Link>
-
-					{/* if userInfo is not null then display the JSX */}
-					{userInfo && (
-						<div className="nav-item navbar-text text-dark">
-							Greetings {userInfo.firstName + ' ' + userInfo.lastName},
-						</div>
+							<Link className="nav-item nav-link" to="/login">
+								log in
+							</Link>
+						</>
 					)}
 
-					<Link className="nav-item nav-link" to="/login" onClick={logoutUser}>
-						log out
-					</Link>
+					{/* if userInfo is NOT null then display the JSX */}
+					{userInfo && (
+						<>
+							<div className="nav-item navbar-text text-dark">
+								Greetings {userInfo.firstName + ' ' + userInfo.lastName},
+							</div>
+							<Link
+								className="nav-item nav-link"
+								to="/login"
+								onClick={logoutUser}
+							>
+								log out
+							</Link>
+						</>
+					)}
 				</div>
 			</div>
 		</nav>
