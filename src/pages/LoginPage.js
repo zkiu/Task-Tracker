@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 
 import ErrorForm from '../components/ErrorForm'
 
-import {signIn} from '../services/auth/signIn'
+import {signIn} from '../services/firebaseAuth/signIn'
 
 function Login(prop) {
 	// -- *** not yet used prop

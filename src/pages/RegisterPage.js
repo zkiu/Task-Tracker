@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import firebase from '../FirebaseConfig'
+import firebase from 'firebase/app'
 
 import ErrorForm from '../components/ErrorForm'
 

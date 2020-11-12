@@ -1,5 +1,4 @@
 import React from 'react'
-import firebase from '../FirebaseConfig'
 import {RiFileEditLine} from 'react-icons/ri'
 import {navigate} from '@reach/router'
 
