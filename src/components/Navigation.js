@@ -2,10 +2,10 @@ import React from 'react'
 import {Link} from '@reach/router'
 import {RiCheckDoubleLine} from 'react-icons/ri'
 
-import {signOut} from '../services/auth/signOut'
+import {signOut} from '../services/firebaseAuth/signOut'
 
-function Navigation() {
-	function logoutUser(e) {
+function Navigation({userInfo, isLoading}) {
+	function logoutUser() {
 		signOut()
 	}
 
@@ -25,9 +25,12 @@ function Navigation() {
 						log in
 					</Link>
 
-					<div className="nav-item navbar-text text-dark">
-						Greetings NAME_PLACEHOLDERSS,
-					</div>
+					{/* if userInfo is not null then display the JSX */}
+					{userInfo && (
+						<div className="nav-item navbar-text text-dark">
+							Greetings {userInfo.firstName + ' ' + userInfo.lastName},
+						</div>
+					)}
 
 					<Link className="nav-item nav-link" to="/login" onClick={logoutUser}>
 						log out
