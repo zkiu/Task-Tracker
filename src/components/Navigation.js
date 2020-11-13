@@ -21,11 +21,11 @@ function Navigation({userInfo, isLoading}) {
 					{/* if userInfo is null then display the JSX */}
 					{!userInfo && (
 						<>
-							<Link className="nav-item nav-link" to="/register">
+							<Link className="nav-item nav-link" to="register">
 								register
 							</Link>
 
-							<Link className="nav-item nav-link" to="/login">
+							<Link className="nav-item nav-link" to="login">
 								log in
 							</Link>
 						</>
@@ -34,9 +34,12 @@ function Navigation({userInfo, isLoading}) {
 					{/* if userInfo is NOT null then display the JSX */}
 					{userInfo && (
 						<>
-							<div className="nav-item navbar-text text-dark">
-								Greetings {userInfo.firstName + ' ' + userInfo.lastName},
-							</div>
+							<Link
+								className="nav-item nav-link"
+								to={'editUser/' + userInfo.id}
+							>
+								{userInfo.firstName + ' ' + userInfo.lastName + ','}
+							</Link>
 							<Link
 								className="nav-item nav-link"
 								to="/login"
