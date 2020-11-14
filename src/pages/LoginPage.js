@@ -5,8 +5,7 @@ import ErrorForm from '../components/ErrorForm'
 
 import {signIn} from '../services/firebaseAuth/signIn'
 
-function Login(prop) {
-	// -- *** not yet used prop
+function Login() {
 	const [loginUser, changeLoginUser] = useState({
 		email: '',
 		password: '',
@@ -79,6 +78,11 @@ function Login(prop) {
 									<button className="btn btn-primary" type="submit">
 										Log in
 									</button>
+								</div>
+								<div>
+									*Note that your login credentials will be remembered on this
+									browser/computer. When using a public computer, please logout
+									after completing your updates.
 								</div>
 							</div>
 						</div>

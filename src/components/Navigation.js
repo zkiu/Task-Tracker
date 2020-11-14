@@ -24,7 +24,7 @@ function Navigation({userInfo, isLoading}) {
 							<Link className="nav-item nav-link" to="register">
 								register
 							</Link>
-
+							{/* ** make login into a dropdown menu https://getbootstrap.com/docs/4.5/components/dropdowns/#forms*/}
 							<Link className="nav-item nav-link" to="login">
 								log in
 							</Link>
