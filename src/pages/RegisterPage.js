@@ -1,18 +1,26 @@
 import React, {useEffect, useState} from 'react'
-import firebase from 'firebase/app'
-
+import registerUser from '../services/user/registerUser'
 import ErrorForm from '../components/ErrorForm'
 
-function Register(prop) {
+function Register() {
 	const [regData, setRegData] = useState({
-		displayName: '',
+		name: '',
 		email: '',
+		jobLevel: '',
 		passOne: '',
 		passTwo: '',
-		errorMessage: null,
 	})
 
-	/// -- ** add new state 'password match' to be true/false. only can submit when true
+	const [errorMessage, setErrorMessage] = useState(null)
+
+	//checking passwors match
+	useEffect(() => {
+		if (regData.passOne !== regData.passTwo) {
+			setErrorMessage('Passwords do not match.')
+		} else {
+			setErrorMessage(null)
+		}
+	}, [regData.passOne, regData.passTwo])
 
 	function handleChange(e) {
 		setRegData({
@@ -20,45 +28,38 @@ function Register(prop) {
 			[e.target.name]: e.target.value,
 		})
 	}
-	useEffect(() => {
-		//checking passwors match
-		if (regData.passOne !== regData.passTwo) {
-			setRegData({
-				...regData,
-				errorMessage: 'The passwords do not match.',
-			})
-		} else {
-			setRegData({...regData, errorMessage: null})
-		}
-		// eslint-disable-next-line
-	}, [regData.passOne, regData.passTwo]) // ** if only include regData, then infinite look. Need to move setRegData outside of useEffect
 
 	function handleSubmit(e) {
 		e.preventDefault()
 
+		// -- prevent the form submission the 2 passwords doesn't match
+		if (regData.passOne !== regData.passTwo) {
+			setErrorMessage(
+				'Passwords do not match. Please fix before re-submitting.'
+			)
+			return
+		}
+
 		let registrationInfo = {
-			displayName: regData.displayName,
+			name: regData.name,
 			email: regData.email,
+			jobLevel: regData.jobLevel,
 			password: regData.passOne,
 		}
 
-		firebase
-			.auth()
-			.createUserWithEmailAndPassword(
-				// -- triggers firebase.auth().onAuthStateChanged() when successfully signed in after registering
-				registrationInfo.email,
-				registrationInfo.password
-			)
-			.then((userCredentials) => {
-				prop.registerUser(userCredentials.user, registrationInfo.displayName)
-			})
-			.catch((error) => {
-				if (error.message !== null) {
-					setRegData({...regData, errorMessage: error.message})
-				} else {
-					setRegData({...regData, errorMessage: null})
-				}
-			})
+		// -- validation of required field and email syntax is done via htlm code
+		// -- validation that there is no duplicate user email is done via firebase.auth()
+		// -- validation of minimum required passwordcomplexity is done by firebase.auth()
+		registerUser(registrationInfo)
+
+		// -- resets the registration form after submitting
+		setRegData({
+			name: '',
+			email: '',
+			jobLevel: '',
+			passOne: '',
+			passTwo: '',
+		})
 	}
 
 	return (
@@ -70,43 +71,73 @@ function Register(prop) {
 							<div className="card-body">
 								<h3 className="font-weight-light mb-3">Register</h3>
 								<div className="form-row">
-									{regData.errorMessage ? (
-										<ErrorForm errorMessage={regData.errorMessage} />
+									{/* *** Feature: make Error Message into modal/toast */}
+									{errorMessage ? (
+										<ErrorForm errorMessage={errorMessage} />
 									) : null}
+
 									<section className="col-sm-12 form-group">
 										<label
 											className="form-control-label sr-only"
-											htmlFor="displayName"
+											htmlFor="name"
 										>
-											Display Name
+											Name
 										</label>
 										<input
 											className="form-control"
 											type="text"
-											id="displayName"
-											placeholder="Display Name"
-											name="displayName"
+											id="name"
+											placeholder="Name"
+											name="name"
 											required
-											value={regData.displayName}
+											value={regData.name}
 											onChange={handleChange}
 										/>
 									</section>
 								</div>
-								<section className="form-group">
-									<label className="form-control-label sr-only" htmlFor="email">
-										Email
-									</label>
-									<input
-										className="form-control"
-										type="email"
-										id="email"
-										placeholder="Email Address"
-										required
-										name="email"
-										value={regData.email}
-										onChange={handleChange}
-									/>
-								</section>
+								<div className="form-row">
+									<section className="col-sm-6 form-group">
+										<label
+											className="form-control-label sr-only"
+											htmlFor="email"
+										>
+											Email
+										</label>
+										<input
+											className="form-control"
+											type="email"
+											id="email"
+											placeholder="Email Address"
+											required
+											name="email"
+											value={regData.email}
+											onChange={handleChange}
+										/>
+									</section>
+									<section className="col-sm-6 form-group">
+										<label
+											className="form-control-label sr-only"
+											htmlFor="name"
+										>
+											Job Level
+										</label>
+										<select
+											className="custom-select"
+											name="jobLevel"
+											id="jobLevel"
+											value={regData.jobLevel}
+											onChange={handleChange}
+											required
+										>
+											{/* Form is prevented from being submitted when the job level is not selecetd thanks to the 'required' property above and the value='' below  */}
+											<option defaultValue value="">
+												Job Level...
+											</option>
+											<option value="L1">L1: General Employee</option>
+											<option value="L2">L2: Supervisor</option>
+										</select>
+									</section>
+								</div>
 								<div className="form-row">
 									<section className="col-sm-6 form-group">
 										<input
