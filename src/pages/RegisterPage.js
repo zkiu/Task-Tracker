@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react'
+import {navigate} from '@reach/router'
+
 import registerUser from '../services/user/registerUser'
 import ErrorForm from '../components/ErrorForm'
 
@@ -29,7 +31,7 @@ function Register() {
 		})
 	}
 
-	function handleSubmit(e) {
+	async function handleSubmit(e) {
 		e.preventDefault()
 
 		// -- prevent the form submission the 2 passwords doesn't match
@@ -50,16 +52,10 @@ function Register() {
 		// -- validation of required field and email syntax is done via htlm code
 		// -- validation that there is no duplicate user email is done via firebase.auth()
 		// -- validation of minimum required passwordcomplexity is done by firebase.auth()
-		registerUser(registrationInfo)
+		await registerUser(registrationInfo)
 
-		// -- resets the registration form after submitting
-		setRegData({
-			name: '',
-			email: '',
-			jobLevel: '',
-			passOne: '',
-			passTwo: '',
-		})
+		// -- once registered, the user will be logged in and directed towards the dashboard
+		navigate('/dashboard')
 	}
 
 	return (
