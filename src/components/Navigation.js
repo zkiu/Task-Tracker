@@ -38,7 +38,7 @@ function Navigation({userInfo, isLoading}) {
 								className="nav-item nav-link"
 								to={'editUser/' + userInfo.id}
 							>
-								{userInfo.firstName + ' ' + userInfo.lastName + ','}
+								{userInfo.name + ','}
 							</Link>
 							<Link
 								className="nav-item nav-link"
