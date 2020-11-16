@@ -71,58 +71,59 @@ export default function TasksList(prop) {
 
 	let myTask = tasksArray.map((task) => {
 		return (
-			<div className="accordion" id="oneTaskElement" key={task.id}>
-				<div className="card">
-					<div className="card-header p-0" id={task.id}>
-						<div
-							className="btn btn-block text-left"
+			<div className="card" key={task.id}>
+				<div className="card-header p-0" id={task.id}>
+					<div
+						className="btn btn-block text-left"
+						type="button"
+						data-toggle="collapse"
+						data-target={`#collapse${task.id}`}
+						aria-expanded="false"
+						aria-controls={`collapse${task.id}`}
+					>
+						<button
 							type="button"
-							data-toggle="collapse"
-							data-target={`#collapse${task.id}`}
-							aria-expanded="false"
-							aria-controls={`collapse${task.id}`}
+							className="btn btn-lg btn-outline-secondary col-1 p-2"
+							title="Edit Task"
 						>
-							<button
-								type="button"
-								className="btn btn-lg btn-outline-secondary col-1 p-2"
-								title="Edit Task"
-							>
-								<RiFileEditLine />
-							</button>
-							<div className="btn text-truncate text-nowrap text-left col-10">
-								{task.taskName}
-							</div>
-							<div className="btn col-1">
-								<MdArrowDropDownCircle />
-							</div>
+							<RiFileEditLine />
+						</button>
+						<div className="btn text-truncate text-nowrap text-left col-10">
+							{task.taskName}
+						</div>
+						<div className="btn col-1">
+							<MdArrowDropDownCircle />
 						</div>
 					</div>
+				</div>
 
-					<div
-						id={`collapse${task.id}`}
-						className="collapse"
-						aria-labelledby={task.id}
-						data-parent="#oneTaskElement"
-					>
-						<div className="card-body text-left ">
-							<div className="container">
-								<div className="card-title row justify-content-between">
-									<span>Priority: {task.priority}</span>
-									<span>Due Date: {task.dateDue}</span>
-								</div>
+				<div
+					id={`collapse${task.id}`}
+					className="collapse"
+					aria-labelledby={task.id}
+					data-parent="#taskListaccordion"
+				>
+					<div className="card-body text-left ">
+						<div className="container">
+							<div className="card-title row justify-content-between">
+								<span>Priority: {task.priority}</span>
+								<span>Due Date: {task.dateDue}</span>
 							</div>
-							<p className="card-text">{task.description}</p>
 						</div>
+						<p className="card-text">{task.description}</p>
 					</div>
 				</div>
 			</div>
 		)
 	})
 
+	// -- NOTE: the class 'accordion' was added below so that only one element is shown while the rest is collapsed. To have multiple tasks elements uncollapsed at the same time, remove the accordion class, and take out the id="taskListaccordion" below as well as the data-parent="#taskListaccordion" in the .map() function
 	return (
 		<>
 			<h1>BELOW IS THE TASK LIST:</h1>
-			{myTask}
+			<div className="accordion" id="taskListaccordion">
+				{myTask}
+			</div>
 		</>
 	)
 }
