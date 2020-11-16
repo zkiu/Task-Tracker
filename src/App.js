@@ -4,6 +4,8 @@ import {Router} from '@reach/router'
 import './FirebaseConfig' // -- initialize firebase
 
 import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap'
+
 import './App.css'
 
 import {ProtectedRoute} from './services/general/ProtectedRoute'
