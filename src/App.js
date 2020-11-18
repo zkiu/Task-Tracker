@@ -72,6 +72,12 @@ function App() {
 					user={user}
 					component={<EditUserPage />}
 				/>
+				<ProtectedRoute
+					path="editTask/:taskId"
+					isLoading={isLoading}
+					user={user}
+					component={<TaskFormPage />}
+				/>
 
 				{/* <NotFound / 404 page default /> */
 				/**** to implement ********/}
