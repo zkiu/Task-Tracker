@@ -6,7 +6,7 @@ The code for this is available at https://github.com/zkiu/.... The page can be a
 
 --- Current to-do as of 2020-11-15:
 DashboardPage - implement query and sort
-TaskForm - create layout
+TaskForm - create layout, when creating new task -> create a new initial comment
 TasksList - change colour of items in task list based on priority
 General - implement more security in code, check validation for the project
 firebase - update security rules
