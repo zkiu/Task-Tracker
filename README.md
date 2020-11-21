@@ -8,5 +8,5 @@ The code for this is available at https://github.com/zkiu/.... The page can be a
 DashboardPage - implement query and sort
 TaskForm - create layout, when creating new task -> create a new initial comment
 TasksList - change colour of items in task list based on priority
-General - implement more security in code, check validation for the project
+General - implement more security in code, check validation for the project, HTML - set tabindex attribute for Aria
 firebase - update security rules
