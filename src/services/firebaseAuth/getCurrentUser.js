@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 
-// Wrapper for Firebase api
+// Wrapper for Firebase Auth api which returns only the id and email properties. Detailed user info is stored in Firestore under the same user id (see getUserInfo.js)
 export const getCurrentUser = () => {
 	const user = firebase.auth().currentUser
 	if (!user) {
