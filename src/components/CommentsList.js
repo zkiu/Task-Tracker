@@ -27,7 +27,7 @@ export default function CommentsList({taskId}) {
 	// *** add class active when roll over
 	return (
 		<>
-			<ul className="list-group pl-4 pr-4">{commentJSX}</ul>
+			<ul className="list-group">{commentJSX}</ul>
 		</>
 	)
 }
