@@ -20,13 +20,28 @@ import {useAuth} from './services/firebaseAuth/useAuth'
 import {signIn} from './services/firebaseAuth/signIn' // ************ delete after test
 import {getCurrentUserInfo} from './services/user/getCurrentUserInfo'
 
+/* 
+testing stuff
+*/
+import useFirestoreUserChange from './services/user/useFirestoreUserChange'
+
 function App() {
 	let {user, isLoading} = useAuth()
 	/// -- user has property user.id and user.email
 	// -- ** will isLoading be true on initial mount, and will be false there after
+	let userId = null
+	if (user !== null) {
+		console.log('value for: user in app')
+		console.log(user.email)
+		userId = user.id
+	}
+	// let newUserObj = useFirestoreUserChange(userId)
+	// console.log('result in app for newUserObj')
+	// console.log(newUserObj)
 
 	const [userInfo, setUserInfo] = useState({})
 
+	// -- this triggers when there is Auth change (login, logout)
 	useEffect(() => {
 		// -- load the user document based on the user.id
 		async function loadUserInfo() {
