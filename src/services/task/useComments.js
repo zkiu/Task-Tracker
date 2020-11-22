@@ -20,7 +20,7 @@ export default function useComments(taskId) {
 			.collection('tasks')
 			.doc(taskId)
 			.collection('comments') // comments is a subcollection of each task document
-		const unsubscribe = commentsRef.onSnapshot(
+		const unsubscribe = commentsRef.orderBy('timestamp', 'desc').onSnapshot(
 			(snapshot) => {
 				const commentsArray = snapshot.docs.map((doc) => ({
 					id: doc.id,
