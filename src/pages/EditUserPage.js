@@ -31,7 +31,7 @@ export default function EditUserPage() {
 		loadUserData(userId)
 	}, [])
 
-	// -- check if the user changed the initial information
+	// -- Activate/Deactivate submit button by checking if the user changed the initial information
 	useEffect(() => {
 		const buttonRef = document.querySelector('#submitButton')
 		if (
@@ -45,8 +45,9 @@ export default function EditUserPage() {
 				buttonRef.attributes.removeNamedItem('disabled')
 			}
 		}
-	}, [newData])
+	}, [newData, existingData])
 
+	// -- record user's changes to the state
 	function handleChange(e) {
 		setNewData({
 			...newData,
@@ -59,14 +60,13 @@ export default function EditUserPage() {
 		let ObjToBeSaved = {name: newData.name, jobLevel: newData.jobLevel}
 
 		let result = await updateUserInfo(userId, ObjToBeSaved)
+		// *** need to update the user object in App with the new data to update the displayed 'name' in the navigation bar since login state has not changed.
+		// *** maybe trigger a page reload? is this a lazy fix?
 
 		if (result) {
 			alert('record updated') // **** modal/toast that update has been saved
 			setExistingData(ObjToBeSaved)
-
-			// -- disable the submit button again since the new changes have been saved
-			const buttonRef = document.querySelector('#submitButton')
-			buttonRef.attributes.setNamedItem(document.createAttribute('disabled'))
+			// -- Once setExistingData(ObjToBeSaved) is triggered, the useEffect to Activate/Deactivate kicks in and disables the button again
 		} else {
 			setErrorMessage('Trouble updating the information. Please try again.')
 		}
