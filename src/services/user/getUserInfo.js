@@ -1,8 +1,10 @@
 import firebase from 'firebase/app'
 const db = firebase.firestore()
 
-// -- Gathers all of a user's details in Firestore given an id
+// -- Returns all of a user's details in Firestore doc given an id
 export const getUserInfo = async (userId) => {
+	if (userId === null) return null // -- handle the improbably situation where userId is null
+
 	const docReference = db.collection('users').doc(userId)
 	const docSnapShot = await docReference.get()
 
