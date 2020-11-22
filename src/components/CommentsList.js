@@ -19,7 +19,7 @@ export default function CommentsList({taskId}) {
 					</a>
 					<small className="text-muted">{comment.date}</small>
 				</div>
-				<div className="text-muted">{comment.description}</div>
+				<div className="text-muted">{comment.comment}</div>
 			</li>
 		)
 	})
