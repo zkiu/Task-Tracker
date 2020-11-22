@@ -17,14 +17,15 @@ export default function CommentsList({taskId}) {
 					>
 						<small>{comment.name}</small>
 					</a>
-					<small className="text-muted">{comment.date}</small>
+					<small className="text-muted">
+						{comment.timestamp.toDate().toDateString()}
+					</small>
 				</div>
 				<div className="text-muted">{comment.comment}</div>
 			</li>
 		)
 	})
 
-	// *** add class active when roll over
 	return (
 		<>
 			<ul className="list-group">{commentJSX}</ul>
