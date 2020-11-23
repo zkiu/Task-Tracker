@@ -26,22 +26,14 @@ testing stuff
 import useFirestoreUserChange from './services/user/useFirestoreUserChange'
 
 function App() {
-	let {user, isLoading} = useAuth()
-	/// -- user has property user.id and user.email
-	// -- ** will isLoading be true on initial mount, and will be false there after
-	let userId = null
-	if (user !== null) {
-		console.log('value for: user in app')
-		console.log(user.email)
-		userId = user.id
-	}
-	// let newUserObj = useFirestoreUserChange(userId)
-	// console.log('result in app for newUserObj')
-	// console.log(newUserObj)
-
 	const [userInfo, setUserInfo] = useState({})
 
-	// -- this triggers when there is Auth change (login, logout)
+	// -- updates when login status changes
+	let {user, isLoading} = useAuth()
+	/// -- user has property user.id and user.email
+	// -- isLoading true on initial mount, and will be false thereafter
+
+	// -- this triggers when there is useAuth() change (login, logout)
 	useEffect(() => {
 		// -- load the user document based on the user.id
 		async function loadUserInfo() {
@@ -54,6 +46,24 @@ function App() {
 		}
 		loadUserInfo()
 	}, [user])
+
+	// -- updates when the user profile changes in Firestore
+	let userId = null
+	if (user === null) {
+		userId = null
+	} else {
+		userId = user.uid // -- NOTE that user obj is returned from Auth(). As such, it has the property 'uid instead of 'id'
+	}
+	let newUserObj = useFirestoreUserChange(userId) // -- useFirestoreUserChange() has a listener for changes to the user's profile. It will return null if no one is logged in
+
+	// -- the effect occurs whenever newUserObj changes (i.e. the firestore doc is modified)
+	useEffect(() => {
+		if (newUserObj) {
+			setUserInfo(newUserObj)
+		} else {
+			setUserInfo(null)
+		}
+	}, [newUserObj])
 
 	return (
 		<div>
