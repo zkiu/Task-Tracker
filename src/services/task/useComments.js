@@ -22,11 +22,34 @@ export default function useComments(taskId) {
 			.collection('comments') // comments is a subcollection of each task document
 		const unsubscribe = commentsRef.orderBy('timestamp', 'desc').onSnapshot(
 			(snapshot) => {
+				/* 
+				-- Learning from article https://medium.com/firebase-developers/the-secrets-of-firestore-fieldvalue-servertimestamp-revealed-29dd7a38a82b
+				-- NOTE: this onSnapshot listener is triggered before the timestamp is written to the server (causing the property timestame to be null). It is then trigerred again with the actual server timestamp once written to the server. However, the app may hang on the 1st 'null' trigger. We can address by putting the data option as so: doc.data({serverTimestamps: 'estimate'}) THIS IS THE METHOD WE WILL USE IN THIS APP.
+				 */
 				const commentsArray = snapshot.docs.map((doc) => ({
 					id: doc.id,
-					...doc.data(),
+					...doc.data({serverTimestamps: 'estimate'}),
 				}))
 				setComments(commentsArray)
+				/*
+				// -- The other options is to use the metadata associated with the DocumentSnapshot delivered to the listener:
+				const commentsArray = snapshot.docs.map((doc) => {
+					if (doc) {
+						if (!doc.data().timestamp && doc.metadata.hasPendingWrites) {
+							console.log('Warning: doc has pending writes')
+							return {
+								...doc.data(),
+								id: doc.id,
+								timestamp: firebase.firestore.Timestamp.now(),
+							}
+						} else {
+							// now we have the final timestamp value
+							return {id: doc.id, ...doc.data()}
+						}
+					}
+				})
+				setComments(commentsArray)
+				*/
 			},
 			(error) => {
 				throw new Error('Error: ' + error.message)
