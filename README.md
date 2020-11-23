@@ -10,3 +10,4 @@ TaskForm - create layout, when creating new task -> create a new initial comment
 TasksList - change colour of items in task list based on priority
 General - implement more security in code, check validation for the project, HTML - set tabindex attribute for Aria, make validation and sanatize input fields
 firebase - update security rules
+CSS - address responsive page break display issues: dashboard width < 770px
