@@ -27,7 +27,7 @@ export default function TasksList({filteredTasksArray}) {
 						<button
 							type="button"
 							className="btn btn-lg btn-outline-secondary col-1 p-2"
-							title="Edit Task"
+							title="Click to Edit Task"
 							onClick={(e) => {
 								handleClick(e, task.id)
 							}}

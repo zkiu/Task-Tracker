@@ -60,8 +60,6 @@ export default function EditUserPage() {
 		let ObjToBeSaved = {name: newData.name, jobLevel: newData.jobLevel}
 
 		let result = await updateUserInfo(userId, ObjToBeSaved)
-		// *** need to update the user object in App with the new data to update the displayed 'name' in the navigation bar since login state has not changed.
-		// *** maybe trigger a page reload? is this a lazy fix?
 
 		if (result) {
 			alert('record updated') // **** modal/toast that update has been saved
