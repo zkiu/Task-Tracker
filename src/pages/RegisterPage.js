@@ -125,7 +125,7 @@ function Register() {
 											onChange={handleChange}
 											required
 										>
-											{/* Form is prevented from being submitted when the job level is not selecetd thanks to the 'required' property above and the value='' below  */}
+											{/* Form is prevented from being submitted when the job level is not selected thanks to the 'required' property above and the value='' below  */}
 											<option defaultValue value="">
 												Job Level...
 											</option>
