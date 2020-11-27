@@ -14,7 +14,8 @@ import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
-import TaskFormPage from './pages/TaskFormPage'
+import TaskPage from './pages/TaskPage'
+// import TaskCreatePage from './pages/TaskCreatePage'
 import EditUserPage from './pages/EditUserPage'
 import {useAuth} from './services/firebaseAuth/useAuth'
 import {signIn} from './services/firebaseAuth/signIn' // ************ delete after test
@@ -86,22 +87,22 @@ function App() {
 					component={<DashboardPage />}
 				/>
 				<ProtectedRoute
-					path="taskform"
-					isLoading={isLoading}
-					user={user}
-					component={<TaskFormPage />}
-				/>
-				<ProtectedRoute
 					path="editUser/:userId"
 					isLoading={isLoading}
 					user={user}
 					component={<EditUserPage />}
 				/>
 				<ProtectedRoute
+					path="editTask"
+					isLoading={isLoading}
+					user={user}
+					component={<TaskPage />}
+				/>
+				<ProtectedRoute
 					path="editTask/:taskId"
 					isLoading={isLoading}
 					user={user}
-					component={<TaskFormPage />}
+					component={<TaskPage />}
 				/>
 
 				{/* <NotFound / 404 page default /> */
