@@ -3,7 +3,7 @@ import {addAuthListener} from './addAuthListener'
 import {getCurrentUser} from './getCurrentUser'
 
 /*
-useComments is a custom React Hook.
+useAuth is a custom React Hook.
 https://reactjs.org/docs/hooks-custom.html
 */
 

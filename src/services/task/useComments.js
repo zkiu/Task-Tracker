@@ -30,7 +30,7 @@ export default function useComments(taskId) {
 					id: doc.id,
 					...doc.data({serverTimestamps: 'estimate'}),
 				}))
-				setComments(commentsArray)
+				setComments(commentsArray) // -- NOTE this setComments seems to need to be called inside the onSnapshot callback. Defining a var 1 layer up and setting the value outside and at the end of this callback function gets tricky
 				/*
 				// -- The other options is to use the metadata associated with the DocumentSnapshot delivered to the listener:
 				const commentsArray = snapshot.docs.map((doc) => {
