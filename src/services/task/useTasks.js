@@ -14,7 +14,7 @@ export default function useTasks() {
 			.onSnapshot((snapshot) => {
 				const tasksArray = snapshot.docs.map((doc) => ({
 					id: doc.id,
-					...doc.data(),
+					...doc.data({serverTimestamps: 'estimate'}),
 				}))
 				setTasks(tasksArray)
 			})
