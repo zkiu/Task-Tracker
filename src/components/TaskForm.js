@@ -29,6 +29,48 @@ export default function TaskForm({taskId = null}) {
 	function handleChange(e) {
 		setTaskObj({...taskObj, [e.target.name]: e.target.value})
 	}
+	function handlePriorityChange(e) {
+		handleChange(e)
+
+		// -- change the menu color based on the selection
+		switch (e.target.value) {
+			case '':
+				e.target.setAttribute('style', 'background-color:white; color:black')
+				break
+			case 'P1':
+				e.target.setAttribute('style', 'background-color:yellow; color:black')
+				break
+			case 'P2':
+				e.target.setAttribute('style', 'background-color:orange; color:white')
+				break
+
+			default:
+				break
+		}
+	}
+
+	function handleStatusChange(e) {
+		handleChange(e)
+
+		// -- change the menu color based on the selection
+		switch (e.target.value) {
+			case '':
+				e.target.setAttribute('style', 'background-color:white; color:black')
+				break
+			case 'S1':
+				e.target.setAttribute('style', 'background-color:green; color:white')
+				break
+			case 'S2':
+				e.target.setAttribute('style', 'background-color:gray; color:black')
+				break
+			case 'S3':
+				e.target.setAttribute('style', 'background-color:black; color:white')
+				break
+
+			default:
+				break
+		}
+	}
 
 	async function createTask(e) {
 		e.preventDefault()
@@ -59,14 +101,29 @@ export default function TaskForm({taskId = null}) {
 							name="priority"
 							id="priority"
 							value={taskObj.priority}
-							onChange={handleChange}
+							onChange={handlePriorityChange}
 							required
 						>
-							<option defaultValue value="">
+							<option
+								defaultValue
+								value=""
+								style={{backgroundColor: 'white', color: 'grey'}}
+							>
 								Priority...
 							</option>
-							<option value="P1">Low</option>
-							<option value="P2">High</option>
+							<option
+								value="P1"
+								style={{backgroundColor: 'yellow', color: 'black'}}
+							>
+								Low
+							</option>
+
+							<option
+								value="P2"
+								style={{backgroundColor: 'orange', color: 'white'}}
+							>
+								High
+							</option>
 						</select>
 					</div>
 					<div className="form-group col-md-3">
@@ -114,19 +171,32 @@ export default function TaskForm({taskId = null}) {
 							name="status"
 							id="status"
 							value={taskObj.status}
-							onChange={handleChange}
+							onChange={handleStatusChange}
 							required
 						>
-							<option defaultValue value="">
+							<option
+								defaultValue
+								value=""
+								style={{backgroundColor: 'white', color: 'grey'}}
+							>
 								Status...
 							</option>
-							<option className="bg-success" value="S1">
+							<option
+								style={{backgroundColor: 'green', color: 'white'}}
+								value="S1"
+							>
 								In Progress
 							</option>
-							<option className="bg-secondary" value="S2">
+							<option
+								style={{backgroundColor: 'grey', color: 'black'}}
+								value="S2"
+							>
 								Closing
 							</option>
-							<option className="bg-dark" value="S3">
+							<option
+								style={{backgroundColor: 'black', color: 'white'}}
+								value="S3"
+							>
 								Archived
 							</option>
 						</select>
