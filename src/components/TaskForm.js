@@ -1,18 +1,45 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import firebase from 'firebase/app'
+import addTask from '../services/task/addTask'
 
 export default function TaskForm({taskId = null}) {
+	// *** if task id is not null, preassign the initial useState values
+
+	const [taskObj, setTaskObj] = useState({
+		priority: '',
+		status: '',
+		dateCreated: '',
+		dateDue: '',
+		nameTaskCreator: '', // *** pre assign if L2 user
+		nameResponsible: '',
+		taskName: '',
+		taskDescription: '',
+	})
+
+	useEffect(() => {
+		if (taskId === null) {
+			setTaskObj({
+				...taskObj,
+				dateCreated: firebase.firestore.FieldValue.serverTimestamp(), // -- add a timestamp property to the obj when creating a new doc
+			})
+		}
+		// *** load L2 user info
+	}, [])
+
 	function handleChange(e) {
-		console.log('typing')
+		setTaskObj({...taskObj, [e.target.name]: e.target.value})
 	}
 
-	function createTask(e) {
+	async function createTask(e) {
 		e.preventDefault()
-		console.log('created')
-		// *** disable button and add message on button once clicked
+		await addTask({name: 'new test'}) // *** change obj to be passed
+
+		// *** disable button and add pop up message on button once clicked
 	}
 	function updateTask(e) {
 		e.preventDefault()
 		console.log('updated')
+		// *** disable button and add pop up message on button once clicked
 	}
 
 	return (
@@ -20,15 +47,14 @@ export default function TaskForm({taskId = null}) {
 			<h1>CREATE TASK PAGE</h1>
 
 			<form>
-				<label
-					className="form-control-label sr-only"
-					htmlFor="priority"
-				></label>
+				<label className="form-control-label" htmlFor="priority">
+					Priority Level:
+				</label>
 				<select
 					className="custom-select"
 					name="priority"
 					id="priority"
-					value="{XXX.priority}"
+					value={taskObj.priority}
 					onChange={handleChange}
 					required
 				>
@@ -38,12 +64,14 @@ export default function TaskForm({taskId = null}) {
 					<option value="P1">Priority: Low</option>
 					<option value="P2">Priority: High</option>
 				</select>
-				<label className="form-control-label sr-only" htmlFor="status"></label>
+				<label className="form-control-label " htmlFor="status">
+					Task Status:
+				</label>
 				<select
 					className="custom-select"
 					name="status"
 					id="status"
-					value="{XXX.status}"
+					value={taskObj.status}
 					onChange={handleChange}
 					required
 				>
@@ -55,53 +83,60 @@ export default function TaskForm({taskId = null}) {
 					<option value="S3">Status: Archieved</option>
 				</select>
 
-				<label className="form-control-label sr-only" htmlFor="dateCreated">
-					Date Created:
+				<label className="form-control-label" htmlFor="dateDue">
+					Deadline:
 				</label>
 				<input
 					className="form-control"
-					type="text"
-					id="dateCreated"
-					placeholder="Loading..."
-					name="dateCreated"
-					value="{XXX.dateCreated}"
-					onChange={handleChange}
-				/>
-				<label className="form-control-label sr-only" htmlFor="dateDue">
-					Date Created:
-				</label>
-				<input
-					className="form-control"
-					type="text"
+					type="date"
 					id="dateDue"
-					placeholder="Loading..."
+					placeholder="Select Task Deadline..."
 					required
 					name="dateDue"
-					value="{XXX.dateDue}"
+					value={taskObj.dateDue}
 					onChange={handleChange}
 				/>
-
-				<label className="form-control-label sr-only" htmlFor="leadName">
-					Task Name
+				{/* only show when the taskId is NOT null (i.e. editing an existing task) */}
+				{taskId !== null && (
+					<>
+						<label className="form-control-label" htmlFor="dateCreated">
+							Date Created:
+						</label>
+						<input
+							className="form-control"
+							type="date"
+							id="dateCreated"
+							placeholder="Loading..."
+							name="dateCreated"
+							value={taskObj.dateCreated}
+							disabled
+						/>
+					</>
+				)}
+				{/* *** modify so that only show this field when updating the form. Keep for now to keep track that L2 name is showing proporly for saving *** */}
+				{/* only L2 users can appear here */}
+				<label className="form-control-label" htmlFor="nameTaskCreator">
+					Task Creator
 				</label>
 				<input
 					className="form-control"
 					type="text"
-					id="leadName"
-					placeholder="Loading..."
-					name="Leader's Name"
-					value="{XXX.LeadName}"
-					onChange={handleChange}
+					id="nameTaskCreator"
+					placeholder="Leader's Name"
+					name="nameTaskCreator"
+					value={taskObj.nameTaskCreator}
+					// onChange={handleChange}
 					disabled
 				/>
-				<label className="form-control-label sr-only" htmlFor="responsibleName">
-					Task Name
+				{/* only L1 users can appear here */}
+				<label className="form-control-label" htmlFor="nameResponsible">
+					Task Manager
 				</label>
 				<select
 					className="custom-select"
-					name="responsibleName"
-					id="responsibleName"
-					value="{XXX.responsibleName}"
+					name="nameResponsible"
+					id="nameResponsible"
+					value={taskObj.nameResponsible}
 					onChange={handleChange}
 					required
 				>
@@ -111,7 +146,7 @@ export default function TaskForm({taskId = null}) {
 					<option>***Dynamically generated list of employees</option>
 				</select>
 
-				<label className="form-control-label sr-only" htmlFor="taskName">
+				<label className="form-control-label" htmlFor="taskName">
 					Task Name
 				</label>
 				<input
@@ -121,10 +156,10 @@ export default function TaskForm({taskId = null}) {
 					placeholder="Enter Task Name..."
 					name="taskName"
 					required
-					value="{XXX.taskName}"
+					value={taskObj.taskName}
 					onChange={handleChange}
 				/>
-				<label className="form-control-label sr-only" htmlFor="taskDescription">
+				<label className="form-control-label" htmlFor="taskDescription">
 					Task Description
 				</label>
 				<textarea
@@ -133,18 +168,24 @@ export default function TaskForm({taskId = null}) {
 					id="taskDescription"
 					required
 					placeholder="Enter Task Description..."
-					value="{XXX.name}"
+					value={taskObj.taskDescription}
 					onChange={handleChange}
 					cols="30"
 					rows="10"
 				></textarea>
 
-				<button className="btn btn-primary" onClick={createTask}>
-					Create Task
-				</button>
-				<button className="btn btn-primary" onClick={updateTask}>
-					Update Task
-				</button>
+				{/* only show when the taskId is null (i.e. creating a new task) */}
+				{taskId === null && (
+					<button className="btn btn-primary" onClick={createTask}>
+						Create Task
+					</button>
+				)}
+				{/* only show when the taskId is NOT null (i.e. editing an existing task) */}
+				{taskId !== null && (
+					<button className="btn btn-primary" onClick={updateTask}>
+						Update Task
+					</button>
+				)}
 			</form>
 		</>
 	)
