@@ -44,110 +44,135 @@ export default function TaskForm({taskId = null}) {
 
 	return (
 		<>
-			<h1>CREATE TASK PAGE</h1>
+			{/* display of heading will depend of status of taskId */}
+			{taskId === null && <h1>Create a New Task</h1>}
+			{taskId !== null && <h1>Update the Task</h1>}
 
-			<form>
-				<label className="form-control-label" htmlFor="priority">
-					Priority Level:
-				</label>
-				<select
-					className="custom-select"
-					name="priority"
-					id="priority"
-					value={taskObj.priority}
-					onChange={handleChange}
-					required
-				>
-					<option defaultValue value="">
-						Priority...
-					</option>
-					<option value="P1">Priority: Low</option>
-					<option value="P2">Priority: High</option>
-				</select>
-				<label className="form-control-label " htmlFor="status">
-					Task Status:
-				</label>
-				<select
-					className="custom-select"
-					name="status"
-					id="status"
-					value={taskObj.status}
-					onChange={handleChange}
-					required
-				>
-					<option defaultValue value="">
-						Status...
-					</option>
-					<option value="S1">Status: In Progress</option>
-					<option value="S2">Status: Closing</option>
-					<option value="S3">Status: Archieved</option>
-				</select>
-
-				<label className="form-control-label" htmlFor="dateDue">
-					Deadline:
-				</label>
-				<input
-					className="form-control"
-					type="date"
-					id="dateDue"
-					placeholder="Select Task Deadline..."
-					required
-					name="dateDue"
-					value={taskObj.dateDue}
-					onChange={handleChange}
-				/>
-				{/* only show when the taskId is NOT null (i.e. editing an existing task) */}
-				{taskId !== null && (
-					<>
-						<label className="form-control-label" htmlFor="dateCreated">
-							Date Created:
+			<form className="border p-2">
+				<div className="form-row">
+					<div className="form-group col-md-3">
+						<label className="form-control-label" htmlFor="priority">
+							Priority Level:
+						</label>
+						<select
+							className="custom-select"
+							name="priority"
+							id="priority"
+							value={taskObj.priority}
+							onChange={handleChange}
+							required
+						>
+							<option defaultValue value="">
+								Priority...
+							</option>
+							<option value="P1">Low</option>
+							<option value="P2">High</option>
+						</select>
+					</div>
+					<div className="form-group col-md-3">
+						<label className="form-control-label" htmlFor="dateDue">
+							Deadline:
 						</label>
 						<input
 							className="form-control"
 							type="date"
-							id="dateCreated"
-							placeholder="Loading..."
-							name="dateCreated"
-							value={taskObj.dateCreated}
+							id="dateDue"
+							placeholder="Select Task Deadline..."
+							required
+							name="dateDue"
+							value={taskObj.dateDue}
+							onChange={handleChange}
+						/>
+					</div>
+					<div className="form-group col-md-6">
+						{/* only L1 users can appear here */}
+						<label className="form-control-label" htmlFor="nameResponsible">
+							Task Manager
+						</label>
+						<select
+							className="custom-select"
+							name="nameResponsible"
+							id="nameResponsible"
+							value={taskObj.nameResponsible}
+							onChange={handleChange}
+							required
+						>
+							<option defaultValue value="">
+								Appoint Responsible Level 1 Employee...
+							</option>
+							<option>***Dynamically generated list of employees</option>
+						</select>
+					</div>
+				</div>
+				<div className="form-row">
+					<div className="form-group col-md-3">
+						<label className="form-control-label " htmlFor="status">
+							Task Status:
+						</label>
+						<select
+							className="custom-select"
+							name="status"
+							id="status"
+							value={taskObj.status}
+							onChange={handleChange}
+							required
+						>
+							<option defaultValue value="">
+								Status...
+							</option>
+							<option className="bg-success" value="S1">
+								In Progress
+							</option>
+							<option className="bg-secondary" value="S2">
+								Closing
+							</option>
+							<option className="bg-dark" value="S3">
+								Archived
+							</option>
+						</select>
+					</div>
+					<div className="form-group col-md-3">
+						{/* only show when the taskId is NOT null (i.e. editing an existing task) */}
+						{taskId !== null && (
+							<>
+								<label className="form-control-label" htmlFor="dateCreated">
+									Date Created:
+								</label>
+								<input
+									className="form-control"
+									type="date"
+									id="dateCreated"
+									placeholder="Loading..."
+									name="dateCreated"
+									value={taskObj.dateCreated}
+									disabled
+								/>
+							</>
+						)}
+					</div>
+					<div className="form-group col-md-6">
+						{' '}
+						{/* *** modify so that only show this field when updating the form. Keep for now to keep track that L2 name is showing proporly for saving *** */}
+						{/* only L2 users can appear here */}
+						<label className="form-control-label" htmlFor="nameTaskCreator">
+							Task Creator
+						</label>
+						<input
+							className="form-control"
+							type="text"
+							id="nameTaskCreator"
+							placeholder="Leader's Name"
+							name="nameTaskCreator"
+							value={taskObj.nameTaskCreator}
+							// onChange={handleChange}
 							disabled
 						/>
-					</>
-				)}
-				{/* *** modify so that only show this field when updating the form. Keep for now to keep track that L2 name is showing proporly for saving *** */}
-				{/* only L2 users can appear here */}
-				<label className="form-control-label" htmlFor="nameTaskCreator">
-					Task Creator
-				</label>
-				<input
-					className="form-control"
-					type="text"
-					id="nameTaskCreator"
-					placeholder="Leader's Name"
-					name="nameTaskCreator"
-					value={taskObj.nameTaskCreator}
-					// onChange={handleChange}
-					disabled
-				/>
-				{/* only L1 users can appear here */}
-				<label className="form-control-label" htmlFor="nameResponsible">
-					Task Manager
-				</label>
-				<select
-					className="custom-select"
-					name="nameResponsible"
-					id="nameResponsible"
-					value={taskObj.nameResponsible}
-					onChange={handleChange}
-					required
-				>
-					<option defaultValue value="">
-						Appoint Responsible Level 1 Employee...
-					</option>
-					<option>***Dynamically generated list of employees</option>
-				</select>
+						{/*  */}
+					</div>
+				</div>
 
 				<label className="form-control-label" htmlFor="taskName">
-					Task Name
+					Task Name:
 				</label>
 				<input
 					className="form-control"
@@ -160,7 +185,7 @@ export default function TaskForm({taskId = null}) {
 					onChange={handleChange}
 				/>
 				<label className="form-control-label" htmlFor="taskDescription">
-					Task Description
+					Task Description:
 				</label>
 				<textarea
 					className="form-control"
@@ -171,18 +196,18 @@ export default function TaskForm({taskId = null}) {
 					value={taskObj.taskDescription}
 					onChange={handleChange}
 					cols="30"
-					rows="10"
+					rows="5"
 				></textarea>
 
 				{/* only show when the taskId is null (i.e. creating a new task) */}
 				{taskId === null && (
-					<button className="btn btn-primary" onClick={createTask}>
+					<button className="btn btn-primary mt-2" onClick={createTask}>
 						Create Task
 					</button>
 				)}
 				{/* only show when the taskId is NOT null (i.e. editing an existing task) */}
 				{taskId !== null && (
-					<button className="btn btn-primary" onClick={updateTask}>
+					<button className="btn btn-primary mt-2" onClick={updateTask}>
 						Update Task
 					</button>
 				)}

@@ -24,7 +24,7 @@ export default function TaskPage() {
 	return (
 		<div className="container">
 			<TaskForm taskId={taskId} />
-			<h5>Comment List:</h5>
+			<h5 className="mt-3">Comment List:</h5>
 			<CommentsSection taskId={taskId} />
 		</div>
 	)
