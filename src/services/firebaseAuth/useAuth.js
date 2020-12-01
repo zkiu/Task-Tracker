@@ -3,8 +3,9 @@ import {addAuthListener} from './addAuthListener'
 import {getCurrentUser} from './getCurrentUser'
 
 /*
-useAuth is a custom React Hook.
+useAuth is a custom React Hook. 
 https://reactjs.org/docs/hooks-custom.html
+On user login status change, it load and return the login credentials (+ simple coded isLoading status) to authInfo 
 */
 
 export const useAuth = () => {

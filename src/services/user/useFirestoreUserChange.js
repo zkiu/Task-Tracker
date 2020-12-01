@@ -2,11 +2,10 @@ import firebase from 'firebase/app'
 import {useEffect, useState} from 'react'
 // import {getUserInfo} from './getUserInfo'
 
-// *** remove default userId parameter
-
-// -- a react custom hook that listen for when the user doc changes
+// -- React custom hook that listen for when the user doc changes and loads it to the stateful val newUserObj
+// -- currently is used to update/change the user profile in Firestore
 export default function useFirestoreUserChange(userId) {
-	const [newUserObj, setNewUserObj] = useState({}) // *** should be setting the default to be an emty object or the existing user obj based on the given userId?
+	const [newUserObj, setNewUserObj] = useState({})
 
 	useEffect(() => {
 		if (userId === null || userId === undefined) {

@@ -14,5 +14,5 @@ export const getUserInfo = async (userId) => {
 
 	const docData = docSnapShot.data()
 
-	return {...docData, id: userId} // -- added second property because docData does not contain the id
+	return {...docData, id: userId} // -- adds id key because docData does not contain the id directly
 }

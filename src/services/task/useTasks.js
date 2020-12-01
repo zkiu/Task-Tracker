@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
 
-// -- returns an array of task for the given userId
+// -- returns a realtime array of task for the given userId
 // *** impletemnt filtering by userId in the leadName or responsible name
 export default function useTasks() {
 	const [tasks, setTasks] = useState([])
@@ -10,7 +10,7 @@ export default function useTasks() {
 	useEffect(() => {
 		const tasksRef = firebase.firestore().collection('tasks')
 		const unsubscribe = tasksRef
-			// .orderBy('priority', 'desc')
+			// .orderBy('priority', 'desc') // *** implement ordering
 			.onSnapshot((snapshot) => {
 				const tasksArray = snapshot.docs.map((doc) => ({
 					id: doc.id,

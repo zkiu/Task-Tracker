@@ -11,5 +11,5 @@ export const addAuthListener = (callback) => {
 			callback(null)
 		}
 	}
-	return firebase.auth().onAuthStateChanged(onChange) // -- .onAuthStateChanged() passes the user|null to the function onChange
+	return firebase.auth().onAuthStateChanged(onChange) // -- .onAuthStateChanged() passes the user credentials || null to the function onChange
 }
