@@ -1,14 +1,13 @@
 // *** fix initial dropdown colors when editing tasks
 // *** generate dynamic list of jobLevel 1 for the dropdown menu
-// *** add function to update task info
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
+import {navigate} from '@reach/router'
 
 import {getCurrentUserInfo} from '../services/user/getCurrentUserInfo'
-import addTask from '../services/task/addTask'
 import getTaskObj from '../services/task/getTaskObj'
-
-import {navigate} from '@reach/router'
+import addTask from '../services/task/addTask'
+import updateTask from '../services/task/updateTask'
 
 export default function TaskForm({taskId = null}) {
 	const [userObj, setuserObj] = useState({})
@@ -99,10 +98,10 @@ export default function TaskForm({taskId = null}) {
 			})
 			alert('New task is saved') // *** make this into a toast/modal
 		} else {
+			await updateTask(taskId, taskObj)
 			alert('Task is updated')
 		}
-
-		// navigate('dashboard')
+		navigate('dashboard')
 	}
 
 	return (
