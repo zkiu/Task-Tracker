@@ -1,8 +1,13 @@
+// *** fix initial dropdown colors when editing tasks
+// *** generate dynamic list of jobLevel 1 for the dropdown menu
+// *** add function to update task info
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
 
 import {getCurrentUserInfo} from '../services/user/getCurrentUserInfo'
 import addTask from '../services/task/addTask'
+import getTaskObj from '../services/task/getTaskObj'
+
 import {navigate} from '@reach/router'
 
 export default function TaskForm({taskId = null}) {
@@ -28,20 +33,15 @@ export default function TaskForm({taskId = null}) {
 		userObj()
 	}, []) // -- since getCurrentUserInfo() is async, it will constantly cycle from a promise to fullfilled everything it is called. As such, I am using the empty [] to only do this action once when the component mounts. Furthermore, getCurrentUserInfo() should not changed while the component is mounted.
 
-	// useEffect(() => {
-
-	// 	if (taskId === null) {
-	// 		setTaskObj({
-	// 			...taskObj,
-	// 			dateCreated: firebase.firestore.FieldValue.serverTimestamp(), // -- add a timestamp property to the obj when creating a new doc
-	// 			nameTaskCreator: name,
-	// 		})
-	// 		console.log('value for: taskObj for taskId===null case')
-	// 		console.log(taskObj)
-	// 	} else {
-	// 		// *** code get task by id (create service js) and load it to taskOjb
-	// 	}
-	// }, [taskId, taskObj])
+	useEffect(() => {
+		if (taskId !== null) {
+			async function getTaskandSet() {
+				const taskInfo = await getTaskObj(taskId)
+				setTaskObj({...taskInfo})
+			}
+			getTaskandSet()
+		}
+	}, [taskId])
 
 	function handleChange(e) {
 		setTaskObj({...taskObj, [e.target.name]: e.target.value})
