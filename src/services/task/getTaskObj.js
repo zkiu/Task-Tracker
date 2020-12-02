@@ -4,5 +4,11 @@ import firebase from 'firebase/app'
 export default async function getTaskObj(taskId) {
 	const taskRef = firebase.firestore().collection('tasks').doc(taskId)
 	const docRef = await taskRef.get()
-	return docRef.data()
+	const obj = docRef.data()
+
+	// -- convert the Firestore timestamp value to a simplified date of YYYY-MM-DD
+	let simpleDate = obj.dateCreated.toDate() // -- creates a new Date() from the milliseconds
+	simpleDate = simpleDate.toISOString().slice(0, 10)
+
+	return {...obj, dateCreated: simpleDate}
 }
