@@ -1,4 +1,3 @@
-// *** fix initial dropdown colors when editing tasks
 // *** generate dynamic list of jobLevel 1 for the dropdown menu
 // *** set restrictions to field depending on joblevel
 // *** implement automatic commenting when creating and updating task by user
@@ -41,6 +40,9 @@ export default function TaskForm({taskId = null}) {
 			async function getTaskandSet() {
 				const taskInfo = await getTaskObj(taskId)
 				setTaskObj({...taskInfo})
+				// -- update the menu colour based on the loaded menu values
+				changeMenuColor(document.querySelector('#priority'))
+				changeMenuColor(document.querySelector('#status'))
 			}
 			getTaskandSet()
 		}
@@ -53,12 +55,10 @@ export default function TaskForm({taskId = null}) {
 		handleChange(e)
 		changeMenuColor(e.target)
 	}
-
 	function handleStatusChange(e) {
 		handleChange(e)
 		changeMenuColor(e.target)
 	}
-
 	// -- change the menu color based on the selection
 	function changeMenuColor(htmlElement) {
 		switch (htmlElement.value) {
@@ -94,7 +94,6 @@ export default function TaskForm({taskId = null}) {
 				break
 		}
 	}
-
 	async function handleSubmit(e) {
 		e.preventDefault()
 		if (taskId === null) {
