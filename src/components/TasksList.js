@@ -5,7 +5,7 @@ import {navigate} from '@reach/router'
 
 // -- This compenent displays a list of tasks from a filtered Array passed on to it from Dashboard
 export default function TasksList({filteredTasksArray}) {
-	// *** Feature - change background colour based on priority
+	// *** Feature - change list item background colour based on priority or status ??
 
 	function handleClick(e, taskId) {
 		e.stopPropagation()
@@ -52,11 +52,14 @@ export default function TasksList({filteredTasksArray}) {
 					<div className="card-body text-left ">
 						<div className="container">
 							<div className="card-title row justify-content-between">
-								<span>Priority: {task.priority}</span>
+								<span>
+									Priority: {task.priority === 'p1' && ' Low'}
+									{task.priority === 'p2' && ' High'}
+								</span>
 								<span>Due Date: {task.dateDue}</span>
 							</div>
 						</div>
-						<p className="card-text">{task.description}</p>
+						<p className="card-text">{task.taskDescription}</p>
 					</div>
 				</div>
 			</div>
