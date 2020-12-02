@@ -15,7 +15,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
 import TaskPage from './pages/TaskPage'
-// import TaskCreatePage from './pages/TaskCreatePage'
+import NotFoundPage from './pages/NotFoundPage'
 import EditUserPage from './pages/EditUserPage'
 import {useAuth} from './services/firebaseAuth/useAuth'
 import {signIn} from './services/firebaseAuth/signIn' // ************ delete after test
@@ -105,8 +105,7 @@ function App() {
 					component={<TaskPage />}
 				/>
 
-				{/* <NotFound / 404 page default /> */
-				/**** to implement ********/}
+				<NotFoundPage default />
 			</Router>
 		</div>
 	)
