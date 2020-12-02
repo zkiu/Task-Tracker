@@ -1,30 +1,47 @@
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
+
+import {getCurrentUserInfo} from '../services/user/getCurrentUserInfo'
 import addTask from '../services/task/addTask'
+import {navigate} from '@reach/router'
 
 export default function TaskForm({taskId = null}) {
-	// *** if task id is not null, preassign the initial useState values
+	const [userObj, setuserObj] = useState({})
 
 	const [taskObj, setTaskObj] = useState({
 		priority: '',
 		status: '',
 		dateCreated: '',
 		dateDue: '',
-		nameTaskCreator: '', // *** pre assign if L2 user
+		nameTaskCreator: '',
 		nameResponsible: '',
 		taskName: '',
 		taskDescription: '',
 	})
 
+	// -- USED FOR NEW TASK - Load the currently logged jobLevel 2 user info
 	useEffect(() => {
-		if (taskId === null) {
-			setTaskObj({
-				...taskObj,
-				dateCreated: firebase.firestore.FieldValue.serverTimestamp(), // -- add a timestamp property to the obj when creating a new doc
-			})
+		const userObj = async () => {
+			const data = await getCurrentUserInfo()
+			setuserObj(data)
 		}
-		// *** load L2 user info
-	}, [])
+		userObj()
+	}, []) // -- since getCurrentUserInfo() is async, it will constantly cycle from a promise to fullfilled everything it is called. As such, I am using the empty [] to only do this action once when the component mounts. Furthermore, getCurrentUserInfo() should not changed while the component is mounted.
+
+	// useEffect(() => {
+
+	// 	if (taskId === null) {
+	// 		setTaskObj({
+	// 			...taskObj,
+	// 			dateCreated: firebase.firestore.FieldValue.serverTimestamp(), // -- add a timestamp property to the obj when creating a new doc
+	// 			nameTaskCreator: name,
+	// 		})
+	// 		console.log('value for: taskObj for taskId===null case')
+	// 		console.log(taskObj)
+	// 	} else {
+	// 		// *** code get task by id (create service js) and load it to taskOjb
+	// 	}
+	// }, [taskId, taskObj])
 
 	function handleChange(e) {
 		setTaskObj({...taskObj, [e.target.name]: e.target.value})
@@ -37,10 +54,10 @@ export default function TaskForm({taskId = null}) {
 			case '':
 				e.target.setAttribute('style', 'background-color:white; color:black')
 				break
-			case 'P1':
+			case 'p1':
 				e.target.setAttribute('style', 'background-color:yellow; color:black')
 				break
-			case 'P2':
+			case 'p2':
 				e.target.setAttribute('style', 'background-color:orange; color:white')
 				break
 
@@ -57,13 +74,13 @@ export default function TaskForm({taskId = null}) {
 			case '':
 				e.target.setAttribute('style', 'background-color:white; color:black')
 				break
-			case 'S1':
+			case 's1':
 				e.target.setAttribute('style', 'background-color:green; color:white')
 				break
-			case 'S2':
+			case 's2':
 				e.target.setAttribute('style', 'background-color:gray; color:black')
 				break
-			case 'S3':
+			case 's3':
 				e.target.setAttribute('style', 'background-color:black; color:white')
 				break
 
@@ -72,16 +89,20 @@ export default function TaskForm({taskId = null}) {
 		}
 	}
 
-	async function createTask(e) {
+	async function handleSubmit(e) {
 		e.preventDefault()
-		await addTask({name: 'new test'}) // *** change obj to be passed
+		if (taskId === null) {
+			await addTask({
+				...taskObj,
+				nameTaskCreator: userObj.name, // ***  name is entered directly instead of userId
+				dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+			})
+			alert('New task is saved') // *** make this into a toast/modal
+		} else {
+			alert('Task is updated')
+		}
 
-		// *** disable button and add pop up message on button once clicked
-	}
-	function updateTask(e) {
-		e.preventDefault()
-		console.log('updated')
-		// *** disable button and add pop up message on button once clicked
+		// navigate('dashboard')
 	}
 
 	return (
@@ -90,7 +111,7 @@ export default function TaskForm({taskId = null}) {
 			{taskId === null && <h1>Create a New Task</h1>}
 			{taskId !== null && <h1>Update the Task</h1>}
 
-			<form className="border p-2">
+			<form className="border p-2" onSubmit={handleSubmit}>
 				<div className="form-row">
 					<div className="form-group col-md-3">
 						<label className="form-control-label" htmlFor="priority">
@@ -112,14 +133,14 @@ export default function TaskForm({taskId = null}) {
 								Priority...
 							</option>
 							<option
-								value="P1"
+								value="p1"
 								style={{backgroundColor: 'yellow', color: 'black'}}
 							>
 								Low
 							</option>
 
 							<option
-								value="P2"
+								value="p2"
 								style={{backgroundColor: 'orange', color: 'white'}}
 							>
 								High
@@ -183,19 +204,19 @@ export default function TaskForm({taskId = null}) {
 							</option>
 							<option
 								style={{backgroundColor: 'green', color: 'white'}}
-								value="S1"
+								value="s1"
 							>
 								In Progress
 							</option>
 							<option
 								style={{backgroundColor: 'grey', color: 'black'}}
-								value="S2"
+								value="s2"
 							>
 								Closing
 							</option>
 							<option
 								style={{backgroundColor: 'black', color: 'white'}}
-								value="S3"
+								value="s3"
 							>
 								Archived
 							</option>
@@ -269,18 +290,10 @@ export default function TaskForm({taskId = null}) {
 					rows="5"
 				></textarea>
 
-				{/* only show when the taskId is null (i.e. creating a new task) */}
-				{taskId === null && (
-					<button className="btn btn-primary mt-2" onClick={createTask}>
-						Create Task
-					</button>
-				)}
-				{/* only show when the taskId is NOT null (i.e. editing an existing task) */}
-				{taskId !== null && (
-					<button className="btn btn-primary mt-2" onClick={updateTask}>
-						Update Task
-					</button>
-				)}
+				<button className="btn btn-primary mt-2" type="submit">
+					{taskId === null && 'Create Task'}
+					{taskId !== null && 'Update Task'}
+				</button>
 			</form>
 		</>
 	)
