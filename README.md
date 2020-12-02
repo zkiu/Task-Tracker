@@ -9,5 +9,6 @@ DashboardPage - implement query and sort
 TaskForm - create layout, when creating new task -> create a new initial comment
 TasksList - change colour of items in task list based on priority
 General - implement more security in code, check validation for the project, HTML - set tabindex attribute for Aria, make validation and sanatize input fields
+Feature - when archiving a task, it gets move to a different collection, so as searching the task collection is faster
 firebase - update security rules
 CSS - address responsive page break display issues: dashboard width < 770px
