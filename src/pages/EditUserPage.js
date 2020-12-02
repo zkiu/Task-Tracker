@@ -23,13 +23,13 @@ export default function EditUserPage() {
 
 	// -- initial load of existing user information on mount of component
 	useEffect(() => {
-		async function loadUserData(userId) {
+		async function loadUserData() {
 			const userObj = await getUserInfo(userId)
 			setExistingData({name: userObj.name, jobLevel: userObj.jobLevel})
 			setNewData({name: userObj.name, jobLevel: userObj.jobLevel})
 		}
-		loadUserData(userId)
-	}, [])
+		loadUserData()
+	}, [userId])
 
 	// -- Activate/Deactivate submit button by checking if the user changed the initial information
 	useEffect(() => {
