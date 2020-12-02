@@ -1,5 +1,8 @@
 // *** fix initial dropdown colors when editing tasks
 // *** generate dynamic list of jobLevel 1 for the dropdown menu
+// *** set restrictions to field depending on joblevel
+// *** test if can update 'disabled' fields bit tweeking html in the browser
+// *** implement automatic commenting when creating and updating task by user
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
 import {navigate} from '@reach/router'
@@ -97,11 +100,12 @@ export default function TaskForm({taskId = null}) {
 				dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
 			})
 			alert('New task is saved') // *** make this into a toast/modal
+			navigate('../dashboard')
 		} else {
 			await updateTask(taskId, taskObj)
-			alert('Task is updated')
+			alert('Task is updated') // *** make this into a toast/modal
+			// -- don't navigate away as the user may edit further information
 		}
-		navigate('dashboard')
 	}
 
 	return (
@@ -241,22 +245,26 @@ export default function TaskForm({taskId = null}) {
 						)}
 					</div>
 					<div className="form-group col-md-6">
-						{' '}
+						{taskId !== null && (
+							<>
+								<label className="form-control-label" htmlFor="nameTaskCreator">
+									Task Creator
+								</label>
+								<input
+									className="form-control"
+									type="text"
+									id="nameTaskCreator"
+									placeholder="Leader's Name"
+									name="nameTaskCreator"
+									value={taskObj.nameTaskCreator}
+									// onChange={handleChange}
+									disabled
+								/>
+							</>
+						)}
 						{/* *** modify so that only show this field when updating the form. Keep for now to keep track that L2 name is showing proporly for saving *** */}
 						{/* only L2 users can appear here */}
-						<label className="form-control-label" htmlFor="nameTaskCreator">
-							Task Creator
-						</label>
-						<input
-							className="form-control"
-							type="text"
-							id="nameTaskCreator"
-							placeholder="Leader's Name"
-							name="nameTaskCreator"
-							value={taskObj.nameTaskCreator}
-							// onChange={handleChange}
-							disabled
-						/>
+
 						{/*  */}
 					</div>
 				</div>
