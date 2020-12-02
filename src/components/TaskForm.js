@@ -1,8 +1,8 @@
 // *** fix initial dropdown colors when editing tasks
 // *** generate dynamic list of jobLevel 1 for the dropdown menu
 // *** set restrictions to field depending on joblevel
-// *** test if can update 'disabled' fields bit tweeking html in the browser
 // *** implement automatic commenting when creating and updating task by user
+// *** for updating tasks, disable 'update' button unless the data has changed
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
 import {navigate} from '@reach/router'
@@ -26,7 +26,7 @@ export default function TaskForm({taskId = null}) {
 		taskDescription: '',
 	})
 
-	// -- USED FOR NEW TASK - Load the currently logged jobLevel 2 user info
+	// -- used NEW task - Load the currently logged jobLevel 2 user info
 	useEffect(() => {
 		const userObj = async () => {
 			const data = await getCurrentUserInfo()
@@ -35,6 +35,7 @@ export default function TaskForm({taskId = null}) {
 		userObj()
 	}, []) // -- since getCurrentUserInfo() is async, it will constantly cycle from a promise to fullfilled everything it is called. As such, I am using the empty [] to only do this action once when the component mounts. Furthermore, getCurrentUserInfo() should not changed while the component is mounted.
 
+	// -- used EXISTING task - set the state to the task info and color the menu
 	useEffect(() => {
 		if (taskId !== null) {
 			async function getTaskandSet() {
@@ -50,40 +51,43 @@ export default function TaskForm({taskId = null}) {
 	}
 	function handlePriorityChange(e) {
 		handleChange(e)
-
-		// -- change the menu color based on the selection
-		switch (e.target.value) {
-			case '':
-				e.target.setAttribute('style', 'background-color:white; color:black')
-				break
-			case 'p1':
-				e.target.setAttribute('style', 'background-color:yellow; color:black')
-				break
-			case 'p2':
-				e.target.setAttribute('style', 'background-color:orange; color:white')
-				break
-
-			default:
-				break
-		}
+		changeMenuColor(e.target)
 	}
 
 	function handleStatusChange(e) {
 		handleChange(e)
+		changeMenuColor(e.target)
+	}
 
-		// -- change the menu color based on the selection
-		switch (e.target.value) {
+	// -- change the menu color based on the selection
+	function changeMenuColor(htmlElement) {
+		switch (htmlElement.value) {
+			// -- '' is for all menus
 			case '':
-				e.target.setAttribute('style', 'background-color:white; color:black')
+				htmlElement.setAttribute('style', 'background-color:white; color:black')
 				break
+			// -- for the 'priority' menus
+			case 'p1':
+				htmlElement.setAttribute(
+					'style',
+					'background-color:yellow; color:black'
+				)
+				break
+			case 'p2':
+				htmlElement.setAttribute(
+					'style',
+					'background-color:orange; color:white'
+				)
+				break
+			// -- for the 'status' menus
 			case 's1':
-				e.target.setAttribute('style', 'background-color:green; color:white')
+				htmlElement.setAttribute('style', 'background-color:green; color:white')
 				break
 			case 's2':
-				e.target.setAttribute('style', 'background-color:gray; color:black')
+				htmlElement.setAttribute('style', 'background-color:gray; color:black')
 				break
 			case 's3':
-				e.target.setAttribute('style', 'background-color:black; color:white')
+				htmlElement.setAttribute('style', 'background-color:black; color:white')
 				break
 
 			default:
