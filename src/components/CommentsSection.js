@@ -35,7 +35,7 @@ export default function CommentsSection({taskId}) {
 	}
 
 	return (
-		<>
+		<div className="border p-2">
 			<form className="input-group mb-3" onSubmit={handleSubmit}>
 				<input
 					name="comment"
@@ -60,6 +60,6 @@ export default function CommentsSection({taskId}) {
 			</form>
 
 			<CommentsList taskId={taskId} />
-		</>
+		</div>
 	)
 }
