@@ -2,6 +2,8 @@
 // *** set restrictions to field depending on joblevel
 // *** implement automatic commenting when creating and updating task by user
 // *** for updating tasks, disable 'update' button unless the data has changed
+// *** make 'in progress' the default selection when creatig new tasks
+// *** provide more detail of what was modified for Auto Messages when updating tasks
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
 import {navigate} from '@reach/router'
@@ -10,6 +12,7 @@ import {getCurrentUserInfo} from '../services/user/getCurrentUserInfo'
 import getTaskObj from '../services/task/getTaskObj'
 import addTask from '../services/task/addTask'
 import updateTask from '../services/task/updateTask'
+import addComment from '../services/task/addComment'
 
 export default function TaskForm({taskId = null}) {
 	const [userObj, setuserObj] = useState({})
@@ -96,18 +99,40 @@ export default function TaskForm({taskId = null}) {
 	}
 	async function handleSubmit(e) {
 		e.preventDefault()
+		// -- if creating a new task
 		if (taskId === null) {
-			await addTask({
+			let newTask = await addTask({
 				...taskObj,
 				nameTaskCreator: userObj.name, // ***  name is entered directly instead of userId
 				dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
 			})
+			// -- auto generate comment about task created by so and so
+			autoCommentBot(newTask.id, 'Auto Message: Task is created')
+
 			alert('New task is saved') // *** make this into a toast/modal
 			navigate('../dashboard')
 		} else {
+			// -- if updating a task
 			await updateTask(taskId, taskObj)
+			// -- auto generate comment about task created by so and so
+			autoCommentBot(taskId, 'Auto Message: Task was modified')
+
 			alert('Task is updated') // *** make this into a toast/modal
 			// -- don't navigate away as the user may edit further information
+		}
+	}
+
+	async function autoCommentBot(taskId, newComment) {
+		try {
+			const userObj = await getCurrentUserInfo() // -- returns Null if no user is logged in
+			// -- checks if user exits, or else something is wrong with the connection
+			if (!userObj) {
+				// -- execute this if userObj is Null
+				throw new Error('User information cannot be verified')
+			}
+			await addComment(taskId, newComment, userObj) // -- currentlyLoggedInUser is an object with the key id, name, email
+		} catch (error) {
+			alert(error.message)
 		}
 	}
 
