@@ -64,7 +64,7 @@ export default function TaskForm({taskId = null}) {
 		for (const item of statusMenus) {
 			changeMenuColor(item)
 		}
-	}, [taskId])
+	}, [taskObj])
 
 	function handleChange(e) {
 		setTaskObj({...taskObj, [e.target.name]: e.target.value})
