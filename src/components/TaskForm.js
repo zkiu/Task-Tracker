@@ -2,7 +2,6 @@
 // *** set restrictions to field depending on joblevel
 // *** implement automatic commenting when creating and updating task by user
 // *** for updating tasks, disable 'update' button unless the data has changed
-// *** make 'in progress' the default selection when creatig new tasks
 // *** provide more detail of what was modified for Auto Messages when updating tasks
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
@@ -28,26 +27,42 @@ export default function TaskForm({taskId = null}) {
 		taskDescription: '',
 	})
 
-	// -- used NEW task - Load the currently logged jobLevel 2 user info
+	// -- NEW task - Load the currently logged jobLevel 2 user info
 	useEffect(() => {
 		const userObj = async () => {
 			const data = await getCurrentUserInfo()
 			setuserObj(data)
 		}
 		userObj()
-	}, []) // -- since getCurrentUserInfo() is async, it will constantly cycle from a promise to fullfilled everything it is called. As such, I am using the empty [] to only do this action once when the component mounts. Furthermore, getCurrentUserInfo() should not changed while the component is mounted.
+	}, []) // -- since getCurrentUserInfo() is async, it will constantly cycle from a promise to fullfilled everytime it is called. As such, I am using the empty [] to only do this action once when the component mounts. Furthermore, getCurrentUserInfo() should not changed while the component is mounted.
 
-	// -- used EXISTING task - set the state to the task info and color the menu
+	// -- NEW task - set by default the status to be 'in progress'
+	useEffect(() => {
+		if (taskId === null) {
+			setTaskObj({...taskObj, status: 's1'})
+		}
+	}, [taskId])
+
+	// -- EXISTING task - set the state to the task info and color the menu
 	useEffect(() => {
 		if (taskId !== null) {
 			async function getTaskandSet() {
 				const taskInfo = await getTaskObj(taskId)
 				setTaskObj({...taskInfo})
-				// -- update the menu colour based on the loaded menu values
-				changeMenuColor(document.querySelector('#priority'))
-				changeMenuColor(document.querySelector('#status'))
 			}
 			getTaskandSet()
+		}
+	}, [taskId])
+
+	// -- set colour of the dropdown menues
+	useEffect(() => {
+		let priorityMenus = document.querySelectorAll('.priority')
+		for (const item of priorityMenus) {
+			changeMenuColor(item)
+		}
+		let statusMenus = document.querySelectorAll('.status')
+		for (const item of statusMenus) {
+			changeMenuColor(item)
 		}
 	}, [taskId])
 
@@ -65,7 +80,7 @@ export default function TaskForm({taskId = null}) {
 	// -- change the menu color based on the selection
 	function changeMenuColor(htmlElement) {
 		switch (htmlElement.value) {
-			// -- '' is for all menus
+			// -- '' is for all menus (Default case when there is no value selected in the drop down menu)
 			case '':
 				htmlElement.setAttribute('style', 'background-color:white; color:black')
 				break
@@ -97,6 +112,7 @@ export default function TaskForm({taskId = null}) {
 				break
 		}
 	}
+
 	async function handleSubmit(e) {
 		e.preventDefault()
 		// -- if creating a new task
@@ -149,31 +165,20 @@ export default function TaskForm({taskId = null}) {
 							Priority Level:
 						</label>
 						<select
-							className="custom-select"
+							className="custom-select priority"
 							name="priority"
-							id="priority"
 							value={taskObj.priority}
 							onChange={handlePriorityChange}
 							required
 						>
-							<option
-								defaultValue
-								value=""
-								style={{backgroundColor: 'white', color: 'grey'}}
-							>
+							<option defaultValue className="priority" value="">
 								Priority...
 							</option>
-							<option
-								value="p1"
-								style={{backgroundColor: 'yellow', color: 'black'}}
-							>
+							<option value="p1" className="priority">
 								Low
 							</option>
 
-							<option
-								value="p2"
-								style={{backgroundColor: 'orange', color: 'white'}}
-							>
+							<option value="p2" className="priority">
 								High
 							</option>
 						</select>
@@ -219,36 +224,23 @@ export default function TaskForm({taskId = null}) {
 							Task Status:
 						</label>
 						<select
-							className="custom-select"
+							className="custom-select status"
 							name="status"
 							id="status"
 							value={taskObj.status}
 							onChange={handleStatusChange}
 							required
 						>
-							<option
-								defaultValue
-								value=""
-								style={{backgroundColor: 'white', color: 'grey'}}
-							>
+							<option defaultValue className="status" value="">
 								Status...
 							</option>
-							<option
-								style={{backgroundColor: 'green', color: 'white'}}
-								value="s1"
-							>
+							<option className="status" value="s1">
 								In Progress
 							</option>
-							<option
-								style={{backgroundColor: 'grey', color: 'black'}}
-								value="s2"
-							>
+							<option className="status" value="s2">
 								Closing
 							</option>
-							<option
-								style={{backgroundColor: 'black', color: 'white'}}
-								value="s3"
-							>
+							<option className="status" value="s3">
 								Archived
 							</option>
 						</select>
