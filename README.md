@@ -6,8 +6,8 @@ The code for this is available at https://github.com/zkiu/.... The page can be a
 
 --- Current to-do as of 2020-11-15:
 DashboardPage - implement query and sort
-TaskForm - create layout, when creating new task -> create a new initial comment
-TasksList - change colour of items in task list based on priority
+TaskForm - when creating new task -> create a new initial comment
+TasksList -
 General - implement more security in code, check validation for the project, HTML - set tabindex attribute for Aria, make validation and sanatize input fields
 Feature - when archiving a task, it gets move to a different collection, so as searching the task collection is faster
 firebase - update security rules
