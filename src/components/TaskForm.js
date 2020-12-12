@@ -1,5 +1,6 @@
 // *** dynamic list of jobLevel 1 for the dropdown menu is further filtered by department (but this is for future improvements / production version)
 // *** set restrictions to field depending on joblevel
+// *** lock taskName once created
 // *** provide more detail of what was modified for Auto Messages when updating tasks
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
@@ -82,8 +83,13 @@ export default function TaskForm({taskId = null}) {
 	useEffect(() => {
 		const buttonRef = document.querySelector('#submitButton')
 		if (
+			// -- taskName, dateCreated, nameTaskCreator will not change once a task is created, so no need to detect changes
 			taskObj.status === existingTaskObj.status &&
-			taskObj.priority === existingTaskObj.priority
+			taskObj.priority === existingTaskObj.priority &&
+			taskObj.dateDue === existingTaskObj.dateDue &&
+			taskObj.nameResponsible === existingTaskObj.nameResponsible &&
+			taskObj.taskName === existingTaskObj.taskName &&
+			taskObj.taskDescription === existingTaskObj.taskDescription
 		) {
 			// -- assigned the 'disabled' attribute to the button element
 			buttonRef.attributes.setNamedItem(document.createAttribute('disabled'))
