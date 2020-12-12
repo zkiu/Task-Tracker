@@ -181,7 +181,7 @@ export default function TaskForm({taskId = null}) {
 		if (taskId === null) {
 			let newTask = await addTask({
 				...taskObj,
-				nameTaskCreator: userObj.name, // ***  name is entered directly along side the userId, so that we don't have to do another query to look up the name from the user id
+				nameTaskCreator: userObj.name, //-- name is entered directly along side the userId, so that we don't have to do another query to look up the name from the user id
 				nameTaskCreatorId: userObj.id,
 				dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
 			})
