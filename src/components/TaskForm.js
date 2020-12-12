@@ -54,7 +54,7 @@ export default function TaskForm({taskId = null}) {
 	// -- NEW task - set by default the status to be 'in progress'
 	useEffect(() => {
 		if (taskId === null) {
-			setTaskObj({...taskObj, status: 's1'})
+			setTaskObj((old) => ({...old, status: 's1'}))
 		}
 	}, [taskId])
 	// -- EXISTING task - set the state to the task info
