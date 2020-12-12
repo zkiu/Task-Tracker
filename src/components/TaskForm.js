@@ -38,6 +38,7 @@ export default function TaskForm({taskId = null}) {
 	const [taskObjPresets, setTaskObjPresets] = useState({
 		dateCreated: '',
 		nameTaskCreator: '',
+		nameTaskCreatorId: '',
 	})
 
 	let employeeList = useEmployeeList().map((item) => {
@@ -71,10 +72,12 @@ export default function TaskForm({taskId = null}) {
 				setTaskObjPresets({
 					dateCreated: taskInfo.dateCreated,
 					nameTaskCreator: taskInfo.nameTaskCreator,
+					nameTaskCreatorId: taskInfo.nameTaskCreatorId,
 				})
 				// -- stripout these properties before setting the state for the following
 				delete taskInfo.dateCreated
 				delete taskInfo.nameTaskCreator
+				delete taskInfo.nameTaskCreatorId
 				setTaskObj({...taskInfo})
 				setExistingTaskObj({...taskInfo})
 			}
@@ -178,7 +181,8 @@ export default function TaskForm({taskId = null}) {
 		if (taskId === null) {
 			let newTask = await addTask({
 				...taskObj,
-				nameTaskCreator: userObj.name, // ***  name is entered directly instead of userId
+				nameTaskCreator: userObj.name, // ***  name is entered directly along side the userId, so that we don't have to do another query to look up the name from the user id
+				nameTaskCreatorId: userObj.id,
 				dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
 			})
 			// -- auto generate comment about task created by so and so
