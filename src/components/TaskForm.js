@@ -1,3 +1,5 @@
+// *** error ' A component is changing a controlled input to be uncontrolled' appears when on page is reloaded, navigate to / or already in the task form page to edit existing task, make any change, then updating task - error not appear again until reload page
+
 // *** dynamic list of jobLevel 1 for the dropdown menu is further filtered by department (but this is for future improvements / production version)
 // *** set restrictions to field depending on joblevel
 // *** lock taskName once created
@@ -171,8 +173,8 @@ export default function TaskForm({taskId = null}) {
 				alert('Task is updated') // *** make this into a toast/modal
 				// -- don't navigate away as the user may edit further information
 
-				setExistingTaskObj(taskObj)
 				// -- Once setExistingTaskObj is triggered, the useEffect to Activate/Deactivate kicks in and disables the button agai
+				setExistingTaskObj(taskObj)
 			}
 		}
 	}
