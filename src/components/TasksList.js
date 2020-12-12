@@ -7,6 +7,10 @@ import {navigate} from '@reach/router'
 export default function TasksList({filteredTasksArray}) {
 	// *** Feature - change list item background colour based on priority or status ??
 
+	if (filteredTasksArray.length === 0) {
+		return <h3>There are currently no task associated with your user name.</h3>
+	}
+
 	function handleClick(e, taskId) {
 		e.stopPropagation()
 		navigate('editTask/' + taskId)
