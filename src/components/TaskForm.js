@@ -20,6 +20,7 @@ export default function TaskForm({taskId = null}) {
 		status: '',
 		dateDue: '',
 		nameResponsible: '',
+		nameResponsibleId: '',
 		taskName: '',
 		taskDescription: '',
 	})
@@ -29,6 +30,7 @@ export default function TaskForm({taskId = null}) {
 		status: '',
 		dateDue: '',
 		nameResponsible: '',
+		nameResponsibleId: '',
 		taskName: '',
 		taskDescription: '',
 	})
@@ -39,7 +41,11 @@ export default function TaskForm({taskId = null}) {
 	})
 
 	let employeeList = useEmployeeList().map((item) => {
-		return <option key={item.id}>{item.name}</option>
+		return (
+			<option key={item.id} data-key={item.id} value={item.name}>
+				{item.name}
+			</option>
+		)
 	})
 	// -- NEW task - Load the currently logged jobLevel 2 user info
 	useEffect(() => {
@@ -109,6 +115,19 @@ export default function TaskForm({taskId = null}) {
 
 	function handleChange(e) {
 		setTaskObj({...taskObj, [e.target.name]: e.target.value})
+	}
+	function handleResponsibleNameChange(e) {
+		// -- gets the index of the targeted option in the dropdown
+		const selectedIndex = e.target.options.selectedIndex
+		// -- get the key at the selected option data-set
+		const responsibleUserId = e.target.options[selectedIndex].getAttribute(
+			'data-key'
+		)
+		setTaskObj({
+			...taskObj,
+			[e.target.name]: e.target.value,
+			nameResponsibleId: responsibleUserId,
+		})
 	}
 	function handlePriorityChange(e) {
 		handleChange(e)
@@ -253,7 +272,7 @@ export default function TaskForm({taskId = null}) {
 							name="nameResponsible"
 							id="nameResponsible"
 							value={taskObj.nameResponsible}
-							onChange={handleChange}
+							onChange={handleResponsibleNameChange}
 							required
 						>
 							<option defaultValue value="">
