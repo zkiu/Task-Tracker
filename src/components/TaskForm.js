@@ -1,7 +1,6 @@
 // *** generate dynamic list of jobLevel 1 for the dropdown menu
+// *** dynamic list of jobLevel 1 for the dropdown menu is further filtered by department (but this is for future improvements / production version)
 // *** set restrictions to field depending on joblevel
-// *** implement automatic commenting when creating and updating task by user
-// *** for updating tasks, disable 'update' button unless the data has changed
 // *** provide more detail of what was modified for Auto Messages when updating tasks
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
@@ -55,7 +54,7 @@ export default function TaskForm({taskId = null}) {
 		}
 	}, [taskId])
 
-	// -- EXISTING task - set the state to the task info and color the menu
+	// -- EXISTING task - set the state to the task info
 	useEffect(() => {
 		if (taskId !== null) {
 			async function getTaskandSet() {
@@ -78,8 +77,6 @@ export default function TaskForm({taskId = null}) {
 			changeMenuColor(item)
 		}
 	}, [taskObj])
-
-	/*******************************************************************/
 	// -- Activate/Deactivate submit button by checking if the user changed the initial information
 	useEffect(() => {
 		const buttonRef = document.querySelector('#submitButton')
@@ -95,7 +92,6 @@ export default function TaskForm({taskId = null}) {
 			}
 		}
 	}, [taskObj, existingTaskObj])
-	/*******************************************************************/
 
 	function handleChange(e) {
 		setTaskObj({...taskObj, [e.target.name]: e.target.value})
@@ -314,7 +310,6 @@ export default function TaskForm({taskId = null}) {
 									placeholder="Leader's Name"
 									name="nameTaskCreator"
 									value={taskObj.nameTaskCreator}
-									// onChange={handleChange}
 									disabled
 								/>
 							</>
