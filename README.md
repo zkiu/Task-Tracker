@@ -4,10 +4,8 @@ This project is the the centre piece of Kiu's portfolio. This tracker is used to
 
 The code for this is available at https://github.com/zkiu/.... The page can be accessed here https://zkiu.github.io/....
 
---- Current to-do as of 2020-11-15:
+--- Current to-do as of 2020-12-12:
 DashboardPage - implement query and sort
-TaskForm - when creating new task -> create a new initial comment
-TasksList -
 General - implement more security in code, check validation for the project, HTML - set tabindex attribute for Aria, make validation and sanatize input fields
 Feature - when archiving a task, it gets move to a different collection, so as searching the task collection is faster
 firebase - update security rules
