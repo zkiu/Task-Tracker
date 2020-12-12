@@ -1,4 +1,3 @@
-// *** generate dynamic list of jobLevel 1 for the dropdown menu
 // *** dynamic list of jobLevel 1 for the dropdown menu is further filtered by department (but this is for future improvements / production version)
 // *** set restrictions to field depending on joblevel
 // *** provide more detail of what was modified for Auto Messages when updating tasks
@@ -8,6 +7,7 @@ import {navigate} from '@reach/router'
 
 import {getCurrentUserInfo} from '../services/user/getCurrentUserInfo'
 import getTaskObj from '../services/task/getTaskObj'
+import useEmployeeList from '../services/task/useEmployeeList'
 import addTask from '../services/task/addTask'
 import updateTask from '../services/task/updateTask'
 import addComment from '../services/task/addComment'
@@ -38,6 +38,9 @@ export default function TaskForm({taskId = null}) {
 		taskDescription: '',
 	})
 
+	let employeeList = useEmployeeList().map((item) => {
+		return <option key={item.id}>{item.name}</option>
+	})
 	// -- NEW task - Load the currently logged jobLevel 2 user info
 	useEffect(() => {
 		const userObj = async () => {
@@ -45,15 +48,14 @@ export default function TaskForm({taskId = null}) {
 			setuserObj(data)
 		}
 		userObj()
-	}, []) // -- since getCurrentUserInfo() is async, it will constantly cycle from a promise to fullfilled everytime it is called. As such, I am using the empty [] to only do this action once when the component mounts. Furthermore, getCurrentUserInfo() should not changed while the component is mounted.
-
+		// -- since getCurrentUserInfo() is async, it will constantly cycle from a promise to fullfilled everytime it is called. As such, I am using the empty [] to only do this action once when the component mounts. Furthermore, getCurrentUserInfo() should not changed while the component is mounted.
+	}, [])
 	// -- NEW task - set by default the status to be 'in progress'
 	useEffect(() => {
 		if (taskId === null) {
 			setTaskObj({...taskObj, status: 's1'})
 		}
 	}, [taskId])
-
 	// -- EXISTING task - set the state to the task info
 	useEffect(() => {
 		if (taskId !== null) {
@@ -65,7 +67,6 @@ export default function TaskForm({taskId = null}) {
 			getTaskandSet()
 		}
 	}, [taskId])
-
 	// -- set colour of the dropdown menues
 	useEffect(() => {
 		let priorityMenus = document.querySelectorAll('.priority')
@@ -139,7 +140,6 @@ export default function TaskForm({taskId = null}) {
 				break
 		}
 	}
-
 	async function handleSubmit(e) {
 		e.preventDefault()
 		// -- if creating a new task
@@ -170,7 +170,6 @@ export default function TaskForm({taskId = null}) {
 			}
 		}
 	}
-
 	async function autoCommentBot(taskId, newComment) {
 		try {
 			const userObj = await getCurrentUserInfo() // -- returns Null if no user is logged in
@@ -234,7 +233,7 @@ export default function TaskForm({taskId = null}) {
 					<div className="form-group col-md-6">
 						{/* only L1 users can appear here */}
 						<label className="form-control-label" htmlFor="nameResponsible">
-							Task Manager
+							Responsible Employee
 						</label>
 						<select
 							className="custom-select"
@@ -247,7 +246,7 @@ export default function TaskForm({taskId = null}) {
 							<option defaultValue value="">
 								Appoint Responsible Level 1 Employee...
 							</option>
-							<option>***Dynamically generated list of employees</option>
+							{employeeList}
 						</select>
 					</div>
 				</div>
@@ -314,10 +313,6 @@ export default function TaskForm({taskId = null}) {
 								/>
 							</>
 						)}
-						{/* *** modify so that only show this field when updating the form. Keep for now to keep track that L2 name is showing proporly for saving *** */}
-						{/* only L2 users can appear here */}
-
-						{/*  */}
 					</div>
 				</div>
 
