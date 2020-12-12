@@ -1,5 +1,4 @@
 // *** dynamic list of jobLevel 1 for the dropdown menu is further filtered by department (but this is for future improvements / production version)
-// *** set restrictions to field depending on joblevel
 // *** provide more detail of what was modified for Auto Messages when updating tasks
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
@@ -34,7 +33,7 @@ export default function TaskForm({taskId = null}) {
 		taskName: '',
 		taskDescription: '',
 	})
-	// -- these presets are for fields not modified once the task is created
+	// -- these presets are for fields not to be modified once the task is created
 	const [taskObjPresets, setTaskObjPresets] = useState({
 		dateCreated: '',
 		nameTaskCreator: '',
@@ -48,7 +47,7 @@ export default function TaskForm({taskId = null}) {
 			</option>
 		)
 	})
-	// -- NEW task - Load the currently logged jobLevel 2 user info
+	// Load the currently logged jobLevel 2 user info
 	useEffect(() => {
 		const userObj = async () => {
 			const data = await getCurrentUserInfo()
@@ -64,7 +63,7 @@ export default function TaskForm({taskId = null}) {
 			setTaskObj((old) => ({...old, status: 's1'}))
 		}
 	}, [taskId])
-	// -- EXISTING task - set the state to the task info
+	// -- EXISTING task - set taskObj to the task info
 	useEffect(() => {
 		if (taskId !== null) {
 			async function getTaskandSet() {
@@ -84,7 +83,17 @@ export default function TaskForm({taskId = null}) {
 			getTaskandSet()
 		}
 	}, [taskId])
-	// -- set colour of the dropdown menues
+	// -- deactivate fields based on job level
+	// *** Alo need to have security redundancy on the server side with security rules (else user can remove the disabled attribute in the browser and submit unauthorized datafields )
+	useEffect(() => {
+		let securedElements = document.querySelectorAll('[data-secured]')
+		if (taskId !== null && userObj.jobLevel === 'L2') {
+			for (const item of securedElements) {
+				item.attributes.setNamedItem(document.createAttribute('disabled'))
+			}
+		}
+	}, [taskId, userObj])
+	// -- set colour of the dropdown menus
 	useEffect(() => {
 		let priorityMenus = document.querySelectorAll('.priority')
 		for (const item of priorityMenus) {
@@ -262,6 +271,7 @@ export default function TaskForm({taskId = null}) {
 							placeholder="Select Task Deadline..."
 							required
 							name="dateDue"
+							data-secured
 							value={taskObj.dateDue}
 							onChange={handleChange}
 						/>
@@ -275,9 +285,10 @@ export default function TaskForm({taskId = null}) {
 							className="custom-select"
 							name="nameResponsible"
 							id="nameResponsible"
+							required
+							data-secured
 							value={taskObj.nameResponsible}
 							onChange={handleResponsibleNameChange}
-							required
 						>
 							<option defaultValue value="">
 								Appoint Responsible Level 1 Employee...
@@ -362,6 +373,7 @@ export default function TaskForm({taskId = null}) {
 					placeholder="Enter Task Name..."
 					name="taskName"
 					required
+					data-secured
 					value={taskObj.taskName}
 					onChange={handleChange}
 				/>
