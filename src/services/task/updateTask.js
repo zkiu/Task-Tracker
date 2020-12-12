@@ -11,6 +11,7 @@ export default async function updateTask(taskId, taskObj) {
 	const tasksRef = firebase.firestore().collection('tasks').doc(taskId)
 	try {
 		await tasksRef.update(taskObj)
+		return true
 	} catch (error) {
 		alert(error.message)
 		throw new Error('Could not update the Task. Please contact Helpdesk.')

@@ -27,6 +27,18 @@ export default function TaskForm({taskId = null}) {
 		taskDescription: '',
 	})
 
+	// -- used to keep track if the data has been changed
+	const [existingTaskObj, setExistingTaskObj] = useState({
+		priority: '',
+		status: '',
+		dateCreated: '',
+		dateDue: '',
+		nameTaskCreator: '',
+		nameResponsible: '',
+		taskName: '',
+		taskDescription: '',
+	})
+
 	// -- NEW task - Load the currently logged jobLevel 2 user info
 	useEffect(() => {
 		const userObj = async () => {
@@ -49,6 +61,7 @@ export default function TaskForm({taskId = null}) {
 			async function getTaskandSet() {
 				const taskInfo = await getTaskObj(taskId)
 				setTaskObj({...taskInfo})
+				setExistingTaskObj({...taskInfo})
 			}
 			getTaskandSet()
 		}
@@ -65,6 +78,24 @@ export default function TaskForm({taskId = null}) {
 			changeMenuColor(item)
 		}
 	}, [taskObj])
+
+	/*******************************************************************/
+	// -- Activate/Deactivate submit button by checking if the user changed the initial information
+	useEffect(() => {
+		const buttonRef = document.querySelector('#submitButton')
+		if (
+			taskObj.status === existingTaskObj.status &&
+			taskObj.priority === existingTaskObj.priority
+		) {
+			// -- assigned the 'disabled' attribute to the button element
+			buttonRef.attributes.setNamedItem(document.createAttribute('disabled'))
+		} else {
+			if (buttonRef.hasAttribute('disabled')) {
+				buttonRef.attributes.removeNamedItem('disabled')
+			}
+		}
+	}, [taskObj, existingTaskObj])
+	/*******************************************************************/
 
 	function handleChange(e) {
 		setTaskObj({...taskObj, [e.target.name]: e.target.value})
@@ -129,12 +160,18 @@ export default function TaskForm({taskId = null}) {
 			navigate('../dashboard')
 		} else {
 			// -- if updating a task
-			await updateTask(taskId, taskObj)
-			// -- auto generate comment about task created by so and so
-			autoCommentBot(taskId, 'Auto Message: Task was modified')
+			let result = await updateTask(taskId, taskObj)
 
-			alert('Task is updated') // *** make this into a toast/modal
-			// -- don't navigate away as the user may edit further information
+			if (result) {
+				// -- auto generate comment about task created by so and so
+				autoCommentBot(taskId, 'Auto Message: Task was modified')
+
+				alert('Task is updated') // *** make this into a toast/modal
+				// -- don't navigate away as the user may edit further information
+
+				setExistingTaskObj(taskObj)
+				// -- Once setExistingTaskObj is triggered, the useEffect to Activate/Deactivate kicks in and disables the button agai
+			}
 		}
 	}
 
@@ -317,7 +354,11 @@ export default function TaskForm({taskId = null}) {
 					rows="5"
 				></textarea>
 
-				<button className="btn btn-primary mt-2" type="submit">
+				<button
+					id="submitButton"
+					className="btn btn-primary mt-2"
+					type="submit"
+				>
 					{taskId === null && 'Create Task'}
 					{taskId !== null && 'Update Task'}
 				</button>
