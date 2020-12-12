@@ -1,8 +1,5 @@
-// *** error ' A component is changing a controlled input to be uncontrolled' appears when on page is reloaded, navigate to / or already in the task form page to edit existing task, make any change, then updating task - error not appear again until reload page
-
 // *** dynamic list of jobLevel 1 for the dropdown menu is further filtered by department (but this is for future improvements / production version)
 // *** set restrictions to field depending on joblevel
-// *** lock taskName once created
 // *** provide more detail of what was modified for Auto Messages when updating tasks
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
@@ -21,24 +18,24 @@ export default function TaskForm({taskId = null}) {
 	const [taskObj, setTaskObj] = useState({
 		priority: '',
 		status: '',
-		dateCreated: '',
 		dateDue: '',
-		nameTaskCreator: '',
 		nameResponsible: '',
 		taskName: '',
 		taskDescription: '',
 	})
-
 	// -- used to keep track if the data has been changed
 	const [existingTaskObj, setExistingTaskObj] = useState({
 		priority: '',
 		status: '',
-		dateCreated: '',
 		dateDue: '',
-		nameTaskCreator: '',
 		nameResponsible: '',
 		taskName: '',
 		taskDescription: '',
+	})
+	// -- these presets are for fields not modified once the task is created
+	const [taskObjPresets, setTaskObjPresets] = useState({
+		dateCreated: '',
+		nameTaskCreator: '',
 	})
 
 	let employeeList = useEmployeeList().map((item) => {
@@ -56,6 +53,7 @@ export default function TaskForm({taskId = null}) {
 	// -- NEW task - set by default the status to be 'in progress'
 	useEffect(() => {
 		if (taskId === null) {
+			// -- automatically set the status to be s1: in progress when creating a new task
 			setTaskObj((old) => ({...old, status: 's1'}))
 		}
 	}, [taskId])
@@ -64,6 +62,13 @@ export default function TaskForm({taskId = null}) {
 		if (taskId !== null) {
 			async function getTaskandSet() {
 				const taskInfo = await getTaskObj(taskId)
+				setTaskObjPresets({
+					dateCreated: taskInfo.dateCreated,
+					nameTaskCreator: taskInfo.nameTaskCreator,
+				})
+				// -- stripout these properties before setting the state for the following
+				delete taskInfo.dateCreated
+				delete taskInfo.nameTaskCreator
 				setTaskObj({...taskInfo})
 				setExistingTaskObj({...taskInfo})
 			}
@@ -298,7 +303,7 @@ export default function TaskForm({taskId = null}) {
 									id="dateCreated"
 									placeholder="Loading..."
 									name="dateCreated"
-									value={taskObj.dateCreated}
+									value={taskObjPresets.dateCreated}
 									disabled
 								/>
 							</>
@@ -316,7 +321,7 @@ export default function TaskForm({taskId = null}) {
 									id="nameTaskCreator"
 									placeholder="Leader's Name"
 									name="nameTaskCreator"
-									value={taskObj.nameTaskCreator}
+									value={taskObjPresets.nameTaskCreator}
 									disabled
 								/>
 							</>
