@@ -2,7 +2,11 @@ import {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
 
 // -- returns a realtime array of task for the given userId
+
+/*******************************************************************/
 // *** impletemnt filtering by userId in the leadName or responsible name
+/*******************************************************************/
+
 export default function useTasks() {
 	const [tasks, setTasks] = useState([])
 
