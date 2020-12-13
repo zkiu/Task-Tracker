@@ -12,3 +12,4 @@ firebase - update security rules
 CSS - address responsive page break display issues: dashboard width < 770px
 Finally - deploy the code by using Google Function
 apply useMemo to compare state changes?
+why L1 can still edit all fields
