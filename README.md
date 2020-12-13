@@ -10,3 +10,4 @@ General - implement more security in code, check validation for the project, HTM
 Feature - when archiving a task, it gets move to a different collection, so as searching the task collection is faster
 firebase - update security rules
 CSS - address responsive page break display issues: dashboard width < 770px
+Finally - deploy the code by using Google Function
