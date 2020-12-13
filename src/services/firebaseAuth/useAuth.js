@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import {addAuthListener} from './addAuthListener'
-import {getCurrentUser} from './getCurrentUser'
+import {getCurrentAuthUser} from './getCurrentAuthUser'
 
 /*
 useAuth is a custom React Hook. 
@@ -10,7 +10,7 @@ On user login status change, it load and return the login credentials (+ simple 
 
 export const useAuth = () => {
 	const [authInfo, setAuthInfo] = useState(() => {
-		const user = getCurrentUser()
+		const user = getCurrentAuthUser()
 		const isLoading = !user
 		return {isLoading, user}
 	})
