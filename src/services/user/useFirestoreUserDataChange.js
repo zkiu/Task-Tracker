@@ -2,9 +2,9 @@ import firebase from 'firebase/app'
 import {useEffect, useState} from 'react'
 // import {getUserInfo} from './getUserInfo'
 
-// -- React custom hook that listen for when the user doc changes and loads it to the stateful val newUserObj
+// -- React custom hook that listen for when a given user doc changes and loads it to the stateful val newUserObj
 // -- currently is used to update/change the user profile in Firestore
-export default function useFirestoreUserChange(userId) {
+export default function useFirestoreUserDataChange(userId) {
 	const [newUserObj, setNewUserObj] = useState({})
 
 	useEffect(() => {

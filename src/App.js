@@ -24,7 +24,7 @@ import {getCurrentUserInfo} from './services/user/getCurrentUserInfo'
 /* 
 testing stuff
 */
-import useFirestoreUserChange from './services/user/useFirestoreUserChange'
+import useFirestoreUserDataChange from './services/user/useFirestoreUserDataChange'
 
 function App() {
 	const [userInfo, setUserInfo] = useState({})
@@ -55,7 +55,7 @@ function App() {
 	} else {
 		userId = user.uid // -- NOTE that user obj is returned from Auth(). As such, it has the property 'uid instead of 'id'
 	}
-	let newUserObj = useFirestoreUserChange(userId) // -- useFirestoreUserChange() has a listener for changes to the user's profile. It will return null if no one is logged in
+	let newUserObj = useFirestoreUserDataChange(userId) // -- useFirestoreUserDataChange() has a listener for changes to the user's profile. It will return null if no one is logged in
 
 	// -- the effect occurs whenever newUserObj changes (i.e. the firestore doc is modified)
 	useEffect(() => {
