@@ -18,7 +18,7 @@ import EditUserPage from './pages/EditUserPage'
 
 import {ProtectedRoute} from './services/general/ProtectedRoute'
 import {useAuth} from './services/firebaseAuth/useAuth'
-import {useFirestoreUserDataChange} from './services/user/useFirestoreUserDataChange'
+import {useFirestoreUserDoc} from './services/user/useFirestoreUserDoc'
 
 /* 
 testing stuff
@@ -40,7 +40,7 @@ function App() {
 		userId = authUser.uid // -- NOTE that user obj is returned from Auth(). As such, it has the property 'uid instead of 'id'
 	}
 	// -- Listener for changes to the user's profile. Returns null if no one is logged in
-	let userObj = useFirestoreUserDataChange(userId)
+	let userObj = useFirestoreUserDoc(userId)
 
 	return (
 		<div>
