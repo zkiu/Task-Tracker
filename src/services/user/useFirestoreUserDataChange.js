@@ -4,18 +4,18 @@ import {useEffect, useState} from 'react'
 
 // -- React custom hook that listen for when a given user doc changes and loads it to the stateful val newUserObj
 // -- currently is used to update/change the user profile in Firestore
-export default function useFirestoreUserDataChange(userId) {
-	const [newUserObj, setNewUserObj] = useState({})
+export const useFirestoreUserDataChange = function (userId) {
+	const [userObj, setUserObj] = useState({})
 
 	useEffect(() => {
 		if (userId === null || userId === undefined) {
-			setNewUserObj(null)
+			setUserObj(null)
 		} else {
 			const userDocRef = firebase.firestore().collection('users').doc(userId)
 
 			const unsubscribe = userDocRef.onSnapshot(
 				(snapshot) => {
-					setNewUserObj({id: userId, ...snapshot.data()})
+					setUserObj({id: userId, ...snapshot.data()})
 				},
 				(error) => {
 					throw new Error('Error finding the user document: ' + error.message)
@@ -25,5 +25,5 @@ export default function useFirestoreUserDataChange(userId) {
 		}
 	}, [userId])
 
-	return newUserObj
+	return userObj
 }
