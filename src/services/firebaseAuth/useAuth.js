@@ -22,6 +22,5 @@ export const useAuth = () => {
 		return unsubscribe // -- basically means that React will automatically call this unsubscribe function when the hook unmounts --- a clean up
 	}, [])
 
-	console.log(authInfo)
 	return authInfo // -- the value of the 'user' key will be null when not logged in or when logging out
 }

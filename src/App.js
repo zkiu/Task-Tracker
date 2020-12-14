@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import {Router} from '@reach/router'
 
 import './FirebaseConfig' // -- initialize firebase
@@ -18,9 +18,7 @@ import EditUserPage from './pages/EditUserPage'
 
 import {ProtectedRoute} from './services/general/ProtectedRoute'
 import {useAuth} from './services/firebaseAuth/useAuth'
-import {getCurrentUserInfo} from './services/user/getCurrentUserInfo'
-import useFirestoreUserDataChange from './services/user/useFirestoreUserDataChange'
-import {UserProvider} from './services/user/UserContext'
+import {useFirestoreUserDataChange} from './services/user/useFirestoreUserDataChange'
 
 /* 
 testing stuff
@@ -32,12 +30,9 @@ testing stuff
 
 function App() {
 	let userId = null
-	const [userInfo, setUserInfo] = useState({})
-
 	// -- updates when login status changes, 'user' has property user.id and user.email
 	// -- isLoading true on initial mount, and will be false thereafter
 	let {authUser, isLoading} = useAuth()
-
 	// -- updates when the user profile changes in Firestore
 	if (authUser === null) {
 		userId = null
@@ -45,29 +40,7 @@ function App() {
 		userId = authUser.uid // -- NOTE that user obj is returned from Auth(). As such, it has the property 'uid instead of 'id'
 	}
 	// -- Listener for changes to the user's profile. Returns null if no one is logged in
-	let newUserObj = useFirestoreUserDataChange(userId)
-
-	// -- On useAuth() change via login and logout
-	useEffect(() => {
-		async function loadUserInfo() {
-			if (authUser) {
-				// -- load the user document in Firestore
-				const userObj = await getCurrentUserInfo()
-				setUserInfo(userObj)
-			} else {
-				setUserInfo(null)
-			}
-		}
-		loadUserInfo()
-	}, [authUser])
-	// -- the effect occurs whenever newUserObj changes (i.e. the firestore doc is modified)
-	useEffect(() => {
-		if (newUserObj) {
-			setUserInfo(newUserObj)
-		} else {
-			setUserInfo(null)
-		}
-	}, [newUserObj])
+	let userObj = useFirestoreUserDataChange(userId)
 
 	return (
 		<div>
@@ -78,7 +51,7 @@ function App() {
 			<br />
 			{/* ************** delete after test}*/}
 
-			<Navigation isLoading={isLoading} userInfo={userInfo} />
+			<Navigation isLoading={isLoading} userObj={userObj} />
 			<Router>
 				<HomePage path="/" user={authUser} />
 				<LoginPage path="login" />
@@ -107,9 +80,7 @@ function App() {
 					user={authUser}
 					component={<TaskPage />}
 				/>
-				<UserProvider path="/">
-					<NotFoundPage default />
-				</UserProvider>
+				<NotFoundPage default />
 			</Router>
 		</div>
 	)
