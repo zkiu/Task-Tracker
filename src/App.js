@@ -20,7 +20,7 @@ import {ProtectedRoute} from './services/general/ProtectedRoute'
 import {useAuth} from './services/firebaseAuth/useAuth'
 import {getCurrentUserInfo} from './services/user/getCurrentUserInfo'
 import useFirestoreUserDataChange from './services/user/useFirestoreUserDataChange'
-import {UserProvider} from './services/user/UserContext'
+import {UserDataProvider} from './services/user/UserContext'
 
 /* 
 testing stuff
@@ -33,18 +33,15 @@ testing stuff
 function App() {
 	let userId = null
 	const [userInfo, setUserInfo] = useState({})
-
 	// -- updates when login status changes, 'user' has property user.id and user.email
-	// -- isLoading true on initial mount, and will be false thereafter
 	let {authUser, isLoading} = useAuth()
-
 	// -- updates when the user profile changes in Firestore
 	if (authUser === null) {
 		userId = null
 	} else {
-		userId = authUser.uid // -- NOTE that user obj is returned from Auth(). As such, it has the property 'uid instead of 'id'
+		userId = authUser.uid // -- NOTE that user obj is returned from Auth(). It has the auto generated property 'uid' instead of 'id'
 	}
-	// -- Listener for changes to the user's profile. Returns null if no one is logged in
+	// -- Provides the userObj and listener for changes to the userObj. Returns null if no one is logged in
 	let newUserObj = useFirestoreUserDataChange(userId)
 
 	// -- On useAuth() change via login and logout
@@ -107,9 +104,9 @@ function App() {
 					user={authUser}
 					component={<TaskPage />}
 				/>
-				<UserProvider path="/">
+				<UserDataProvider path="/">
 					<NotFoundPage default />
-				</UserProvider>
+				</UserDataProvider>
 			</Router>
 		</div>
 	)
