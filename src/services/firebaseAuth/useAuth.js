@@ -17,11 +17,12 @@ export const useAuth = () => {
 
 	useEffect(() => {
 		const unsubscribe = addAuthListener((authUser) => {
-			setAuthInfo({isLoading: false, authUser}) // -- isLoading will be explicitly false once sign-in state has changed
+			setAuthInfo({isLoading: false, authUser})
+			// -- isLoading true on initial mount, and will be false thereafter
+			// -- isLoading will be false once login complete
 		})
 		return unsubscribe // -- basically means that React will automatically call this unsubscribe function when the hook unmounts --- a clean up
 	}, [])
 
-	console.log(authInfo)
 	return authInfo // -- the value of the 'user' key will be null when not logged in or when logging out
 }
