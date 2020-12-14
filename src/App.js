@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import {Router} from '@reach/router'
 
 import './FirebaseConfig' // -- initialize firebase
@@ -18,9 +18,9 @@ import EditUserPage from './pages/EditUserPage'
 
 import {ProtectedRoute} from './services/general/ProtectedRoute'
 import {useAuth} from './services/firebaseAuth/useAuth'
-import {getCurrentUserInfo} from './services/user/getCurrentUserInfo'
-import useFirestoreUserDataChange from './services/user/useFirestoreUserDataChange'
+
 import {UserDataProvider} from './services/user/UserContext'
+import {useFirestoreUserDoc} from './services/user/useFirestoreUserDoc'
 
 /* 
 testing stuff
@@ -32,7 +32,6 @@ testing stuff
 
 function App() {
 	let userId = null
-	const [userInfo, setUserInfo] = useState({})
 	// -- updates when login status changes, 'user' has property user.id and user.email
 	let {authUser, isLoading} = useAuth()
 	// -- updates when the user profile changes in Firestore
@@ -41,30 +40,8 @@ function App() {
 	} else {
 		userId = authUser.uid // -- NOTE that user obj is returned from Auth(). It has the auto generated property 'uid' instead of 'id'
 	}
-	// -- Provides the userObj and listener for changes to the userObj. Returns null if no one is logged in
-	let newUserObj = useFirestoreUserDataChange(userId)
-
-	// -- On useAuth() change via login and logout
-	useEffect(() => {
-		async function loadUserInfo() {
-			if (authUser) {
-				// -- load the user document in Firestore
-				const userObj = await getCurrentUserInfo()
-				setUserInfo(userObj)
-			} else {
-				setUserInfo(null)
-			}
-		}
-		loadUserInfo()
-	}, [authUser])
-	// -- the effect occurs whenever newUserObj changes (i.e. the firestore doc is modified)
-	useEffect(() => {
-		if (newUserObj) {
-			setUserInfo(newUserObj)
-		} else {
-			setUserInfo(null)
-		}
-	}, [newUserObj])
+	// -- Listener for changes to the user's profile. Returns null if no one is logged in
+	let userObj = useFirestoreUserDoc(userId)
 
 	return (
 		<div>
@@ -75,7 +52,7 @@ function App() {
 			<br />
 			{/* ************** delete after test}*/}
 
-			<Navigation isLoading={isLoading} userInfo={userInfo} />
+			<Navigation isLoading={isLoading} userObj={userObj} />
 			<Router>
 				<HomePage path="/" user={authUser} />
 				<LoginPage path="login" />

@@ -4,7 +4,7 @@ import {RiCheckDoubleLine} from 'react-icons/ri'
 
 import {signOut} from '../services/firebaseAuth/signOut'
 
-function Navigation({userInfo, isLoading}) {
+function Navigation({userObj, isLoading}) {
 	function logoutUser() {
 		signOut()
 	}
@@ -18,8 +18,8 @@ function Navigation({userInfo, isLoading}) {
 				</Link>
 
 				<div className="navbar-nav ml-auto">
-					{/* if userInfo is null then display the JSX */}
-					{!userInfo && (
+					{/* if userObj is null then display the JSX */}
+					{!userObj && (
 						<>
 							<Link className="nav-item nav-link" to="register">
 								register
@@ -31,14 +31,11 @@ function Navigation({userInfo, isLoading}) {
 						</>
 					)}
 
-					{/* if userInfo is NOT null then display the JSX */}
-					{userInfo && (
+					{/* if userObj is NOT null then display the JSX */}
+					{userObj && (
 						<>
-							<Link
-								className="nav-item nav-link"
-								to={'editUser/' + userInfo.id}
-							>
-								{userInfo.name + ','}
+							<Link className="nav-item nav-link" to={'editUser/' + userObj.id}>
+								{userObj.name + ','}
 							</Link>
 							<Link
 								className="nav-item nav-link"
