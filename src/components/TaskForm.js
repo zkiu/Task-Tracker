@@ -47,7 +47,7 @@ export default function TaskForm({taskId = null}) {
 			</option>
 		)
 	})
-	// Load the currently logged jobLevel 2 user info
+	// Load the currently logged user info
 	useEffect(() => {
 		const userObj = async () => {
 			const data = await getCurrentUserInfo()
