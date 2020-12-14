@@ -5,10 +5,8 @@ import './FirebaseConfig' // -- initialize firebase
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap'
-
 import './App.css'
 
-import {ProtectedRoute} from './services/general/ProtectedRoute'
 import Navigation from './components/Navigation'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
@@ -17,46 +15,51 @@ import DashboardPage from './pages/DashboardPage'
 import TaskPage from './pages/TaskPage'
 import NotFoundPage from './pages/NotFoundPage'
 import EditUserPage from './pages/EditUserPage'
+
+import {ProtectedRoute} from './services/general/ProtectedRoute'
 import {useAuth} from './services/firebaseAuth/useAuth'
-import {signIn} from './services/firebaseAuth/signIn' // ************ delete after test
 import {getCurrentUserInfo} from './services/user/getCurrentUserInfo'
+import useFirestoreUserDataChange from './services/user/useFirestoreUserDataChange'
+import {UserProvider} from './services/user/UserContext'
 
 /* 
 testing stuff
 */
-import useFirestoreUserDataChange from './services/user/useFirestoreUserDataChange'
+import {signIn} from './services/firebaseAuth/signIn' // ************ delete after test
+/* 
+testing stuff
+*/
 
 function App() {
+	let userId = null
 	const [userInfo, setUserInfo] = useState({})
 
-	// -- updates when login status changes
-	let {user, isLoading} = useAuth()
-	/// -- user has property user.id and user.email
+	// -- updates when login status changes, 'user' has property user.id and user.email
 	// -- isLoading true on initial mount, and will be false thereafter
+	let {authUser, isLoading} = useAuth()
 
-	// -- this triggers when there is useAuth() change (login, logout)
+	// -- updates when the user profile changes in Firestore
+	if (authUser === null) {
+		userId = null
+	} else {
+		userId = authUser.uid // -- NOTE that user obj is returned from Auth(). As such, it has the property 'uid instead of 'id'
+	}
+	// -- Listener for changes to the user's profile. Returns null if no one is logged in
+	let newUserObj = useFirestoreUserDataChange(userId)
+
+	// -- On useAuth() change via login and logout
 	useEffect(() => {
-		// -- load the user document based on the user.id
 		async function loadUserInfo() {
-			if (user) {
-				const userObj = await getCurrentUserInfo(user.id)
+			if (authUser) {
+				// -- load the user document in Firestore
+				const userObj = await getCurrentUserInfo()
 				setUserInfo(userObj)
 			} else {
 				setUserInfo(null)
 			}
 		}
 		loadUserInfo()
-	}, [user])
-
-	// -- updates when the user profile changes in Firestore
-	let userId = null
-	if (user === null) {
-		userId = null
-	} else {
-		userId = user.uid // -- NOTE that user obj is returned from Auth(). As such, it has the property 'uid instead of 'id'
-	}
-	let newUserObj = useFirestoreUserDataChange(userId) // -- useFirestoreUserDataChange() has a listener for changes to the user's profile. It will return null if no one is logged in
-
+	}, [authUser])
 	// -- the effect occurs whenever newUserObj changes (i.e. the firestore doc is modified)
 	useEffect(() => {
 		if (newUserObj) {
@@ -71,41 +74,42 @@ function App() {
 			{/* ************** delete after test}*/}
 			<button onClick={() => signIn('1@1.com', '123123')}>sign-in</button>
 			<br />
-			<button onClick={() => console.log(user)}>useAuth user value</button>
+			<button onClick={() => console.log(authUser)}>useAuth user value</button>
 			<br />
 			{/* ************** delete after test}*/}
 
 			<Navigation isLoading={isLoading} userInfo={userInfo} />
 			<Router>
-				<HomePage path="/" user={user} />
+				<HomePage path="/" user={authUser} />
 				<LoginPage path="login" />
 				<RegisterPage path="register" />
 				<ProtectedRoute
 					path="dashboard"
 					isLoading={isLoading}
-					user={user}
+					user={authUser}
 					component={<DashboardPage />}
 				/>
 				<ProtectedRoute
 					path="editUser/:userId"
 					isLoading={isLoading}
-					user={user}
+					user={authUser}
 					component={<EditUserPage />}
 				/>
 				<ProtectedRoute
 					path="editTask"
 					isLoading={isLoading}
-					user={user}
+					user={authUser}
 					component={<TaskPage />}
 				/>
 				<ProtectedRoute
 					path="editTask/:taskId"
 					isLoading={isLoading}
-					user={user}
+					user={authUser}
 					component={<TaskPage />}
 				/>
-
-				<NotFoundPage default />
+				<UserProvider path="/">
+					<NotFoundPage default />
+				</UserProvider>
 			</Router>
 		</div>
 	)

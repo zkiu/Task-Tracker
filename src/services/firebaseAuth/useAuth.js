@@ -10,17 +10,18 @@ On user login status change, it load and return the login credentials (+ simple 
 
 export const useAuth = () => {
 	const [authInfo, setAuthInfo] = useState(() => {
-		const user = getCurrentAuthUser()
-		const isLoading = !user
-		return {isLoading, user}
+		const authUser = getCurrentAuthUser()
+		const isLoading = !authUser
+		return {isLoading, authUser}
 	})
 
 	useEffect(() => {
-		const unsubscribe = addAuthListener((user) => {
-			setAuthInfo({isLoading: false, user}) // -- isLoading will be explicitly false once sign-in state has changed
+		const unsubscribe = addAuthListener((authUser) => {
+			setAuthInfo({isLoading: false, authUser}) // -- isLoading will be explicitly false once sign-in state has changed
 		})
 		return unsubscribe // -- basically means that React will automatically call this unsubscribe function when the hook unmounts --- a clean up
 	}, [])
 
-	return authInfo // -- the value of the 'user' key will  be null when not logged in or when logging out
+	console.log(authInfo)
+	return authInfo // -- the value of the 'user' key will be null when not logged in or when logging out
 }
