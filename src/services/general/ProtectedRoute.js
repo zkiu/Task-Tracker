@@ -3,7 +3,7 @@ import {navigate} from '@reach/router'
 
 // -- service that takes only display the component if the user has logged in, else they get redirected to the login page
 // -- protected routes will show 'Loading' until the user has been resolved
-export const ProtectedRoute = ({isLoading, isAuth, component}) => {
+export const ProtectedRoute = ({isLoading, isAuth, children}) => {
 	if (isLoading) {
 		return <div>Loading...</div> // -- displayed until user credentials are loaded
 	}
@@ -14,5 +14,5 @@ export const ProtectedRoute = ({isLoading, isAuth, component}) => {
 		navigate('/login')
 	}
 
-	return component
+	return children
 }

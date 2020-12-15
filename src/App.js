@@ -57,31 +57,14 @@ function App() {
 				<HomePage path="/" isAuth={!!authUser} />
 				<LoginPage path="login" />
 				<RegisterPage path="register" />
-				<ProtectedRoute
-					path="dashboard"
-					isLoading={isLoading}
-					isAuth={!!authUser}
-					component={<DashboardPage />}
-				/>
-				<ProtectedRoute
-					path="editUser/:userId"
-					isLoading={isLoading}
-					isAuth={!!authUser}
-					component={<EditUserPage />}
-				/>
-				<ProtectedRoute
-					path="editTask"
-					isLoading={isLoading}
-					isAuth={!!authUser}
-					component={<TaskPage />}
-				/>
-				<ProtectedRoute
-					path="editTask/:taskId"
-					isLoading={isLoading}
-					isAuth={!!authUser}
-					component={<TaskPage />}
-				/>
-				<UserDataProvider path="/">
+				<ProtectedRoute path="/" isLoading={isLoading} isAuth={!!authUser}>
+					<DashboardPage path="dashboard" />
+					<EditUserPage path="editUser/:userId" />
+					<TaskPage path="editTask" />
+					<TaskPage path="editTask/:taskId" />
+				</ProtectedRoute>
+
+				<UserDataProvider default>
 					<NotFoundPage default />
 				</UserDataProvider>
 			</Router>
