@@ -84,10 +84,10 @@ export default function TaskForm({taskId = null}) {
 		}
 	}, [taskId])
 	// -- deactivate fields based on job level
-	// *** Alo need to have security redundancy on the server side with security rules (else user can remove the disabled attribute in the browser and submit unauthorized datafields )
+	// *** Also need to have security redundancy on the server side with security rules (else user can remove the disabled attribute in the browser and submit unauthorized datafields )
 	useEffect(() => {
 		let securedElements = document.querySelectorAll('[data-secured]')
-		if (taskId !== null && userObj.jobLevel === 'L2') {
+		if (taskId !== null && userObj.jobLevel === 'L1') {
 			for (const item of securedElements) {
 				item.attributes.setNamedItem(document.createAttribute('disabled'))
 			}
