@@ -18,8 +18,6 @@ import EditUserPage from './pages/EditUserPage'
 
 import {ProtectedRoute} from './services/general/ProtectedRoute'
 import {useAuth} from './services/firebaseAuth/useAuth'
-
-import {UserDataProvider} from './services/user/UserContext'
 import {useFirestoreUserDoc} from './services/user/useFirestoreUserDoc'
 
 /* 
@@ -61,11 +59,8 @@ function App() {
 					<EditUserPage path="editUser/:userId" />
 					<TaskPage path="editTask" />
 					<TaskPage path="editTask/:taskId" />
-				</ProtectedRoute>
-
-				{/* <UserDataProvider default>
 					<NotFoundPage default />
-				</UserDataProvider> */}
+				</ProtectedRoute>
 			</Router>
 		</div>
 	)
