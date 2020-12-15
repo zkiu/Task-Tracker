@@ -4,7 +4,7 @@ import {RiCheckDoubleLine} from 'react-icons/ri'
 
 import {signOut} from '../services/firebaseAuth/signOut'
 
-function Navigation({userObj, isLoading}) {
+function Navigation({userObj}) {
 	function logoutUser() {
 		signOut()
 	}

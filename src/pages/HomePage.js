@@ -2,10 +2,13 @@ import React from 'react'
 import {navigate, Link} from '@reach/router'
 
 // -- page user lands only when not logged in.
-function Home({user}) {
-	if (user) {
+function Home({isAuth}) {
+	// -- if there is a user logged in, then go to dashboard
+	if (isAuth) {
 		navigate('/dashboard')
 	}
+
+	// -- if there are NO user logged in, the provide these options
 	return (
 		<div className="container text-center">
 			<div className="row justify-content-center">

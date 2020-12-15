@@ -52,33 +52,33 @@ function App() {
 			<br />
 			{/* ************** delete after test}*/}
 
-			<Navigation isLoading={isLoading} userObj={userObj} />
+			<Navigation userObj={userObj} />
 			<Router>
-				<HomePage path="/" user={authUser} />
+				<HomePage path="/" isAuth={!!authUser} />
 				<LoginPage path="login" />
 				<RegisterPage path="register" />
 				<ProtectedRoute
 					path="dashboard"
 					isLoading={isLoading}
-					user={authUser}
+					isAuth={!!authUser}
 					component={<DashboardPage />}
 				/>
 				<ProtectedRoute
 					path="editUser/:userId"
 					isLoading={isLoading}
-					user={authUser}
+					isAuth={!!authUser}
 					component={<EditUserPage />}
 				/>
 				<ProtectedRoute
 					path="editTask"
 					isLoading={isLoading}
-					user={authUser}
+					isAuth={!!authUser}
 					component={<TaskPage />}
 				/>
 				<ProtectedRoute
 					path="editTask/:taskId"
 					isLoading={isLoading}
-					user={authUser}
+					isAuth={!!authUser}
 					component={<TaskPage />}
 				/>
 				<UserDataProvider path="/">
