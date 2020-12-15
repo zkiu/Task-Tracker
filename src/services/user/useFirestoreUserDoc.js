@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react'
 // -- React custom hook return the Firestore userObj for a given userId
 // -- It will also listen for changes to the doc
 export const useFirestoreUserDoc = function (userId) {
-	const [userObj, setUserObj] = useState({})
+	const [userObj, setUserObj] = useState(null)
 
 	useEffect(() => {
 		if (userId === null || userId === undefined) {

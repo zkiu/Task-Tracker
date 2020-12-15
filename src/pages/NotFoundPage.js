@@ -4,16 +4,19 @@ import {UserContext} from '../services/user/UserContext'
 // *** Make this page nicer
 
 export default function NotFound() {
-	const {status, handleClick, msg} = useContext(UserContext)
-
+	const {authUser, userObj} = useContext(UserContext)
+	/*******************************************************************/
+	console.log('AAAA  value for: authUser ')
+	console.log(authUser)
+	console.log('BBBB  value for: userObj ')
+	console.log(userObj)
+	/*******************************************************************/
 	return (
 		<>
-			<div>
-				<button onClick={handleClick}>Click Here</button>
-				Sorry, nothing here. I'll make this page prettier next time.But for now
-				a message: {status} +++
-			</div>
-			<div>{msg}</div>
+			{/* <div>{authUser}</div>
+			<div>{userObj}</div>
+			 */}
+			<div>maybe some data</div>
 		</>
 	)
 }
