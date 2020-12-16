@@ -1,7 +1,7 @@
 import React from 'react'
 import TasksList from '../components/TasksList'
 import {navigate} from '@reach/router'
-import useTaskList from '../services/task/useTaskList'
+import {useTaskList} from '../services/task/useTaskList'
 
 // ** need to add component to filter/query through tasks before sending array to TaskList
 export default function DashboardPage() {
