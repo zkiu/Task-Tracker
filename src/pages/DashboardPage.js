@@ -1,7 +1,7 @@
 import React from 'react'
 import TasksList from '../components/TasksList'
 import {navigate} from '@reach/router'
-import useTasks from '../services/task/useTasks'
+import useTaskList from '../services/task/useTaskList'
 
 // ** need to add component to filter/query through tasks before sending array to TaskList
 export default function DashboardPage() {
@@ -11,7 +11,7 @@ export default function DashboardPage() {
 	// *** implement pagination, so only top 10 records gets shown until user scroll further down or request more
 	// *** https://www.youtube.com/watch?v=poqTHxtDXwU&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=7
 
-	let filteredTasksArray = useTasks() // *** insert query to get back filtered list
+	let filteredTasksArray = useTaskList() // *** insert query to get back filtered list
 
 	function handleClick(e) {
 		navigate('editTask')

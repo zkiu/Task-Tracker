@@ -7,7 +7,7 @@ import firebase from 'firebase/app'
 // *** impletemnt filtering by userId in the leadName or responsible name
 /*******************************************************************/
 
-export default function useTasks() {
+export default function useTaskList() {
 	const [tasks, setTasks] = useState([])
 
 	// -- NOTE refer to the comments in useComments for details of the code below
