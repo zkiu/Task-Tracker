@@ -5,11 +5,9 @@ import {useTaskList} from '../services/task/useTaskList'
 
 // ** need to add component to filter/query through tasks before sending array to TaskList
 export default function DashboardPage() {
-	// *** set so that users can only see their own task when responsible or created (if L2 then created, and responsible, L1 if responsible)
 	// *** query based on priority, keywords in task name, MAYBE on due dates???
 	// *** sort result before sending off??
-	// *** implement pagination, so only top 10 records gets shown until user scroll further down or request more
-	// *** https://www.youtube.com/watch?v=poqTHxtDXwU&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=7
+	// *** implement pagination, so only top 10 records gets shown until user scroll further down or request more https://www.youtube.com/watch?v=poqTHxtDXwU&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=7
 
 	let filteredTasksArray = useTaskList() // *** insert query to get back filtered list
 
