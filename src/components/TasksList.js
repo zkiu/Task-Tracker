@@ -71,7 +71,7 @@ export default function TasksList({filteredTasksArray}) {
 	// -- NOTE: the class 'accordion' was added below so that only one element is shown while the rest is collapsed. To have multiple tasks elements uncollapsed at the same time, remove the accordion class, and take out the id="taskListaccordion" below as well as the data-parent="#taskListaccordion" in the .map() function
 	return (
 		<>
-			<h1>BELOW IS THE TASK LIST:</h1>
+			{/* <h1>BELOW IS THE TASK LIST:</h1> */}
 			<div className="accordion" id="taskListaccordion">
 				{myTask}
 			</div>
