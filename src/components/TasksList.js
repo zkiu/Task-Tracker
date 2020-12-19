@@ -5,8 +5,6 @@ import {navigate} from '@reach/router'
 
 // -- This compenent displays a list of tasks from a filtered Array passed on to it from Dashboard
 export default function TasksList({filteredTasksArray}) {
-	// *** Feature - change list item background colour based on priority or status ??
-
 	if (filteredTasksArray.length === 0) {
 		return <h3>There are currently no task associated with your user name.</h3>
 	}

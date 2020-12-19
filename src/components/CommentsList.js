@@ -4,8 +4,6 @@ import useComments from '../services/task/useComments'
 export default function CommentsList({taskId}) {
 	const commentsArray = useComments(taskId) // -- returns an array of comment objects
 
-	// *** can apply a date sort to the array before mapping the JSX
-
 	let commentJSX = commentsArray.map((comment) => {
 		// -- each comment object has to have at least the following keyss: id, timestamp, description, userId, name, email
 		return (

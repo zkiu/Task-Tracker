@@ -29,5 +29,3 @@ export default function TaskPage() {
 		</div>
 	)
 }
-
-// *** based on user's jobLevel, some fields cannot be changed

@@ -1,5 +1,3 @@
-// *** create index in firestore to add compound filtering
-
 import {useState, useEffect} from 'react'
 import firebase from 'firebase/app'
 
