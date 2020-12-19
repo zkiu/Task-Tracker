@@ -2,8 +2,13 @@ import {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
 import {getCurrentAuthUser} from '../firebaseAuth/getCurrentAuthUser'
 
-// -- returns a realtime array of task for the given userId, either they are the creator or assigned as the one responsible
-// -- NOTE refer to the comments in useComments for detail innerworkings of the code below
+/*
+Returns a realtime array of task Objects for the given the currently logged on userId, either they are the creator or assigned as the one responsible
+
+ex: [{dateCreated, dateDue, nameResponsible, nameResponsibleId, nameTaskCreator, nameTaskCreatorId, priority, status, taskDescription, taskName}]
+
+-- NOTE refer to the comments in useComments for detail innerworkings of the code below
+*/
 export const useTaskList = () => {
 	let userAuthObj = getCurrentAuthUser()
 	const [tasksCreator, setTasksCreator] = useState([])
