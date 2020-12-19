@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import TasksList from '../components/TasksList'
 import {navigate} from '@reach/router'
 import {useTaskList} from '../services/task/useTaskList'
+import {filterTask} from '../services/task/filterTask'
 
 // ** need to add component to filter/query through tasks before sending array to TaskList
 export default function DashboardPage() {
@@ -9,12 +10,14 @@ export default function DashboardPage() {
 	// *** sort result before sending off??
 	// *** implement pagination, so only top 10 records gets shown until user scroll further down or request more https://www.youtube.com/watch?v=poqTHxtDXwU&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=7
 
-	let filteredTasksArray = useTaskList() // *** insert query to get back filtered list
-
 	const [orderBy, setOrderby] = useState('date')
 	const [searchCriteria, setSearchCriteria] = useState('')
+	let taskList = useTaskList()
+
+	let filteredTasksArray = filterTask(taskList, searchCriteria, orderBy)
 
 	function handleClick(e) {
+		e.preventDefault()
 		navigate('editTask')
 	}
 	return (
