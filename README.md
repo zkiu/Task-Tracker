@@ -6,8 +6,17 @@ The code for this is available at https://github.com/zkiu/.... The page can be a
 
 --- Current to-do as of 2020-12-12:
 DashboardPage - implement query and sort
-General - implement more security in code, check validation for the project, HTML - set tabindex attribute for Aria, make validation and sanatize input fields
+
+General
+
+- pretty things with floating labels with bootstrap
+- implement more security in code, check validation for the project, HTML - set tabindex attribute for Aria, make validation and sanatize input fields
+- add info display when hovering over fields and other important items
+
 Feature - when archiving a task, it gets move to a different collection, so as searching the task collection is faster
-firebase - update security rules
+
+Firebase - update security rules
+
 CSS - address responsive page break display issues: dashboard width < 770px
+
 Finally - deploy the code by using Google Function
