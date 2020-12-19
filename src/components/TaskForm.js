@@ -39,8 +39,15 @@ export default function TaskForm({taskId = null}) {
 		nameTaskCreator: '',
 		nameTaskCreatorId: '',
 	})
-
-	let employeeList = useEmployeeList().map((item) => {
+	// -- load employee list for dropdown menu
+	let employeeL1List = useEmployeeList('L1').map((item) => {
+		return (
+			<option key={item.id} data-key={item.id} value={item.name}>
+				<span className="pl-1">{'hello'}</span>
+			</option>
+		)
+	})
+	let employeeL2List = useEmployeeList('L2').map((item) => {
 		return (
 			<option key={item.id} data-key={item.id} value={item.name}>
 				{item.name}
@@ -291,9 +298,13 @@ export default function TaskForm({taskId = null}) {
 							onChange={handleResponsibleNameChange}
 						>
 							<option defaultValue value="">
-								Appoint Responsible Level 1 Employee...
+								- L1 General Employees: -
 							</option>
-							{employeeList}
+							{employeeL1List}
+							<option defaultValue value="">
+								- L2 Supervisor Level: -
+							</option>
+							{employeeL2List}
 						</select>
 					</div>
 				</div>

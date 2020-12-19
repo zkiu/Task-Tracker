@@ -5,16 +5,18 @@ import firebase from 'firebase/app'
 
 /*
 useEmployeeList is a custom React Hook.
+params: jobLevel is string L1 or L2
 returns a realtime array of employees at the JOBLEVEL 1
+
 */
-export default function useEmployeeList() {
+export default function useEmployeeList(jobLevel) {
 	const [employees, setEmployees] = useState([])
 
 	useEffect(() => {
 		const usersRef = firebase.firestore().collection('users')
 
 		const unsubscribe = usersRef
-			.where('jobLevel', '==', 'L1')
+			.where('jobLevel', '==', jobLevel)
 			// .orderBy('name', 'desc')
 			.onSnapshot(
 				(snapshot) => {
