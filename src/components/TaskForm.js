@@ -43,7 +43,7 @@ export default function TaskForm({taskId = null}) {
 	let employeeL1List = useEmployeeList('L1').map((item) => {
 		return (
 			<option key={item.id} data-key={item.id} value={item.name}>
-				<span className="pl-1">{'hello'}</span>
+				{item.name}
 			</option>
 		)
 	})
@@ -297,14 +297,13 @@ export default function TaskForm({taskId = null}) {
 							value={taskObj.nameResponsible}
 							onChange={handleResponsibleNameChange}
 						>
-							<option defaultValue value="">
-								- L1 General Employees: -
+							<option value="" defaultValue disabled hidden>
+								Select Responsible Employee
 							</option>
-							{employeeL1List}
-							<option defaultValue value="">
-								- L2 Supervisor Level: -
-							</option>
-							{employeeL2List}
+							<optgroup label="L1 General Employees:">
+								{employeeL1List}
+							</optgroup>
+							<optgroup label="L2 Supervisor Level:">{employeeL2List}</optgroup>
 						</select>
 					</div>
 				</div>
