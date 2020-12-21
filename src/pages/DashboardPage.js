@@ -13,8 +13,10 @@ export default function DashboardPage() {
 	const [orderBy, setOrderby] = useState('date')
 	const [searchCriteria, setSearchCriteria] = useState('')
 	let taskList = useTaskList()
-
-	let filteredTasksArray = filterTask(taskList, searchCriteria, orderBy)
+	let filteredTasksArray = []
+	if (taskList.length !== 0 && taskList !== undefined && taskList !== null) {
+		filteredTasksArray = filterTask(taskList, searchCriteria, orderBy)
+	}
 
 	function handleClick(e) {
 		e.preventDefault()
