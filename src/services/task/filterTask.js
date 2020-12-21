@@ -21,6 +21,10 @@ function orderByDate(taskList) {
 		return Date.parse(a.dateDue) - Date.parse(b.dateDue)
 		// -- sort in descending order (later to earlier dates)
 		// return Date.parse(b.dateDue) - Date.parse(a.dateDue)
+		/*
+		NOTE: I am using Date.parse to be quick and dirty. Risk: There are still many differences in how different hosts parse date strings.
+		https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
+		*/
 	})
 	return sortArray
 }
