@@ -1,4 +1,6 @@
-// [{dateCreated, dateDue, nameResponsible, nameResponsibleId, nameTaskCreator, nameTaskCreatorId, priority, status, taskDescription, taskName}]
+/*
+Each task in the talk arrray is {dateCreated, dateDue, nameResponsible, nameResponsibleId, nameTaskCreator, nameTaskCreatorId, priority, status, taskDescription, taskName}
+*/
 
 export const filterTask = (taskList, searchCriteria, orderBy) => {
 	let orderedList = []
@@ -30,9 +32,12 @@ function orderByDate(taskList) {
 }
 // -- order an Array of objects by the priority key
 function orderByPriority(taskList) {
-	console.log('ordered by priority')
-	/*******************************************************************/
-	// *** insert sort code
-	/*******************************************************************/
-	return taskList
+	let p1Array = taskList.filter((elt) => {
+		return elt.priority === 'p1'
+	})
+	let p2Array = taskList.filter((elt) => {
+		return elt.priority === 'p2'
+	})
+	// -- then order by due date closest 1st
+	return [...orderByDate(p2Array), ...orderByDate(p1Array)]
 }
