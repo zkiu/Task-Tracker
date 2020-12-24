@@ -59,15 +59,13 @@ export default function DashboardPage() {
 								onChange={(e) => setOrderby(e.target.value)}
 								required
 							>
-								<option defaultValue value="date">
-									Due Date
+								<option value="recent" defaultValue>
+									Recently Added
 								</option>
+								<option value="dueDate">Due Date</option>
 								<option value="priority">Priority</option>
 							</select>
 						</div>
-						{/*  */}
-
-						{/*  */}
 						<TasksList filteredTasksArray={filteredTasksArray} />
 					</div>
 				</div>
