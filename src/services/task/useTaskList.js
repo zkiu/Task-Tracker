@@ -1,12 +1,9 @@
 import {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
 import {getCurrentAuthUser} from '../firebaseAuth/getCurrentAuthUser'
-
 /*
-Returns a realtime array of task Objects for the given the currently logged on userId, either they are the creator or assigned as the one responsible
-
+A wrapper API that RETURNS a realtime array of task Objects associated with the currently logged on userId
 ex: [{dateCreated, dateDue, nameResponsible, nameResponsibleId, nameTaskCreator, nameTaskCreatorId, priority, status, taskDescription, taskName}]
-
 -- NOTE refer to the comments in useComments for detail innerworkings of the code below
 */
 export const useTaskList = () => {
@@ -14,7 +11,7 @@ export const useTaskList = () => {
 	const [tasksCreator, setTasksCreator] = useState([])
 	const [tasksResponsible, setTasksResponsible] = useState([])
 
-	// -- leading Doc where current userId match the creator field
+	// -- loading Docs where current userId match the creator field
 	useEffect(() => {
 		const tasksRef = firebase.firestore().collection('tasks')
 		const unsubscribe = tasksRef
@@ -30,7 +27,7 @@ export const useTaskList = () => {
 		return () => unsubscribe()
 		// eslint-disable-next-line
 	}, [])
-	// -- leading Doc where current userId match the responsible field
+	// -- loading Docs where current userId match the responsible field
 	useEffect(() => {
 		const tasksRef = firebase.firestore().collection('tasks')
 		const unsubscribe = tasksRef
