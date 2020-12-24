@@ -17,6 +17,7 @@ export default async function getTaskObj(taskId) {
 
 	// -- curate what will be returned so we can control future changes better
 	return {
+		id: taskId,
 		dateCreated: simpleDate,
 		dateDue: obj.dateDue,
 		priority: obj.priority,
