@@ -4,18 +4,42 @@ Each task in the talk arrray is {dateCreated, dateDue, nameResponsible, nameResp
 
 export const filterTask = (taskList, searchCriteria, orderBy) => {
 	let orderedList = []
-	if (orderBy === 'date') {
-		orderedList = orderByDate(taskList)
-	}
-	if (orderBy === 'priority') {
-		orderedList = orderByPriority(taskList)
+
+	switch (orderBy) {
+		case 'recent':
+			orderedList = orderByRecent(taskList)
+			break
+		case 'dueDate':
+			orderedList = orderByDate(taskList)
+			break
+		case 'priority':
+			orderedList = orderByPriority(taskList)
+			break
+		default:
+			break
 	}
 	// -- just return the whole list, once sorted, if there are no search criteria
 	if (searchCriteria.length === 0) return orderedList
 
+	if (searchCriteria.length > 0) return orderByKeyword(orderedList)
+
 	return orderedList
 }
 
+// -- order an Array of objects by the most recently added first (dateCreated)
+function orderByRecent(taskList) {
+	let sortArray = taskList.sort((a, b) => {
+		// -- sort in ascending order (earlier to later dates)
+		return Date.parse(a.dateCreated) - Date.parse(b.dateCreated)
+		/*
+		NOTE: I am using Date.parse to be quick and dirty. Risk: There are still many differences in how different hosts parse date strings.
+		https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
+		
+		The Firestore timestamp dateCreated property in the var taskList was converted to a simple date STRING. As such, ordering tasks created on the same day will not exact.
+		*/
+	})
+	return sortArray
+}
 // -- order an Array of objects by the dateDue key
 function orderByDate(taskList) {
 	let sortArray = taskList.sort((a, b) => {
@@ -23,10 +47,6 @@ function orderByDate(taskList) {
 		return Date.parse(a.dateDue) - Date.parse(b.dateDue)
 		// -- sort in descending order (later to earlier dates)
 		// return Date.parse(b.dateDue) - Date.parse(a.dateDue)
-		/*
-		NOTE: I am using Date.parse to be quick and dirty. Risk: There are still many differences in how different hosts parse date strings.
-		https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
-		*/
 	})
 	return sortArray
 }
@@ -40,4 +60,11 @@ function orderByPriority(taskList) {
 	})
 	// -- then order by due date closest 1st
 	return [...orderByDate(p2Array), ...orderByDate(p1Array)]
+}
+// -- order an Array of objects keywords
+function orderByKeyword(taskList) {
+	/*******************************************************************/
+	// -- insert code here
+	/*******************************************************************/
+	return taskList
 }

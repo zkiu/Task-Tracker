@@ -4,20 +4,16 @@ import {navigate} from '@reach/router'
 import {useTaskList} from '../services/task/useTaskList'
 import {filterTask} from '../services/task/filterTask'
 
-// ** need to add component to filter/query through tasks before sending array to TaskList
 export default function DashboardPage() {
-	// *** query based on priority, keywords in task name, MAYBE on due dates???
-	// *** sort result before sending off??
 	// *** implement pagination, so only top 10 records gets shown until user scroll further down or request more https://www.youtube.com/watch?v=poqTHxtDXwU&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=7
 
-	const [orderBy, setOrderby] = useState('date')
+	const [orderBy, setOrderby] = useState('recent')
 	const [searchCriteria, setSearchCriteria] = useState('')
 	let taskList = useTaskList()
 	let filteredTasksArray = []
 	if (taskList.length !== 0 && taskList !== undefined && taskList !== null) {
 		filteredTasksArray = filterTask(taskList, searchCriteria, orderBy)
 	}
-
 	function handleClick(e) {
 		e.preventDefault()
 		navigate('editTask')
@@ -34,8 +30,6 @@ export default function DashboardPage() {
 							Create New Task
 						</button>
 						<p className="lead">Tasks assigned to you:</p>
-						{/*  */}
-
 						<div className="input-group mb-3">
 							<input
 								type="text"
