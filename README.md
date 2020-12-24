@@ -12,6 +12,7 @@ General
 - pretty things with floating labels with bootstrap
 - implement more security in code, check validation for the project, HTML - set tabindex attribute for Aria, make validation and sanatize input fields
 - add info display when hovering over fields and other important items
+- set autocomple to text fields HTML?
 
 Feature - when archiving a task, it gets move to a different collection, so as searching the task collection is faster
 
