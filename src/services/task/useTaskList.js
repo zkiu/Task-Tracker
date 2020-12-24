@@ -40,12 +40,12 @@ const useUserBelongToTask = (userTypeFilter) => {
 						dateDue: obj.dateDue,
 						priority: obj.priority,
 						status: obj.status,
-						nameResponsible: obj.nameResponsible,
-						nameResponsibleId: obj.nameResponsibleId,
 						nameTaskCreator: obj.nameTaskCreator,
 						nameTaskCreatorId: obj.nameTaskCreatorId,
-						taskDescription: obj.taskDescription,
+						nameResponsible: obj.nameResponsible,
+						nameResponsibleId: obj.nameResponsibleId,
 						taskName: obj.taskName,
+						taskDescription: obj.taskDescription,
 					}
 				})
 				setTasks(tasksArray)
