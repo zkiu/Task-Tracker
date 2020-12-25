@@ -2,14 +2,15 @@ import {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
 import {getCurrentAuthUser} from '../firebaseAuth/getCurrentAuthUser'
 /*
-A wrapper API that RETURNS a realtime array of task Objects associated with the currently logged on userId
+A wrapper API that RETURNS a realtime array of task Objects associated with the currently logged on userId by matching either at nameTaskCreator or nameResponsible
+						
 NOTE refer to the comments in useComments for detail innerworkings of the code below
 */
 export const useTaskList = () => {
 	const tasksCreator = useUserBelongToTask('nameTaskCreatorId')
 	const tasksResponsible = useUserBelongToTask('nameResponsibleId')
 	let finalList = [...tasksCreator, ...tasksResponsible]
-	return finalList
+	return removeDuplicateArr(finalList)
 }
 
 // -- Param userTypeFilter is either 'nameTaskCreatorId' or 'nameResponsibleId'
@@ -54,4 +55,19 @@ const useUserBelongToTask = (userTypeFilter) => {
 		// eslint-disable-next-line
 	}, [])
 	return tasks
+}
+
+function removeDuplicateArr(arr) {
+	const getHash = (item) => item.id
+	// to ensure uniqueness of id
+	const seenHash = new Set()
+
+	return arr.filter((item) => {
+		if (seenHash.has(getHash(item))) {
+			return false
+		} else {
+			seenHash.add(getHash(item))
+			return true
+		}
+	})
 }
