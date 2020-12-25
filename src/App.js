@@ -1,7 +1,7 @@
 import React from 'react'
 import {Router} from '@reach/router'
-
-import './FirebaseConfig' // -- initialize firebase
+// -- initialize firebase
+import './FirebaseConfig'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap'
@@ -23,7 +23,7 @@ import {useFirestoreUserDoc} from './services/user/useFirestoreUserDoc'
 /* 
 testing stuff
 */
-import {signIn} from './services/firebaseAuth/signIn' // ************ delete after test
+import {signIn} from './services/firebaseAuth/signIn' // *** delete after test
 /* 
 testing stuff
 */
@@ -42,12 +42,12 @@ function App() {
 
 	return (
 		<div>
-			{/* ************** delete after test}*/}
+			{/*** delete after test}*/}
 			<button onClick={() => signIn('1@1.com', '123123')}>sign-in</button>
 			<br />
 			<button onClick={() => console.log(authUser)}>useAuth user value</button>
 			<br />
-			{/* ************** delete after test}*/}
+			{/*** delete after test}*/}
 
 			<Navigation userObj={userObj} />
 			<Router>

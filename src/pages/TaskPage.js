@@ -16,10 +16,12 @@ export default function TaskPage() {
 	}
 
 	// *** TODO below
-	// -- this path is reached when the url with a taskId is bookmarked, but the task is deleted in the database or the url has been modified
+	// -- this path is reachable when the url with a taskId is bookmarked (and the user is logged in), implement the following:
+	// -- 1. if the task id no longer exist ->
 	// if (!confirmTaskIdExist(taskId)) {
 	// 	return <h1>The task you are looking for doesn't exist</h1>
 	// }
+	// -- 2. set restriction rights to access only the authorized tasks
 
 	return (
 		<div className="container">

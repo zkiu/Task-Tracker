@@ -63,7 +63,7 @@ function searchByKeyword(taskList, searchCriteria = '') {
 	if (searchCriteria.length === 0) return taskList
 	// -- make sure that the search string is sanatized
 	if (containsBadChar(searchCriteria)) {
-		// *** make a better error notification
+		// *** implement a toast/modal for this error notification
 		console.error('This field only accepts letters, digits, and spaces')
 	} else {
 		searchTermArray = extractSearchKeywords(searchCriteria)

@@ -1,9 +1,6 @@
 import firebase from 'firebase/app'
 
 // -- wrapper to firebase for updating a task
-
-// *** implement data cleansing and validation before upload to firestore
-
 export default async function updateTask(taskId, taskObj) {
 	// -- NOTE: ensures that the timestamp is not overwritten
 	delete taskObj.dateCreated

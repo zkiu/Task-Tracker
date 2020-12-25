@@ -6,7 +6,7 @@ import ErrorForm from '../components/ErrorForm'
 
 export default function EditUserPage() {
 	// -- user id to be modified is taken from the url
-	// *** this means that any log-in user can modify other users as long as they have the id. TODO: set restrictions based on jobLevel
+	// *** currently any log-in user can modify other user info (name and jobLevel) as long as they have the user's unique firestore id number. To set restrictions based on jobLevel
 	const userId = useParams().userId
 
 	// *** adding an email and password update feature means accessing firebase.auth(). This project will just stick with just database changes for now (firestore)
