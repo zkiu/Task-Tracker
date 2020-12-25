@@ -10,6 +10,7 @@ import useEmployeeList from '../services/task/useEmployeeList'
 import addTask from '../services/task/addTask'
 import updateTask from '../services/task/updateTask'
 import addComment from '../services/task/addComment'
+import {containsBadChar} from '../services/general/containsBadChar'
 
 export default function TaskForm({taskId = null}) {
 	const [userObj, setuserObj] = useState({})
@@ -40,6 +41,7 @@ export default function TaskForm({taskId = null}) {
 		nameTaskCreatorId: '',
 	})
 	// -- load employee list for dropdown menu
+	// -- currently allowing the task creator to assign themselves as the one responsible
 	let employeeL1List = useEmployeeList('L1').map((item) => {
 		return (
 			<option key={item.id} data-key={item.id} value={item.name}>
@@ -91,7 +93,7 @@ export default function TaskForm({taskId = null}) {
 		}
 	}, [taskId])
 	// -- deactivate fields based on job level
-	// *** Also need to have security redundancy on the server side with security rules (else user can remove the disabled attribute in the browser and submit unauthorized datafields )
+	// *** Also need to implement security redundancy on the server side with security rules (else user can remove the disabled attribute in the browser and submit unauthorized datafields )
 	useEffect(() => {
 		let securedElements = document.querySelectorAll('[data-secured]')
 		if (taskId !== null && userObj.jobLevel === 'L1') {
@@ -195,30 +197,54 @@ export default function TaskForm({taskId = null}) {
 		e.preventDefault()
 		// -- if creating a new task
 		if (taskId === null) {
-			let newTask = await addTask({
-				...taskObj,
-				nameTaskCreator: userObj.name, //-- name is entered directly along side the userId, so that we don't have to do another query to look up the name from the user id
-				nameTaskCreatorId: userObj.id,
-				dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
-			})
-			// -- auto generate comment about task created by so and so
-			autoCommentBot(newTask.id, 'Auto Message: Task is created')
-
-			alert('New task is saved') // *** make this into a toast/modal
-			navigate('../dashboard')
-		} else {
-			// -- if updating a task
-			let result = await updateTask(taskId, taskObj)
-
-			if (result) {
+			//data validation before upload to firestore
+			if (
+				containsBadChar(taskObj.taskName) ||
+				containsBadChar(taskObj.taskDescription)
+			) {
+				// *** update this error message into a toast
+				console.error(
+					'Comments cannot contain special characters. Please only use numbers and letters. Space, periods, exclamation points, and question marks are okay. Please remove the special characters before saving'
+				)
+			} else {
+				// -- once data validaitno is passed
+				let newTask = await addTask({
+					...taskObj,
+					nameTaskCreator: userObj.name, //-- name is entered directly along side the userId, so that we don't have to do another query to look up the name from the user id
+					nameTaskCreatorId: userObj.id,
+					dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+				})
 				// -- auto generate comment about task created by so and so
-				autoCommentBot(taskId, 'Auto Message: Task was modified')
+				autoCommentBot(newTask.id, 'Auto Message: Task is created')
 
-				alert('Task is updated') // *** make this into a toast/modal
-				// -- don't navigate away as the user may edit further information
+				alert('New task is saved') // *** make this into a toast/modal
+				navigate('../dashboard')
+			}
+		} else {
+			// UPDATING a task
 
-				// -- Once setExistingTaskObj is triggered, the useEffect to Activate/Deactivate kicks in and disables the button agai
-				setExistingTaskObj(taskObj)
+			//data validation before upload to firestore
+			if (
+				containsBadChar(taskObj.taskName) ||
+				containsBadChar(taskObj.taskDescription)
+			) {
+				// *** update this error message into a toast
+				console.error(
+					'Comments cannot contain special characters. Please only use numbers and letters. Space, periods, exclamation points, and question marks are okay. Please remove the special characters before saving'
+				)
+			} else {
+				let result = await updateTask(taskId, taskObj)
+
+				if (result) {
+					// -- auto generate comment about task created by so and so
+					autoCommentBot(taskId, 'Auto Message: Task was modified')
+
+					alert('Task is updated') // *** make this into a toast/modal
+					// -- don't navigate away as the user may edit further information
+
+					// -- Once setExistingTaskObj is triggered, the useEffect to Activate/Deactivate kicks in and disables the button agai
+					setExistingTaskObj(taskObj)
+				}
 			}
 		}
 	}
