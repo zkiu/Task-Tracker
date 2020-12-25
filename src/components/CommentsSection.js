@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import CommentsList from '../components/CommentsList'
 import {getCurrentUserInfo} from '../services/user/getCurrentUserInfo'
 import addComment from '../services/task/addComment'
+import {containsBadChar} from '../services/general/containsBadChar'
 
 export default function CommentsSection({taskId}) {
 	const [newComment, setNewComment] = useState('')
@@ -13,7 +14,6 @@ export default function CommentsSection({taskId}) {
 	}
 
 	async function handleSubmit(e) {
-		// *** use function to sanatize the comment field before sending off
 		e.preventDefault() // -- prevents reloading when the 'enter' key is pressed when typing in the input field
 		try {
 			const userObj = await getCurrentUserInfo() // -- returns Null if no user is logged in
@@ -22,13 +22,18 @@ export default function CommentsSection({taskId}) {
 				// -- execute this if userObj is Null
 				throw new Error('User information cannot be verified')
 			}
-
-			await addComment(taskId, newComment, userObj) // -- currentlyLoggedInUser is an object with the key id, name, email
-			// *** handle the return for addComment
-
-			setNewComment('') // -- resets the form after submitting
-
-			// -- because onSnapshop was used to generate the list of comments, the new comment should automatically be displayed
+			// sanatize the comment field before sending off
+			if (containsBadChar(newComment)) {
+				// *** update this error message into a toast
+				console.error(
+					'Comments cannot contain special characters. Please only use numbers and letters. Space, periods, exclamation points, and question marks are okay. Please remove the special characters before saving'
+				)
+			} else {
+				// -- currentlyLoggedInUser is an object with the key id, name, email
+				await addComment(taskId, newComment, userObj)
+				setNewComment('') // -- resets the form after submitting
+				// -- because onSnapshop was used to generate the list of comments, the new comment should automatically be displayed
+			}
 		} catch (error) {
 			alert(error.message)
 		}
