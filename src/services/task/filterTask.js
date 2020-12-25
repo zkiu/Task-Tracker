@@ -1,6 +1,5 @@
-/*
-Each task in the talk arrray is {dateCreated, dateDue, nameResponsible, nameResponsibleId, nameTaskCreator, nameTaskCreatorId, priority, status, taskDescription, taskName}
-*/
+import {containsBadChar} from '../general/containsBadChar'
+import {extractSearchKeywords} from '../general/extractSearchKeywords'
 
 export const filterTask = (taskList, searchCriteria, orderBy) => {
 	let orderedList = []
@@ -18,12 +17,7 @@ export const filterTask = (taskList, searchCriteria, orderBy) => {
 		default:
 			break
 	}
-	// -- just return the whole list, once sorted, if there are no search criteria
-	if (searchCriteria.length === 0) return orderedList
-
-	if (searchCriteria.length > 0) return orderByKeyword(orderedList)
-
-	return orderedList
+	return searchByKeyword(orderedList, searchCriteria)
 }
 
 // -- order an Array of objects by the most recently added first (dateCreated)
@@ -62,9 +56,32 @@ function orderByPriority(taskList) {
 	return [...orderByDate(p2Array), ...orderByDate(p1Array)]
 }
 // -- order an Array of objects keywords
-function orderByKeyword(taskList) {
-	/*******************************************************************/
-	// -- insert code here
-	/*******************************************************************/
-	return taskList
+function searchByKeyword(taskList, searchCriteria = '') {
+	let searchTermArray = []
+	let results = []
+	// -- just return the whole list if there are no search criteria
+	if (searchCriteria.length === 0) return taskList
+	// -- make sure that the search string is sanatized
+	if (containsBadChar(searchCriteria)) {
+		// *** make a better error notification
+		console.error('This field only accepts letters, digits, and spaces')
+	} else {
+		searchTermArray = extractSearchKeywords(searchCriteria)
+
+		results = taskList.filter((task) => {
+			/*
+			for each keyword in the searchTermArray search in task.taskName and task.taskDescription to see if there is a match
+			stop seach and return false if any keyword is not found in both taskName and taskDescription
+			*/
+			for (const keyword of searchTermArray) {
+				if (
+					!task.taskName.toLowerCase().includes(keyword) &&
+					!task.taskDescription.toLowerCase().includes(keyword)
+				)
+					return false
+			}
+			return true
+		})
+	}
+	return results
 }
