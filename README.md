@@ -4,7 +4,9 @@ This project is the centre piece of Kiu's portfolio. This tracker is used to mon
 
 The code for this is available at https://github.com/zkiu/.... The page can be accessed here https://zkiu.github.io/....
 
---- Current to-do as of 2020-12-12:
+--- Current to-do as of 2020-12-27:
+Create Basic Email Verification Flow using Google Function (instead of the pre built functionallity)
+
 DashboardPage - implement query and sort
 
 General
