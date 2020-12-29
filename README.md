@@ -1,6 +1,8 @@
 # Description
 
-This project is the centre piece of Kiu's portfolio. This tracker is used to monitor more complex tasks than to-do-lists, but less complex than longer term 'project' like tasks. It will demonstrate Kiu's knowledge of the full web development stack, from the font-end to the back-end. The project uses React on the front-end. Firebase services (Authentication, Firestore, and Hosting) will provide server services to this app. The code contains a functions folder that starts to explore using Google Cloud Functions. However, it is not yet integrated into the main production code.
+This project is the centre piece of Kiu's portfolio. This tracker is used to monitor more complex tasks than to-do-lists, but less complex than longer term 'project' like tasks. It will demonstrate Kiu's knowledge of the full web development stack, from the font-end to the back-end. The project uses React on the front-end. Firebase services (Authentication, Firestore, and Hosting) will provide server services to this app.
+
+The code contains a functions folder that starts to explore using Google Cloud Functions. However, it is not yet integrated into the main production code. The reason not to implement at this momoent due because Firebase requires the Blaze plan (pay as you go) instead of the Spark plan (free).
 
 The code for this is available at https://github.com/zkiu/.... The page can be accessed here https://zkiu.github.io/....
 
