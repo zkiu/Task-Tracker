@@ -36,6 +36,7 @@ export default function DashboardPage() {
 								className="form-control"
 								aria-label="Text input with dropdown button"
 								placeholder="Enter search keywords..."
+								autoFocus
 								value={searchCriteria}
 								onChange={(e) => setSearchCriteria(e.target.value)}
 							/>
