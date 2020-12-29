@@ -1,6 +1,8 @@
 require('regenerator-runtime/runtime')
-const functions = require('firebase-functions')
-const buildFunctions = require('./build')
+const admin = require('firebase-admin')
+const buildFunctions = require('./build').default
+
+admin.initializeApp()
 
 Object.keys(buildFunctions).forEach((functionName) => {
 	exports[functionName] = buildFunctions[functionName]

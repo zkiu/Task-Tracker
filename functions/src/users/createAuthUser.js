@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin'
 
 /* 
-Were are not making wrapper functions for this, because these codes are to be used with Google function.
+Were are not making wrapper functions for this, because these codes are to be used with Google Cloud functions.
  */
 export const createAuthUser = async (newUserInfo) => {
 	const auth = admin.auth()
