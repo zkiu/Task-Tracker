@@ -7,7 +7,6 @@ The code contains a functions folder that starts to explore using Google Cloud F
 The code for this is available at https://github.com/zkiu/.... The page can be accessed here https://zkiu.github.io/....
 
 --- Current to-do as of 2020-12-27:
-Create Basic Email Verification Flow using Google Cloud Functions (instead of the pre built functionallity)
 
 - pretty things with floating labels with bootstrap
 - implement more security in code, check validation for the project, HTML - set tabindex attribute for Aria, make validation and sanatize input fields
