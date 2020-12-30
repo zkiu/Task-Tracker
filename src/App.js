@@ -20,14 +20,6 @@ import {ProtectedRoute} from './services/general/ProtectedRoute'
 import {useAuth} from './services/firebaseAuth/useAuth'
 import {useFirestoreUserDoc} from './services/user/useFirestoreUserDoc'
 
-/* 
-testing stuff
-*/
-import {signIn} from './services/firebaseAuth/signIn' // *** delete after test
-/* 
-testing stuff
-*/
-
 function App() {
 	let userId = null
 	// -- updates when login status changes, 'user' has property user.id and user.email
@@ -42,13 +34,6 @@ function App() {
 
 	return (
 		<div>
-			{/*** delete after test}*/}
-			<button onClick={() => signIn('1@1.com', '123123')}>sign-in</button>
-			<br />
-			<button onClick={() => console.log(authUser)}>useAuth user value</button>
-			<br />
-			{/*** delete after test}*/}
-
 			<Navigation userObj={userObj} />
 			<Router>
 				<HomePage path="/" isAuth={!!authUser} />
