@@ -1,0 +1,72 @@
+/*
+POPOUT Button component to link back to Kiu's portfolio
+has the css, js, and html component
+THis component enable a hovering action for the banner 'Return to Kiu's resume page'
+*/
+/* initial load animation */
+.return-pop-out {
+	-webkit-animation-name: tabPopOut;
+	animation-name: tabPopOut;
+	-webkit-animation-duration: 4s;
+	animation-duration: 4s;
+	-webkit-animation-delay: 1s;
+	animation-delay: 1s;
+	-webkit-animation-iteration-count: 1;
+	animation-iteration-count: 1;
+}
+@-webkit-keyframes tabPopOut {
+	0% {
+		right: -205px;
+	}
+	50% {
+		right: 0;
+	}
+	100% {
+		right: -205px;
+	}
+}
+@keyframes tabPopOut {
+	0% {
+		right: -205px;
+	}
+	50% {
+		right: 0;
+	}
+	100% {
+		right: -205px;
+	}
+}
+/* banner style scheme */
+.return-pop-out {
+	right: -205px;
+	bottom: 20%;
+	display: block;
+	position: fixed;
+	z-index: 99;
+	background-color: rgba(255, 208, 0, 0.9);
+	color: black;
+	border: 1px solid orange;
+	border-right: none;
+	border-radius: 5px 0 0 5px;
+	text-decoration: none;
+	-webkit-transition: -webkit-transform 0.5s;
+	transition: -webkit-transform 0.5s;
+	transition: transform 0.5s;
+	transition: transform 0.5s, -webkit-transform 0.5s;
+	cursor: pointer;
+}
+/* link reaction on hover */
+.return-pop-out:hover {
+	text-decoration: none;
+}
+/* icon styling */
+.return-pop-out .icon {
+	font-size: 2em;
+	margin: 5px;
+}
+/* banner text styling */
+.return-pop-out #return {
+	font-size: 1em;
+	display: inline-block;
+	margin-right: 5px;
+}

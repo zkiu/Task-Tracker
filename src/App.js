@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap'
 import './App.css'
 
+import BtnPortfolio from './components/resumeBanner/BtnPortfolio'
 import Navigation from './components/Navigation'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
@@ -35,6 +36,7 @@ function App() {
 	return (
 		<div id="app">
 			<Navigation userObj={userObj} />
+			<BtnPortfolio />
 			<Router>
 				<HomePage path="/" isAuth={!!authUser} />
 				<LoginPage path="login" />
