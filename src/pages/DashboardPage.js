@@ -26,11 +26,13 @@ export default function DashboardPage() {
 						<div className="display-4 text-primary mt-3 mb-2">
 							Task Dashboard
 						</div>
-						<button className="btn btn-secondary" onClick={handleClick}>
+						<button
+							className="btn btn-secondary mt-4 mb-2"
+							onClick={handleClick}
+						>
 							Create New Task
 						</button>
-						<p className="lead">Tasks assigned to you:</p>
-						<div className="input-group mb-3">
+						<div className="input-group mb-1">
 							<input
 								type="text"
 								className="form-control"
