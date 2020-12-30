@@ -33,7 +33,7 @@ function App() {
 	let userObj = useFirestoreUserDoc(userId)
 
 	return (
-		<div>
+		<div id="app">
 			<Navigation userObj={userObj} />
 			<Router>
 				<HomePage path="/" isAuth={!!authUser} />
