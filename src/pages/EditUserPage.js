@@ -92,12 +92,13 @@ export default function EditUserPage() {
 											Name
 										</label>
 										<input
-											className="form-control"
+											required
+											autoComplete="true"
+											className="form-control border border-primary"
 											type="text"
 											id="name"
 											placeholder="Name"
 											name="name"
-											required
 											value={newData.name}
 											onChange={handleChange}
 										/>
@@ -131,7 +132,7 @@ export default function EditUserPage() {
 								<div className="form-group text-right mb-0">
 									<button
 										id="submitButton"
-										className="btn btn-primary"
+										className="btn btn-secondary"
 										type="submit"
 									>
 										Update Info

@@ -23,9 +23,7 @@ export default function DashboardPage() {
 			<div className="container text-center">
 				<div className="row justify-content-center">
 					<div className="col-10 col-md-10 col-lg-8 col-xl-7">
-						<div className="display-4 text-primary mt-3 mb-2">
-							Task Dashboard
-						</div>
+						<h1 className="display-4 text-primary mt-3 mb-2">Task Dashboard</h1>
 						<button
 							className="btn btn-secondary mt-4 mb-2"
 							onClick={handleClick}
@@ -35,7 +33,7 @@ export default function DashboardPage() {
 						<div className="input-group mb-1">
 							<input
 								type="text"
-								className="form-control"
+								className="form-control border border-primary"
 								aria-label="Text input with dropdown button"
 								placeholder="Enter search keywords..."
 								autoFocus

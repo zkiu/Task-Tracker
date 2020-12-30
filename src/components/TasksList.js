@@ -6,7 +6,11 @@ import {navigate} from '@reach/router'
 // -- This compenent displays a list of tasks from a filtered Array passed on to it from Dashboard
 export default function TasksList({filteredTasksArray}) {
 	if (filteredTasksArray.length === 0) {
-		return <h3>There are currently no task associated with your user name.</h3>
+		return (
+			<h4 className="text-white-50 mt-4">
+				There are currently no task associated with your account.
+			</h4>
+		)
 	}
 
 	function handleClick(e, taskId) {

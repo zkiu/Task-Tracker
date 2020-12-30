@@ -54,7 +54,9 @@ function Login() {
 									</label>
 									<input
 										required
-										className="form-control"
+										autoFocus
+										autoComplete="true"
+										className="form-control border border-primary"
 										type="email"
 										id="email"
 										name="email"
@@ -66,7 +68,8 @@ function Login() {
 								<section className="form-group">
 									<input
 										required
-										className="form-control"
+										autoComplete="true"
+										className="form-control border border-primary"
 										type="password"
 										name="password"
 										placeholder="Password"
@@ -75,14 +78,9 @@ function Login() {
 									/>
 								</section>
 								<div className="form-group text-right mb-0">
-									<button className="btn btn-primary" type="submit">
+									<button className="btn btn-secondary" type="submit">
 										Log in
 									</button>
-								</div>
-								<div>
-									*Note that your login credentials will be remembered on this
-									browser/computer. When using a public computer, please logout
-									after completing your updates.
 								</div>
 							</div>
 						</div>

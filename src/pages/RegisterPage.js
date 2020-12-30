@@ -80,12 +80,14 @@ function Register() {
 											Name
 										</label>
 										<input
-											className="form-control"
+											required
+											autoFocus
+											autoComplete="true"
+											className="form-control border border-primary"
 											type="text"
 											id="name"
 											placeholder="Name"
 											name="name"
-											required
 											value={regData.name}
 											onChange={handleChange}
 										/>
@@ -100,11 +102,12 @@ function Register() {
 											Email
 										</label>
 										<input
-											className="form-control"
+											required
+											autoComplete="true"
+											className="form-control border border-primary"
 											type="email"
 											id="email"
 											placeholder="Email Address"
-											required
 											name="email"
 											value={regData.email}
 											onChange={handleChange}
@@ -137,7 +140,9 @@ function Register() {
 								<div className="form-row">
 									<section className="col-sm-6 form-group">
 										<input
-											className="form-control"
+											required
+											autoComplete="true"
+											className="form-control border border-primary"
 											type="password"
 											name="passOne"
 											placeholder="Password"
@@ -147,9 +152,10 @@ function Register() {
 									</section>
 									<section className="col-sm-6 form-group">
 										<input
-											className="form-control"
-											type="password"
 											required
+											autoComplete="true"
+											className="form-control border border-primary"
+											type="password"
 											name="passTwo"
 											placeholder="Repeat Password"
 											value={regData.passTwo}
@@ -158,7 +164,7 @@ function Register() {
 									</section>
 								</div>
 								<div className="form-group text-right mb-0">
-									<button className="btn btn-primary" type="submit">
+									<button className="btn btn-secondary" type="submit">
 										Register
 									</button>
 								</div>

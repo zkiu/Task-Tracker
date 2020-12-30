@@ -40,12 +40,12 @@ export default function CommentsSection({taskId}) {
 	}
 
 	return (
-		<div className="border p-2">
+		<div className="border p-2 card">
 			<form className="input-group mb-3" onSubmit={handleSubmit}>
 				<input
 					name="comment"
 					type="text"
-					className="form-control"
+					className="form-control border border-primary"
 					placeholder="Add a new comment..."
 					aria-label="New comment input field"
 					aria-describedby="button-comment"

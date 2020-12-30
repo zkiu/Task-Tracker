@@ -10,7 +10,7 @@ function Navigation({userObj}) {
 	}
 
 	return (
-		<nav className="site-nav family-sans navbar navbar-expand bg-primary navbar-dark higher">
+		<nav className="site-nav family-sans navbar navbar-expand bg-primary navbar-dark">
 			<div className="container-fluid">
 				<Link to="/" className="navbar-brand">
 					<RiCheckDoubleLine className="mr-1" />

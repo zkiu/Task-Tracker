@@ -265,10 +265,14 @@ export default function TaskForm({taskId = null}) {
 	return (
 		<>
 			{/* display of heading will depend of status of taskId */}
-			{taskId === null && <h1>Create a New Task</h1>}
-			{taskId !== null && <h1>Update the Task</h1>}
+			{taskId === null && (
+				<h2 className="text-primary my-3">Create New Task Form</h2>
+			)}
+			{taskId !== null && (
+				<h2 className="text-primary my-3">Update Task Form</h2>
+			)}
 
-			<form className="border p-2" onSubmit={handleSubmit}>
+			<form className="border p-2 bg-light card" onSubmit={handleSubmit}>
 				<div className="form-row">
 					<div className="form-group col-md-3">
 						<label className="form-control-label" htmlFor="priority">
@@ -403,7 +407,7 @@ export default function TaskForm({taskId = null}) {
 					Task Name:
 				</label>
 				<input
-					className="form-control"
+					className="form-control border border-primary"
 					type="text"
 					id="taskName"
 					placeholder="Enter Task Name..."
@@ -417,7 +421,7 @@ export default function TaskForm({taskId = null}) {
 					Task Description:
 				</label>
 				<textarea
-					className="form-control"
+					className="form-control border border-primary"
 					name="taskDescription"
 					id="taskDescription"
 					required
@@ -427,15 +431,16 @@ export default function TaskForm({taskId = null}) {
 					cols="30"
 					rows="5"
 				></textarea>
-
-				<button
-					id="submitButton"
-					className="btn btn-primary mt-2"
-					type="submit"
-				>
-					{taskId === null && 'Create Task'}
-					{taskId !== null && 'Update Task'}
-				</button>
+				<div className="form-group text-right mb-0">
+					<button
+						id="submitButton"
+						className="btn btn-secondary mt-2"
+						type="submit"
+					>
+						{taskId === null && 'Create Task'}
+						{taskId !== null && 'Update Task'}
+					</button>
+				</div>
 			</form>
 		</>
 	)
