@@ -13,6 +13,7 @@ The code for this is available at https://github.com/zkiu/.... The page can be a
 
 --- Current to-do as of 2020-12-27:
 
+- !!! ad pagination to the comment list
 - pretty things with floating labels with bootstrap
 - implement more security in code, check validation for the project, HTML - set tabindex attribute for Aria, make validation and sanatize input fields
 - add info display when hovering over fields and other important items
