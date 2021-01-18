@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
-// import useComments from '../services/task/useComments'
+import firebase from 'firebase/app'
+
 import {loadMoreComments} from '../services/task/loadMoreComments'
 
 export default function CommentsList({taskId}) {
@@ -10,23 +11,32 @@ export default function CommentsList({taskId}) {
 	const queryLimit = 5
 
 	useEffect(() => {
-		async function getTasks(taskId) {
-			try {
-				setIsLoading(true)
-				// -- loading 1st set of comments
-				const {lastComment, commentList} = await loadMoreComments(
-					taskId,
-					queryLimit
-				)
-				setInitialComments(commentList)
-				setComments(commentList)
-				setLastRetrievedDoc(lastComment)
-				setIsLoading(false)
-			} catch (error) {
-				console.error("Can't load comments")
+		setIsLoading(true)
+		const commentsRef = firebase
+			.firestore()
+			.collection('tasks')
+			.doc(taskId)
+			.collection('comments')
+			.orderBy('timestamp', 'desc')
+			.limit(queryLimit)
+
+		const unsubscribe = commentsRef.onSnapshot(
+			(snapshot) => {
+				const commentsArray = snapshot.docs.map((doc) => ({
+					id: doc.id,
+					...doc.data({serverTimestamps: 'estimate'}),
+				}))
+				setInitialComments(commentsArray)
+				setComments(commentsArray)
+				setLastRetrievedDoc(snapshot.docs[snapshot.docs.length - 1])
+			},
+			(error) => {
+				throw new Error('Error: ' + error.message)
 			}
-		}
-		getTasks(taskId)
+		)
+		setIsLoading(false)
+
+		return () => unsubscribe()
 	}, [taskId])
 
 	useEffect(() => {
@@ -61,7 +71,7 @@ export default function CommentsList({taskId}) {
 	}
 
 	let commentJSX = comments.map((comment) => (
-		// -- each comment object has to have at least the following keyss: id, timestamp, description, userId, name, email
+		// -- each comment object has to have at least the following keys: id, timestamp, description, userId, name, email
 		<li className="list-group-item list-group-item-action" key={comment.id}>
 			<div className="d-flex w-100 justify-content-between">
 				<a

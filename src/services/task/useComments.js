@@ -1,3 +1,5 @@
+// !!! CURRENTLY NOT BEING USED IN THE PROJECT ANYMORE, BUT GOOD TO KEEP AROUND TO USE AS A REFERENCE
+
 import {useState, useEffect} from 'react'
 import firebase from 'firebase/app'
 
