@@ -24,7 +24,7 @@ export const filterTask = (taskList, searchCriteria, orderBy) => {
 function orderByRecent(taskList) {
 	let sortArray = taskList.sort((a, b) => {
 		// -- sort in ascending order (earlier to later dates)
-		return Date.parse(a.dateCreated) - Date.parse(b.dateCreated)
+		return Date.parse(b.dateCreated) - Date.parse(a.dateCreated)
 		/*
 		NOTE: I am using Date.parse to be quick and dirty. Risk: There are still many differences in how different hosts parse date strings.
 		https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
