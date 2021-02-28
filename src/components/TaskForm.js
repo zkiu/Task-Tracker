@@ -204,7 +204,7 @@ export default function TaskForm({taskId = null}) {
 			) {
 				// *** update this error message into a toast
 				console.error(
-					'Comments cannot contain special characters. Please only use numbers and letters. Space, periods, exclamation points, and question marks are okay. Please remove the special characters before saving'
+					'Comments cannot contain special characters other than !?.$%&+-. Please remove the other special characters before saving'
 				)
 			} else {
 				// -- once data validaitno is passed
@@ -230,7 +230,7 @@ export default function TaskForm({taskId = null}) {
 			) {
 				// *** update this error message into a toast
 				console.error(
-					'Comments cannot contain special characters. Please only use numbers and letters. Space, periods, exclamation points, and question marks are okay. Please remove the special characters before saving'
+					'Comments cannot contain special characters other than !?.$%&+-. Please remove the other special characters before saving'
 				)
 			} else {
 				let result = await updateTask(taskId, taskObj)
