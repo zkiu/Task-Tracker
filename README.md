@@ -7,7 +7,7 @@
 
 <p align='center'>Task List shown once logged in.</p>
 <p align="center">
-<img src="https://live.staticflickr.com/65535/51070234862_baec8a2676_c.jpg" width="80%"></p>
+<img src="https://live.staticflickr.com/65535/51070234862_3b8595761c_n.jpg" width="80%"></p>
 <p align='center'>Detail view of individual tasks.</p>
 <p align="center">
 <img src="https://live.staticflickr.com/65535/51072443511_91b88f354f_c.jpg" width="80%"></p>
@@ -19,71 +19,67 @@ Currently, 2 level of editing privileges are implemented: supervisor level and w
 ## The tools
 
 <p align="center">
-<img src="https://live.staticflickr.com/65535/51072631176_a6f514a148_n.jpg" width="100%"></p>
+<img src="https://live.staticflickr.com/65535/51072631176_a6f514a148_n.jpg" width="50%"></p>
 
 This App is put together with React and styled with Bootstrap. Firebase services (Authentication, Firestore, and Hosting) provides various services for this development.
 
 ### Database
 
-The Firestore data is stored as such:
+The Firestore data is stored in 2 root collections: users and tasks.
+
+--> users collection:
 
 ```
-/users/<user doc>/projects/<project doc>
+/users/<user doc>
 ```
 
-Each project document contains the following object:
+Each user document contains the following object:
 
 ```
 {
-	cards: [array of card],
+	id,
+	email,
+	jobLevel,
+	name
+}
+```
+
+--> tasks collection:
+
+```
+/tasks/<task doc>/comments/<comment doc>
+```
+
+Each task document contains the following object:
+
+```
+{
+	id,
 	dateCreated,
-	title,
-}
+	dateDue,
+	nameResponsible,
+	nameResponsibleID,
+	nameTaskCreator,
+	nameTaskCreatorId,
+	priority,
+	status,
+	taskName,
+	taskDescription
+	}
 ```
 
-Each card in the array contains the following object:
+Each task document as an associated comments collection. The comment document has the following structure:
 
 ```
 {
-	imageID,
-	height,
-	width,
-	imgSmall,
-	imgMed,
-	imgLg,
-	paragraph
-}
+	id,
+	comment,
+	email,
+	name,
+	timestamp,
+	userId
+	}
 ```
-
-Pros:
-
-- I found that receiving and writing data to be really easy for the purpose of this app.
-- Restricting access is really straight forward to. Project documents can't be accessed without the user ID. The user ID is determined from the auth token sent from the client side.
-
-Cons:
-
-- This makes implementing a sharing feature for your story in Theater Mode with a 3rd party tricky. Firebase's collectionGroup() method might help overcome this.
-
-### Intergration with 3rd Party Image API
-
-Backend -> Queries the https://www.pexels.com/ API and receives a JSON response of image data.
-
-Frontend -> Loads the image urls from the Pexels server.
-
-## Future scope
-
-- Donations to pay for a responsive server and hosting space.
-- Implementing the sharing of the Theater Mode output to others without logging-in requirements.
-- Add card animations.
-- Instead of a server, migrate to using Google Functions. Netlify seems to offer something similar, which also happens to be called Functions.
-- Move away from a 3rd party image API -> instead host our own database of images (📢 call out to all the artist who wants to showcase their work. I am thinking of tilting the images/illustrations to be more youth centric.)
-- A themes option to select the types of random images received.
-
-## Contributions are Welcome
-
-- Donations for hosting
-- UX/UI help to make the interface more appealing
-- Unique illustrations from Artists. You can sign your images, for accreditation.
 
 ## Contact
 
