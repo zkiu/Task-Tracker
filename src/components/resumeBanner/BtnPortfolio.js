@@ -24,7 +24,7 @@ export default function BtnPortfolio() {
 	return (
 		<aside>
 			<a
-				href="https://zkiu.github.io/kiu-resume-portfolio/"
+				href="https://zkiu.github.io/portfolio/"
 				aria-describedby="return to resume link"
 				tabIndex="20"
 				className="return-pop-out"
