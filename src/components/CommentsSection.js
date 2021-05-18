@@ -45,7 +45,7 @@ export default function CommentsSection({taskId}) {
 				<input
 					name="comment"
 					type="text"
-					className="form-control border border-primary"
+					className="form-control border border-secondary"
 					placeholder="Add a new comment..."
 					aria-label="New comment input field"
 					aria-describedby="button-comment"

@@ -33,7 +33,7 @@ export default function DashboardPage() {
 						<div className="input-group mb-1">
 							<input
 								type="text"
-								className="form-control border border-primary"
+								className="form-control border border-secondary"
 								aria-label="Text input with dropdown button"
 								placeholder="Enter search keywords..."
 								autoFocus
@@ -48,7 +48,7 @@ export default function DashboardPage() {
 								disabled
 							/>
 							<select
-								className="custom-select col-lg-3"
+								className="form-select mb-2 col-lg-3"
 								name="orderBy"
 								value={orderBy}
 								onChange={(e) => setOrderby(e.target.value)}

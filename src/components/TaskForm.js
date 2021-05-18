@@ -279,7 +279,7 @@ export default function TaskForm({taskId = null}) {
 							Priority Level:
 						</label>
 						<select
-							className="custom-select priority"
+							className="form-select mb-2 priority"
 							name="priority"
 							value={taskObj.priority}
 							onChange={handlePriorityChange}
@@ -319,7 +319,7 @@ export default function TaskForm({taskId = null}) {
 							Responsible Employee
 						</label>
 						<select
-							className="custom-select"
+							className="form-select mb-2"
 							name="nameResponsible"
 							id="nameResponsible"
 							required
@@ -343,7 +343,7 @@ export default function TaskForm({taskId = null}) {
 							Task Status:
 						</label>
 						<select
-							className="custom-select status"
+							className="form-select mb-2 status"
 							name="status"
 							id="status"
 							value={taskObj.status}
@@ -407,7 +407,7 @@ export default function TaskForm({taskId = null}) {
 					Task Name:
 				</label>
 				<input
-					className="form-control border border-primary"
+					className="form-control border border-secondary"
 					type="text"
 					id="taskName"
 					placeholder="Enter Task Name..."
@@ -421,7 +421,7 @@ export default function TaskForm({taskId = null}) {
 					Task Description:
 				</label>
 				<textarea
-					className="form-control border border-primary"
+					className="form-control border border-secondary"
 					name="taskDescription"
 					id="taskDescription"
 					required

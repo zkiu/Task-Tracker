@@ -95,7 +95,7 @@ export default function EditUserPage() {
 										<input
 											required
 											autoComplete="true"
-											className="form-control border border-primary"
+											className="form-control border border-secondary"
 											type="text"
 											id="name"
 											placeholder="Name"
@@ -114,7 +114,7 @@ export default function EditUserPage() {
 											Job Level
 										</label>
 										<select
-											className="custom-select"
+											className="form-select mb-2"
 											name="jobLevel"
 											id="jobLevel"
 											value={newData.jobLevel}

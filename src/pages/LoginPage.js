@@ -51,7 +51,7 @@ function Login() {
 
 								<section className="form-group">
 									<label
-										className="form-control-label visually-hidden"
+										className="form-control mb-2-label visually-hidden"
 										htmlFor="Email"
 									>
 										Email
@@ -60,7 +60,7 @@ function Login() {
 										required
 										autoFocus
 										autoComplete="true"
-										className="form-control border border-primary"
+										className="form-control mb-2 border border-secondary"
 										type="email"
 										id="email"
 										name="email"
@@ -73,7 +73,7 @@ function Login() {
 									<input
 										required
 										autoComplete="true"
-										className="form-control border border-primary"
+										className="form-control mb-2 mb-2 border border-secondary"
 										type="password"
 										name="password"
 										placeholder="Password"

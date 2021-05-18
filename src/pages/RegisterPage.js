@@ -75,7 +75,7 @@ function Register() {
 
 									<section className="col-sm-12 form-group">
 										<label
-											className="form-control-label visually-hidden"
+											className="form-control mb-2-label visually-hidden"
 											htmlFor="name"
 										>
 											Name
@@ -84,7 +84,7 @@ function Register() {
 											required
 											autoFocus
 											autoComplete="true"
-											className="form-control border border-primary"
+											className="form-control mb-2 border border-secondary"
 											type="text"
 											id="name"
 											placeholder="Name"
@@ -97,7 +97,7 @@ function Register() {
 								<div className="form-row">
 									<section className="col-sm-6 form-group">
 										<label
-											className="form-control-label visually-hidden"
+											className="form-control mb-2-label visually-hidden"
 											htmlFor="email"
 										>
 											Email
@@ -105,7 +105,7 @@ function Register() {
 										<input
 											required
 											autoComplete="true"
-											className="form-control border border-primary"
+											className="form-control mb-2 border border-secondary"
 											type="email"
 											id="email"
 											placeholder="Email Address"
@@ -116,13 +116,13 @@ function Register() {
 									</section>
 									<section className="col-sm-6 form-group">
 										<label
-											className="form-control-label visually-hidden"
+											className="form-control mb-2-label visually-hidden"
 											htmlFor="name"
 										>
 											Job Level
 										</label>
 										<select
-											className="custom-select"
+											className="form-select border border-secondary mb-2"
 											name="jobLevel"
 											id="jobLevel"
 											value={regData.jobLevel}
@@ -143,7 +143,7 @@ function Register() {
 										<input
 											required
 											autoComplete="true"
-											className="form-control border border-primary"
+											className="form-control mb-2 border border-secondary"
 											type="password"
 											name="passOne"
 											placeholder="Password"
@@ -155,7 +155,7 @@ function Register() {
 										<input
 											required
 											autoComplete="true"
-											className="form-control border border-primary"
+											className="form-control mb-2 border border-secondary"
 											type="password"
 											name="passTwo"
 											placeholder="Repeat Password"
