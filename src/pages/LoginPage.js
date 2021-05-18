@@ -50,7 +50,10 @@ function Login() {
 								)}
 
 								<section className="form-group">
-									<label className="form-control-label sr-only" htmlFor="Email">
+									<label
+										className="form-control-label visually-hidden"
+										htmlFor="Email"
+									>
 										Email
 									</label>
 									<input

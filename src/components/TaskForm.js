@@ -275,7 +275,7 @@ export default function TaskForm({taskId = null}) {
 			<form className="border p-2 bg-light card" onSubmit={handleSubmit}>
 				<div className="form-row">
 					<div className="form-group col-md-3">
-						<label className="form-control-label" htmlFor="priority">
+						<label className="form-label" htmlFor="priority">
 							Priority Level:
 						</label>
 						<select
@@ -298,7 +298,7 @@ export default function TaskForm({taskId = null}) {
 						</select>
 					</div>
 					<div className="form-group col-md-3">
-						<label className="form-control-label" htmlFor="dateDue">
+						<label className="form-label" htmlFor="dateDue">
 							Deadline:
 						</label>
 						<input
@@ -315,7 +315,7 @@ export default function TaskForm({taskId = null}) {
 					</div>
 					<div className="form-group col-md-6">
 						{/* only L1 users can appear here */}
-						<label className="form-control-label" htmlFor="nameResponsible">
+						<label className="form-label" htmlFor="nameResponsible">
 							Responsible Employee
 						</label>
 						<select
@@ -339,7 +339,7 @@ export default function TaskForm({taskId = null}) {
 				</div>
 				<div className="form-row">
 					<div className="form-group col-md-3">
-						<label className="form-control-label " htmlFor="status">
+						<label className="form-label " htmlFor="status">
 							Task Status:
 						</label>
 						<select
@@ -368,7 +368,7 @@ export default function TaskForm({taskId = null}) {
 						{/* only show when the taskId is NOT null (i.e. editing an existing task) */}
 						{taskId !== null && (
 							<>
-								<label className="form-control-label" htmlFor="dateCreated">
+								<label className="form-label" htmlFor="dateCreated">
 									Date Created:
 								</label>
 								<input
@@ -386,7 +386,7 @@ export default function TaskForm({taskId = null}) {
 					<div className="form-group col-md-6">
 						{taskId !== null && (
 							<>
-								<label className="form-control-label" htmlFor="nameTaskCreator">
+								<label className="form-label" htmlFor="nameTaskCreator">
 									Task Creator
 								</label>
 								<input
@@ -403,7 +403,7 @@ export default function TaskForm({taskId = null}) {
 					</div>
 				</div>
 
-				<label className="form-control-label" htmlFor="taskName">
+				<label className="form-label" htmlFor="taskName">
 					Task Name:
 				</label>
 				<input
@@ -417,7 +417,7 @@ export default function TaskForm({taskId = null}) {
 					value={taskObj.taskName}
 					onChange={handleChange}
 				/>
-				<label className="form-control-label" htmlFor="taskDescription">
+				<label className="form-label" htmlFor="taskDescription">
 					Task Description:
 				</label>
 				<textarea

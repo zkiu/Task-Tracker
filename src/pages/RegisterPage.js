@@ -75,7 +75,7 @@ function Register() {
 
 									<section className="col-sm-12 form-group">
 										<label
-											className="form-control-label sr-only"
+											className="form-control-label visually-hidden"
 											htmlFor="name"
 										>
 											Name
@@ -97,7 +97,7 @@ function Register() {
 								<div className="form-row">
 									<section className="col-sm-6 form-group">
 										<label
-											className="form-control-label sr-only"
+											className="form-control-label visually-hidden"
 											htmlFor="email"
 										>
 											Email
@@ -116,7 +116,7 @@ function Register() {
 									</section>
 									<section className="col-sm-6 form-group">
 										<label
-											className="form-control-label sr-only"
+											className="form-control-label visually-hidden"
 											htmlFor="name"
 										>
 											Job Level

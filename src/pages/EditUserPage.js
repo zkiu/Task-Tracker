@@ -87,7 +87,7 @@ export default function EditUserPage() {
 									) : null}
 									<section className="col-sm-12 form-group">
 										<label
-											className="form-control-label sr-only"
+											className="form-control-label visually-hidden"
 											htmlFor="name"
 										>
 											Name
@@ -108,7 +108,7 @@ export default function EditUserPage() {
 								<div className="form-row">
 									<section className="col-sm-12 form-group">
 										<label
-											className="form-control-label sr-only"
+											className="form-control-label visually-hidden"
 											htmlFor="name"
 										>
 											Job Level

@@ -31,16 +31,18 @@ function App() {
 			<Router>
 				<Navigation userObj={userObj} />
 				<BtnPortfolio />
-				<HomePage path="/" isAuth={!!authUser} />
-				<LoginPage path="login" />
-				<RegisterPage path="register" />
-				{/* <ProtectedRoute path="/" isLoading={isLoading} isAuth={!!authUser}>
+				<Switch>
+					<HomePage path="/" exact isAuth={!!authUser} />
+					<LoginPage path="/login" exact />
+					<RegisterPage path="/register" exact />
+					{/* <ProtectedRoute path="/" isLoading={isLoading} isAuth={!!authUser}>
 					<DashboardPage path="dashboard" />
 					<EditUserPage path="editUser/:userId" />
 					<TaskPage path="editTask" />
 					<TaskPage path="editTask/:taskId" />
 					<NotFoundPage default />
 				</ProtectedRoute> */}
+				</Switch>
 			</Router>
 		</div>
 	)

@@ -16,10 +16,10 @@ function Home({isAuth}) {
 					<div className="display-4 text-primary mt-3 mb-2">Task Dashboard</div>
 					<p className="lead text-white">Please login to see your dashboard</p>
 
-					<Link to="/register" className="btn btn-secondary mr-2">
+					<Link to="/register" className="btn btn-secondary me-2">
 						Register
 					</Link>
-					<Link to="/login" className="btn btn-secondary mr-2">
+					<Link to="/login" className="btn btn-secondary me-2">
 						Log In
 					</Link>
 				</div>

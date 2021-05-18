@@ -8,7 +8,7 @@ function Navigation({userObj}) {
 		<nav className="site-nav family-sans navbar navbar-expand bg-primary navbar-dark">
 			<div className="container-fluid">
 				<Link to="/" className="navbar-brand">
-					<RiCheckDoubleLine className="mr-1" />
+					<RiCheckDoubleLine className="me-1" />
 					Task Tracker
 				</Link>
 
