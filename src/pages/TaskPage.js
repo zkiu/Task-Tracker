@@ -1,10 +1,11 @@
 import React from 'react'
-import {useParams} from '@reach/router' // -- NOTE gets the dynamic segment directly from the url instead of being passed as a prop. useful because we are using the middleware ProtectedRoute
+import {useParams} from 'react-router-dom'
 import TaskForm from '../components/TaskForm'
 import CommentsSection from '../components/CommentsSection'
 
 export default function TaskPage() {
-	const taskId = useParams().taskId
+	// const taskId = useParams().taskId
+	const {taskId} = useParams()
 
 	// -- if there is no task number provided(i.e. creating a new task)
 	if (taskId === undefined) {

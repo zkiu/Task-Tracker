@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import TasksList from '../components/TasksList'
-import {navigate} from '@reach/router'
+import {useHistory} from 'react-router-dom'
 import {useTaskList} from '../services/task/useTaskList'
 import {filterTask} from '../services/task/filterTask'
 
 export default function DashboardPage() {
 	// *** implement pagination, so only top 10 records gets shown until user scroll further down or request more https://www.youtube.com/watch?v=poqTHxtDXwU&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=7
-
+	let history = useHistory()
 	const [orderBy, setOrderby] = useState('recent')
 	const [searchCriteria, setSearchCriteria] = useState('')
 	let taskList = useTaskList()
@@ -16,7 +16,7 @@ export default function DashboardPage() {
 	}
 	function handleClick(e) {
 		e.preventDefault()
-		navigate('editTask')
+		history.push('editTask')
 	}
 	return (
 		<>

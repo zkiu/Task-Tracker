@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import {navigate} from '@reach/router'
+import {useHistory} from 'react-router-dom'
 
 import registerUser from '../services/user/registerUser'
 import ErrorForm from '../components/ErrorForm'
 
 function Register() {
+	let history = useHistory()
 	const [regData, setRegData] = useState({
 		name: '',
 		email: '',
@@ -55,7 +56,7 @@ function Register() {
 		await registerUser(registrationInfo)
 
 		// -- once registered, the user will be logged in and directed towards the dashboard
-		navigate('/dashboard')
+		history.push('/dashboard')
 	}
 
 	return (

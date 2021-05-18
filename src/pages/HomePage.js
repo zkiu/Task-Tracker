@@ -1,11 +1,11 @@
 import React from 'react'
-import {navigate, Link} from '@reach/router'
+import {Link, useHistory} from 'react-router-dom'
 
 // -- page user lands only when not logged in.
 function Home({isAuth}) {
-	// -- if there is a user logged in, then go to dashboard
+	let history = useHistory()
 	if (isAuth) {
-		navigate('/dashboard')
+		history.push('/dashboard')
 	}
 
 	// -- if there are NO user logged in, the provide these options

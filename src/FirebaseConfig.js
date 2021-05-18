@@ -1,5 +1,4 @@
 import firebase from 'firebase/app'
-// import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/functions'
@@ -17,10 +16,5 @@ const firebaseConfig = {
 }
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
-// firebase.analytics()
-firebase.functions().useEmulator('http://localhost:5001')
-
-// export const provider = new firebase.auth.GoogleAuthProvider()
-// export const auth = firebase.auth()
 
 export default firebase

@@ -1,14 +1,9 @@
-import React from 'react'
-import {Link} from '@reach/router'
+import {Link} from 'react-router-dom'
 import {RiCheckDoubleLine} from 'react-icons/ri'
 
 import {signOut} from '../services/firebaseAuth/signOut'
 
 function Navigation({userObj}) {
-	function logoutUser() {
-		signOut()
-	}
-
 	return (
 		<nav className="site-nav family-sans navbar navbar-expand bg-primary navbar-dark">
 			<div className="container-fluid">
@@ -37,11 +32,7 @@ function Navigation({userObj}) {
 							<Link className="nav-item nav-link" to={'editUser/' + userObj.id}>
 								{userObj.name + ','}
 							</Link>
-							<Link
-								className="nav-item nav-link"
-								to="/login"
-								onClick={logoutUser}
-							>
+							<Link className="nav-item nav-link" to="/login" onClick={signOut}>
 								log out
 							</Link>
 						</>

@@ -1,10 +1,12 @@
 import React from 'react'
 import {RiFileEditLine} from 'react-icons/ri'
 import {MdArrowDropDownCircle} from 'react-icons/md'
-import {navigate} from '@reach/router'
+import {useHistory} from 'react-router-dom'
 
 // -- This compenent displays a list of tasks from a filtered Array passed on to it from Dashboard
 export default function TasksList({filteredTasksArray}) {
+	let history = useHistory()
+
 	if (filteredTasksArray.length === 0) {
 		return (
 			<h4 className="text-white-50 mt-4">
@@ -15,7 +17,7 @@ export default function TasksList({filteredTasksArray}) {
 
 	function handleClick(e, taskId) {
 		e.stopPropagation()
-		navigate('editTask/' + taskId)
+		history.push('editTask/' + taskId)
 	}
 
 	let myTask = filteredTasksArray.map((task) => {

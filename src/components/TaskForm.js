@@ -2,7 +2,7 @@
 // *** provide more detail of what was modified for Auto Messages when updating tasks
 import React, {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
-import {navigate} from '@reach/router'
+import {useHistory} from 'react-router-dom'
 
 import {getCurrentUserInfo} from '../services/user/getCurrentUserInfo'
 import getTaskObj from '../services/task/getTaskObj'
@@ -13,6 +13,7 @@ import addComment from '../services/task/addComment'
 import {containsBadChar} from '../services/general/containsBadChar'
 
 export default function TaskForm({taskId = null}) {
+	let history = useHistory()
 	const [userObj, setuserObj] = useState({})
 
 	const [taskObj, setTaskObj] = useState({
@@ -141,9 +142,8 @@ export default function TaskForm({taskId = null}) {
 		// -- gets the index of the targeted option in the dropdown
 		const selectedIndex = e.target.options.selectedIndex
 		// -- get the key at the selected option data-set
-		const responsibleUserId = e.target.options[selectedIndex].getAttribute(
-			'data-key'
-		)
+		const responsibleUserId =
+			e.target.options[selectedIndex].getAttribute('data-key')
 		setTaskObj({
 			...taskObj,
 			[e.target.name]: e.target.value,
@@ -218,7 +218,7 @@ export default function TaskForm({taskId = null}) {
 				autoCommentBot(newTask.id, 'Auto Message: Task is created')
 
 				alert('New task is saved') // *** make this into a toast/modal
-				navigate('../dashboard')
+				history.push('../dashboard')
 			}
 		} else {
 			// UPDATING a task

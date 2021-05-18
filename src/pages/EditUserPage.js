@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useParams} from '@reach/router' // -- NOTE gets the dynamic segment directly from the url instead of being passed as a prop. useful because we are using the middleware ProtectedRoute
+import {useParams} from 'react-router-dom'
 import {getUserInfo} from '../services/user/getUserInfo'
 import {updateUserInfo} from '../services/user/updateUserInfo'
 import ErrorForm from '../components/ErrorForm'
@@ -7,7 +7,8 @@ import ErrorForm from '../components/ErrorForm'
 export default function EditUserPage() {
 	// -- user id to be modified is taken from the url
 	// *** currently any log-in user can modify other user info (name and jobLevel) as long as they have the user's unique firestore id number. To set restrictions based on jobLevel
-	const userId = useParams().userId
+	// const userId = useParams().userId
+	const {userId} = useParams()
 
 	// *** adding an email and password update feature means accessing firebase.auth(). This project will just stick with just database changes for now (firestore)
 	// -- updating the jobLevel will change access right to the app

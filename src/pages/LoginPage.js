@@ -1,4 +1,4 @@
-import {navigate} from '@reach/router'
+import {useHistory} from 'react-router-dom'
 import React, {useState} from 'react'
 
 import ErrorForm from '../components/ErrorForm'
@@ -6,6 +6,7 @@ import ErrorForm from '../components/ErrorForm'
 import {signIn} from '../services/firebaseAuth/signIn'
 
 function Login() {
+	let history = useHistory()
 	const [loginUser, changeLoginUser] = useState({
 		email: '',
 		password: '',
@@ -23,7 +24,7 @@ function Login() {
 			.then((user) => {
 				if (user) {
 					//if the user is not null then
-					navigate('/dashboard')
+					history.push('/dashboard')
 				}
 			})
 			.catch((error) => {

@@ -1,10 +1,7 @@
-import React from 'react'
-import {Router} from '@reach/router'
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 // -- initialize firebase
 import './FirebaseConfig'
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap'
 import './App.css'
 
 import BtnPortfolio from './components/resumeBanner/BtnPortfolio'
@@ -23,31 +20,27 @@ import {useFirestoreUserDoc} from './services/user/useFirestoreUserDoc'
 
 function App() {
 	let userId = null
-	// -- updates when login status changes, 'user' has property user.id and user.email
 	let {authUser, isLoading} = useAuth()
-	// -- updates when the user profile changes in Firestore
 	if (authUser !== null) {
-		userId = authUser.id // -- NOTE that user obj is returned from Auth(). It has the auto generated property 'uid' instead of 'id'
+		userId = authUser.id
 	}
-	// -- Listener for changes to the user's profile. Returns null if no one is logged in
-	// -- can simplify this code further by creating a new function called useCurrentFirestoreUserDoc, which has no need for the userId param
 	let userObj = useFirestoreUserDoc(userId)
 
 	return (
 		<div id="app">
-			<Navigation userObj={userObj} />
-			<BtnPortfolio />
 			<Router>
+				<Navigation userObj={userObj} />
+				<BtnPortfolio />
 				<HomePage path="/" isAuth={!!authUser} />
 				<LoginPage path="login" />
 				<RegisterPage path="register" />
-				<ProtectedRoute path="/" isLoading={isLoading} isAuth={!!authUser}>
+				{/* <ProtectedRoute path="/" isLoading={isLoading} isAuth={!!authUser}>
 					<DashboardPage path="dashboard" />
 					<EditUserPage path="editUser/:userId" />
 					<TaskPage path="editTask" />
 					<TaskPage path="editTask/:taskId" />
 					<NotFoundPage default />
-				</ProtectedRoute>
+				</ProtectedRoute> */}
 			</Router>
 		</div>
 	)
