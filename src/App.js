@@ -44,12 +44,18 @@ function App() {
 					<ProtectedRoute
 						isLoading={isLoading}
 						isAuth={!!authUser}
+						exact
 						path="/editTask"
+						Component={TaskPage}
+					/>
+					<ProtectedRoute
+						isLoading={isLoading}
+						isAuth={!!authUser}
+						path="/editTask/:taskId"
 						Component={TaskPage}
 					/>
 					{/* 
 					<EditUserPage path="editUser/:userId" />
-					<TaskPage path="editTask/:taskId" />
 					<NotFoundPage default />
 				</ProtectedRoute> */}
 				</Switch>

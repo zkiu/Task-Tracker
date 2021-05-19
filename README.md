@@ -6,7 +6,9 @@
 2021-05-18:
 
 1. Move hosting to Netlify from Firebase Hosting
-2. On-going update of codes
+2. Migrate to Bootstrap v5 from v4
+3. Migrate to React Router from Reach Router
+4. On-going update of codes
 
 ---
 

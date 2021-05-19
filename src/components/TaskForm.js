@@ -1,6 +1,5 @@
-// *** dynamic list of jobLevel 1 for the dropdown menu is further filtered by department (but this is for future improvements / production version)
-// *** provide more detail of what was modified for Auto Messages when updating tasks
-import React, {useEffect, useState} from 'react'
+// TODO: dynamic list of jobLevel 1 for the dropdown menu is further filtered by department (but this is for future improvements / production version)
+import {useEffect, useState} from 'react'
 import firebase from 'firebase/app'
 import {useHistory} from 'react-router-dom'
 
@@ -42,7 +41,7 @@ export default function TaskForm({taskId = null}) {
 		nameTaskCreatorId: '',
 	})
 	// -- load employee list for dropdown menu
-	// -- currently allowing the task creator to assign themselves as the one responsible
+	// -- currently allowing the task creator to assign themselves as the one responsible. this may change as the app evolves
 	let employeeL1List = useEmployeeList('L1').map((item) => {
 		return (
 			<option key={item.id} data-key={item.id} value={item.name}>
@@ -138,6 +137,7 @@ export default function TaskForm({taskId = null}) {
 	function handleChange(e) {
 		setTaskObj({...taskObj, [e.target.name]: e.target.value})
 	}
+
 	function handleResponsibleNameChange(e) {
 		// -- gets the index of the targeted option in the dropdown
 		const selectedIndex = e.target.options.selectedIndex
@@ -207,7 +207,7 @@ export default function TaskForm({taskId = null}) {
 					'Comments cannot contain special characters other than !?.$%&+-. Please remove the other special characters before saving'
 				)
 			} else {
-				// -- once data validaitno is passed
+				// -- once data validation is passed
 				let newTask = await addTask({
 					...taskObj,
 					nameTaskCreator: userObj.name, //-- name is entered directly along side the userId, so that we don't have to do another query to look up the name from the user id
@@ -264,17 +264,15 @@ export default function TaskForm({taskId = null}) {
 
 	return (
 		<>
-			{/* display of heading will depend of status of taskId */}
-			{taskId === null && (
+			{taskId === null ? (
 				<h2 className="text-primary my-3">Create New Task Form</h2>
-			)}
-			{taskId !== null && (
+			) : (
 				<h2 className="text-primary my-3">Update Task Form</h2>
 			)}
 
 			<form className="border p-2 bg-light card" onSubmit={handleSubmit}>
-				<div className="form-row">
-					<div className="form-group col-md-3">
+				<div className="row">
+					<div className="form-group col">
 						<label className="form-label" htmlFor="priority">
 							Priority Level:
 						</label>
@@ -337,7 +335,7 @@ export default function TaskForm({taskId = null}) {
 						</select>
 					</div>
 				</div>
-				<div className="form-row">
+				<div className="row">
 					<div className="form-group col-md-3">
 						<label className="form-label " htmlFor="status">
 							Task Status:
@@ -437,8 +435,7 @@ export default function TaskForm({taskId = null}) {
 						className="btn btn-secondary mt-2"
 						type="submit"
 					>
-						{taskId === null && 'Create Task'}
-						{taskId !== null && 'Update Task'}
+						{taskId === null ? 'Create Task' : 'Update Task'}
 					</button>
 				</div>
 			</form>
