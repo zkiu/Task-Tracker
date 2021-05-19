@@ -2,8 +2,6 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 // -- initialize firebase
 import './FirebaseConfig'
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap'
 import './App.css'
 
 import BtnPortfolio from './components/resumeBanner/BtnPortfolio'
