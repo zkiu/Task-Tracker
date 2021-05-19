@@ -1,7 +1,14 @@
 <h1 align="center">Task Tracker</h1>
 <h2 align="center"><a  href="https://task-tracker-84155.web.app/">Try App</a> </h2>
 
-<br/>
+## Updates
+
+2021-05-18:
+
+1. Move hosting to Netlify from Firebase Hosting
+2. On-going update of codes
+
+---
 
 ## Description
 

@@ -13,26 +13,30 @@ function Navigation({userObj}) {
 				</Link>
 
 				<div className="navbar-nav ml-auto">
-					{/* if userObj is null then display the JSX */}
 					{!userObj && (
 						<>
-							<Link className="nav-item nav-link" to="register">
+							<Link className="nav-item nav-link fw-bold" to="register">
 								register
 							</Link>
 							{/* ** make login into a dropdown menu https://getbootstrap.com/docs/4.5/components/dropdowns/#forms*/}
-							<Link className="nav-item nav-link" to="login">
+							<Link className="nav-item nav-link fw-bold" to="login">
 								log in
 							</Link>
 						</>
 					)}
-
-					{/* if userObj is NOT null then display the JSX */}
 					{userObj && (
 						<>
-							<Link className="nav-item nav-link" to={'editUser/' + userObj.id}>
+							<Link
+								className="nav-item nav-link fw-bold text-white"
+								to={'editUser/' + userObj.id}
+							>
 								{userObj.name + ','}
 							</Link>
-							<Link className="nav-item nav-link" to="/login" onClick={signOut}>
+							<Link
+								className="nav-item nav-link fw-bold text-white"
+								to="/login"
+								onClick={signOut}
+							>
 								log out
 							</Link>
 						</>

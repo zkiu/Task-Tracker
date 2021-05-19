@@ -2,6 +2,8 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 // -- initialize firebase
 import './FirebaseConfig'
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap'
 import './App.css'
 
 import BtnPortfolio from './components/resumeBanner/BtnPortfolio'
@@ -35,10 +37,20 @@ function App() {
 					<HomePage path="/" exact isAuth={!!authUser} />
 					<LoginPage path="/login" exact />
 					<RegisterPage path="/register" exact />
-					{/* <ProtectedRoute path="/" isLoading={isLoading} isAuth={!!authUser}>
-					<DashboardPage path="dashboard" />
+					<ProtectedRoute
+						isLoading={isLoading}
+						isAuth={!!authUser}
+						path="/dashboard"
+						Component={DashboardPage}
+					/>
+					<ProtectedRoute
+						isLoading={isLoading}
+						isAuth={!!authUser}
+						path="/editTask"
+						Component={TaskPage}
+					/>
+					{/* 
 					<EditUserPage path="editUser/:userId" />
-					<TaskPage path="editTask" />
 					<TaskPage path="editTask/:taskId" />
 					<NotFoundPage default />
 				</ProtectedRoute> */}
