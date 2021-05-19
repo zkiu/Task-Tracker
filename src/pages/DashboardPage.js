@@ -5,7 +5,6 @@ import {useTaskList} from '../services/task/useTaskList'
 import {filterTask} from '../services/task/filterTask'
 
 export default function DashboardPage() {
-	// *** implement pagination, so only top 10 records gets shown until user scroll further down or request more https://www.youtube.com/watch?v=poqTHxtDXwU&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=7
 	let history = useHistory()
 	const [orderBy, setOrderby] = useState('recent')
 	const [searchCriteria, setSearchCriteria] = useState('')
@@ -33,22 +32,19 @@ export default function DashboardPage() {
 						<div className="input-group mb-1">
 							<input
 								type="text"
-								className="form-control border border-secondary"
+								className="form-control"
 								aria-label="Text input with dropdown button"
 								placeholder="Enter search keywords..."
 								autoFocus
 								value={searchCriteria}
 								onChange={(e) => setSearchCriteria(e.target.value)}
 							/>
-							<input
-								type="Query Type Label"
-								className="form-control text-center col-lg-3"
-								aria-label=""
-								value="Order Search by:"
-								disabled
-							/>
+							<label className="input-group-text" htmlFor="searchOrder">
+								Order Search by:
+							</label>
 							<select
-								className="form-select mb-2 col-lg-3"
+								id="searchOrder"
+								className="form-select"
 								name="orderBy"
 								value={orderBy}
 								onChange={(e) => setOrderby(e.target.value)}

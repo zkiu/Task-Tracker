@@ -1,9 +1,6 @@
-import React from 'react'
 import {RiFileEditLine} from 'react-icons/ri'
-import {MdArrowDropDownCircle} from 'react-icons/md'
 import {useHistory} from 'react-router-dom'
 
-// -- This compenent displays a list of tasks from a filtered Array passed on to it from Dashboard
 export default function TasksList({filteredTasksArray}) {
 	let history = useHistory()
 
@@ -22,15 +19,15 @@ export default function TasksList({filteredTasksArray}) {
 
 	let myTask = filteredTasksArray.map((task) => {
 		return (
-			<div className="card" key={task.id}>
-				<div className="card-header p-0" id={task.id}>
+			<div className="accordion-item" key={task.id}>
+				<div className="accordion-header p-0" id={task.id}>
 					<div
-						className="btn btn-block text-left"
+						className="accordion-button collapsed"
 						type="button"
-						data-toggle="collapse"
-						data-target={`#collapse${task.id}`}
+						data-bs-toggle="collapse"
+						data-bs-target={`#collapse-${task.id}`}
 						aria-expanded="false"
-						aria-controls={`collapse${task.id}`}
+						aria-controls={`collapse-${task.id}`}
 					>
 						<button
 							type="button"
@@ -45,39 +42,35 @@ export default function TasksList({filteredTasksArray}) {
 						<div className="btn text-truncate text-nowrap text-left col-10">
 							{task.taskName}
 						</div>
-						<div className="btn col-1">
-							<MdArrowDropDownCircle />
-						</div>
 					</div>
 				</div>
-
 				<div
-					id={`collapse${task.id}`}
-					className="collapse"
+					id={`collapse-${task.id}`}
+					className="accordion-collapse collapse"
 					aria-labelledby={task.id}
-					data-parent="#taskListaccordion"
+					data-bs-parent="#taskListaccordion"
 				>
-					<div className="card-body text-left ">
+					<div className="accordion-body">
 						<div className="container">
-							<div className="card-title row justify-content-between">
-								<span>
+							<div className="row">
+								<span className="col text-start">
 									Priority: {task.priority === 'p1' && ' Low'}
 									{task.priority === 'p2' && ' High'}
 								</span>
-								<span>Due Date: {task.dateDue}</span>
+								<span className="col text-end">Due Date: {task.dateDue}</span>
 							</div>
+							<p classN className="col text-start mt-2">
+								{task.taskDescription}
+							</p>
 						</div>
-						<p className="card-text">{task.taskDescription}</p>
 					</div>
 				</div>
 			</div>
 		)
 	})
 
-	// -- NOTE: the class 'accordion' was added below so that only one element is shown while the rest is collapsed. To have multiple tasks elements uncollapsed at the same time, remove the accordion class, and take out the id="taskListaccordion" below as well as the data-parent="#taskListaccordion" in the .map() function
 	return (
 		<>
-			{/* <h1>BELOW IS THE TASK LIST:</h1> */}
 			<div className="accordion" id="taskListaccordion">
 				{myTask}
 			</div>
