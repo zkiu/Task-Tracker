@@ -19,12 +19,7 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"deploy": "npm run build && git add -A && git commit -m\"Deploying new build\" && git push",
-		"functions:build": "npm run build --prefix ./functions",
-		"functions:deploy": "npm run functions:build && firebase deploy --only functions",
-		"functions:watch": "nodemon --watch ./functions --ignore  ./functions/build --exec \"npm run functions:build\"",
-		"functions:dev": "concurrently \"npm run functions:watch\" \"firebase emulators:start --only functions\""
+		"eject": "react-scripts eject"
 	},
 	"eslintConfig": {
 		"extends": [
