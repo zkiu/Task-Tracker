@@ -14,9 +14,9 @@ export default function CommentsSection({taskId}) {
 	}
 
 	async function handleSubmit(e) {
-		e.preventDefault() // -- prevents reloading when the 'enter' key is pressed when typing in the input field
+		e.preventDefault()
 		try {
-			const userObj = await getCurrentUserInfo() // -- returns Null if no user is logged in
+			const userObj = await getCurrentUserInfo()
 
 			if (!userObj) {
 				// -- execute this if userObj is Null
