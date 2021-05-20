@@ -59,9 +59,7 @@ export default function TasksList({filteredTasksArray}) {
 								</span>
 								<span className="col text-end">Due Date: {task.dateDue}</span>
 							</div>
-							<p classN className="col text-start mt-2">
-								{task.taskDescription}
-							</p>
+							<p className="col text-start mt-2">{task.taskDescription}</p>
 						</div>
 					</div>
 				</div>
