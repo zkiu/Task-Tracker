@@ -15,11 +15,11 @@ function Navigation({userObj}) {
 				<div className="navbar-nav ml-auto">
 					{!userObj && (
 						<>
-							<Link className="nav-item nav-link fw-bold" to="register">
+							<Link className="nav-item nav-link fw-bold" to="/register">
 								register
 							</Link>
 							{/* ** make login into a dropdown menu https://getbootstrap.com/docs/4.5/components/dropdowns/#forms*/}
-							<Link className="nav-item nav-link fw-bold" to="login">
+							<Link className="nav-item nav-link fw-bold" to="/login">
 								log in
 							</Link>
 						</>
@@ -28,7 +28,7 @@ function Navigation({userObj}) {
 						<>
 							<Link
 								className="nav-item nav-link fw-bold text-white"
-								to={'editUser/' + userObj.id}
+								to={'/editUser/' + userObj.id}
 							>
 								{userObj.name + ','}
 							</Link>
