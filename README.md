@@ -1,9 +1,9 @@
 <h1 align="center">Task Tracker</h1>
-<h2 align="center"><a  href="https://task-tracker-84155.web.app/">Try App</a> </h2>
+<h2 align="center"><a  href="https://kiu-task-tracker.netlify.app/">Try App</a> </h2>
 
 ## Updates
 
-2021-05-18:
+2021-05-19:
 
 1. Move hosting to Netlify from Firebase Hosting
 2. Migrate to Bootstrap v5 from v4
